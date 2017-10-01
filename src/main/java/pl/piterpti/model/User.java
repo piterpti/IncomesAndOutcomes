@@ -1,5 +1,6 @@
 package pl.piterpti.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -41,6 +44,10 @@ public class User {
 	
 	@Column(name = "enabled")
 	private boolean enabled;
+	
+	@OneToMany
+	@JoinColumn(name = "user_id")
+	private List<Outcome> outcomes;
 
 	public long getId() {
 		return id;
@@ -88,6 +95,14 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public List<Outcome> getOutcomes() {
+		return outcomes;
+	}
+
+	public void setOutcomes(List<Outcome> outcomes) {
+		this.outcomes = outcomes;
 	}
 
 	@Override

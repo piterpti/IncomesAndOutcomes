@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Add outcome</title>
+    </head>
+    <body>
+        
+    	<form action="#" th:action=@{/addOutcome} th:object="${outcome}" method="post" role="form">
+    		<h2>Add outcome</h2>
+    	
+    		<div>
+    			Value: <input type="number" th:field="*{value}" placeholder="Value"> <br>
+    			Date: <input type="date" th:field="*{date}" placeholder="Date"> <br>
+    			Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description"> <br>
+    		
+    			<button type="submit">Add</button>
+    		
+    		</div>
+    	
+    	</form>    
+        
+        
+    </body>
+</html>
