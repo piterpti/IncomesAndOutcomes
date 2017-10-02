@@ -1,5 +1,6 @@
 package pl.piterpti.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -33,7 +33,7 @@ public class User {
 	
 	@Column(name = "password")
 	@NotEmpty
-	private String password;
+	private char[] password;
 	
 	@Column(name = "user_name")
 	private String userName;
@@ -65,11 +65,11 @@ public class User {
 		this.login = login;
 	}
 
-	public String getPassword() {
+	public char[] getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(char[] password) {
 		this.password = password;
 	}
 
@@ -107,7 +107,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password + ", userName="
+		return "User [id=" + id + ", login=" + login + ", password=" + Arrays.toString(password) + ", userName="
 				+ userName + "]";
 	}
 }

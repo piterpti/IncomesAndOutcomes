@@ -10,21 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-@Table(name= "outcome")
+@Table(name = "outcome")
 public class Outcome {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "outcome_id")
 	private long id;
-	
+
 	@Column(name = "value")
 	private BigDecimal value;
-	
-	@Column(name = "date")
-	private Date date;
-	
+
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@Column(name = "outcomeDate")
+	private Date outcomeDate;
+
 	@Column(name = "short_desc")
 	private String shortDesc;
 
@@ -44,19 +47,20 @@ public class Outcome {
 		this.value = value;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public String getShortDesc() {
 		return shortDesc;
 	}
 
 	public void setShortDesc(String shortDesc) {
 		this.shortDesc = shortDesc;
-	}	
+	}
+
+	public Date getOutcomeDate() {
+		return outcomeDate;
+	}
+
+	public void setOutcomeDate(Date outcomeDate) {
+		this.outcomeDate = outcomeDate;
+	}
+
 }

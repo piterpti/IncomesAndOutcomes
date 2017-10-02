@@ -1,6 +1,7 @@
 package pl.piterpti.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,6 +37,8 @@ public class OutcomesController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		Outcome outcome = new Outcome();
+		
+		outcome.setOutcomeDate(new Date());
 		
 		modelAndView.addObject("outcome", outcome);
 		
@@ -79,6 +82,7 @@ public class OutcomesController {
 	
 	@RequestMapping(value = "/outcomes/userOutcomes", method = RequestMethod.GET)
 	public ModelAndView userOutcomes() {
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(VIEW_USER_OUTCOMES);
 		
