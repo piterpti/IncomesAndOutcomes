@@ -10,8 +10,8 @@
 	<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]] all outcomes</h1>
 
 	<div>
-		<ul>
-			<li th:each="item : ${outcomes}" th:text="${item.shortDesc} + ' ' + ${item.value}"></li>
+		<ul th:each="item : ${outcomes}">
+			<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span> <a th:href="@{'/deleteOutcome?id=' + ${item.id}}"> Delete</a></li>
 		</ul>
 
 	</div>

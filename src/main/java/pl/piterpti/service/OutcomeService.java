@@ -17,5 +17,7 @@ public interface OutcomeService {
 	
 	public List<Outcome> findAll();
 	
+	public void deleteOutcome(long outcomeId);
+	
 	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -94,5 +95,16 @@ public class OutcomesController {
 		modelAndView.addObject("outcomes", user.getOutcomes());
 		
 		return modelAndView;
-	}	
+	}
+	
+	@RequestMapping(value = "/deleteOutcome")
+	public ModelAndView deleteOutcome(@Param("id") long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName(VIEW_USER_OUTCOMES);
+		
+		outcomeService.deleteOutcome(id);
+		
+		return modelAndView;	
+	}
 }

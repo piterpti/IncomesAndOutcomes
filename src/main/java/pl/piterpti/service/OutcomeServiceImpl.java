@@ -24,4 +24,10 @@ public class OutcomeServiceImpl implements OutcomeService {
 		return outcomeRepository.findAll();
 	}
 
+	@Override
+	public void deleteOutcome(long outcomeId) {
+		outcomeRepository.delete(outcomeId);
+		
+	}
+
 }
