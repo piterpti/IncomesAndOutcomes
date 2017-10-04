@@ -4,17 +4,43 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <title>All outcomes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-	<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]] all outcomes</h1>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a th:href="@{/home}">Home</a></li>
+				<li><a th:href="@{/addOutcome}">Add outcome</a></li>
+				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+				<li><a th:href="@{/logout}">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
 
-	<div>
-		<ul th:each="item : ${outcomes}">
-			<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span> <a th:href="@{'/deleteOutcome?id=' + ${item.id}}"> Delete</a></li>
-		</ul>
+	<div class="container">
+		<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
+			all outcomes</h1>
+
+		<div>
+			<ul th:each="item : ${outcomes}">
+				<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span>
+					<a th:href="@{'/deleteOutcome?id=' + ${item.id}}"> Delete</a></li>
+			</ul>
+
+		</div>
 
 	</div>
-
 </body>
 </html>
