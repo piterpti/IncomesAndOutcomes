@@ -1,5 +1,6 @@
 package pl.piterpti.service;
 
+import java.util.Date;
 import java.util.List;
 
 import pl.piterpti.model.Outcome;
@@ -18,6 +19,8 @@ public interface OutcomeService {
 	public List<Outcome> findAll();
 	
 	public void deleteOutcome(long outcomeId);
+	
+	public List<Outcome> findByUserIdAndInDatePeroid(int userId, Date fromDate, Date toDate);
 	
 	
 }

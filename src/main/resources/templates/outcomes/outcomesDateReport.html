@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Add outcome</title>
+<title>Outcomes</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -14,7 +14,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -31,26 +30,22 @@
 		</div>
 	</nav>
 
-
 	<div class="container">
-		<form action="#" th:action=@{/addOutcome} th:object="${outcome}"
-			method="post" role="form">
-			<h2>Add outcome</h2>
 
+		<form th:action="@{/outcomesDateReport}" th:object="${datePeriod}"
+			method="get">
+
+			<h2>Show outcomes between dates</h2>
 			<div>
-				Value: <input type="number" th:field="*{value}" placeholder="Value">
-				<br> Date: <input type="text" th:field="*{outcomeDate}"
-					placeholder="Date"> <br> Short description: <input
-					type="text" th:field="*{shortDesc}" placeholder="Short description">
-				<br>
+				Date from: <input type="text" th:field="*{fromDate}" placeholder="From"> <br>
+				Date to: <input type="text" th:field="*{toDate}" placeholder="To"> <br>
 
-				<button type="submit">Add</button>
-
+				<button type="submit">Show</button>
+				
 			</div>
 
 		</form>
+
 	</div>
-
-
 </body>
 </html>

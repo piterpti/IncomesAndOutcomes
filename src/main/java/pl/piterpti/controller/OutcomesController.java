@@ -1,6 +1,7 @@
 package pl.piterpti.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.piterpti.model.DateFromTo;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
 import pl.piterpti.service.OutcomeService;
@@ -26,6 +28,7 @@ public class OutcomesController {
 	
 	private static final String VIEW_ADD_OUTCOME = "outcomes/addOutcome";
 	private static final String VIEW_USER_OUTCOMES = "outcomes/userOutcomes";
+	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
 	
 	@Autowired
 	private OutcomeService outcomeService;
@@ -106,5 +109,31 @@ public class OutcomesController {
 		outcomeService.deleteOutcome(id);
 		
 		return modelAndView;	
+	}
+	
+	@RequestMapping(value = "/outcomesDateReport", method = RequestMethod.GET)
+	public ModelAndView prepareOutcomeDateReport() {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		
+		DateFromTo dft = new DateFromTo(cal.getTime(), new Date());
+		
+		modelAndView.addObject("datePeriod", dft);
+	
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/outcomesDateReport")
+	public ModelAndView showOutcomeDateReport() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
+		
+		
+		
+		return modelAndView;
 	}
 }

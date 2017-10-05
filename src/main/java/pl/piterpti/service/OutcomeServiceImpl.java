@@ -1,5 +1,6 @@
 package pl.piterpti.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class OutcomeServiceImpl implements OutcomeService {
 	public void deleteOutcome(long outcomeId) {
 		outcomeRepository.delete(outcomeId);
 		
+	}
+
+	@Override
+	public List<Outcome> findByUserIdAndInDatePeroid(int userId, Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		
+		return null;
 	}
 
 }

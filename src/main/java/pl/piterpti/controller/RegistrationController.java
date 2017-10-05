@@ -3,6 +3,9 @@ package pl.piterpti.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +24,21 @@ public class RegistrationController {
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("registration");
-		User user = new User();
 
-		modelAndView.addObject("user", user);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+
+			modelAndView.setViewName("index");
+
+		} else {
+
+			modelAndView.setViewName("registration");
+
+			User user = new User();
+
+			modelAndView.addObject("user", user);
+		}
 
 		return modelAndView;
 	}
@@ -38,17 +52,17 @@ public class RegistrationController {
 			bindingResult.rejectValue("login", "error.user",
 					"There is already user registered with the login provided");
 		}
-		
+
 		if (bindingResult.hasErrors()) {
-			
+
 			modelAndView.setViewName("registration");
-			
+
 		} else {
-			
+
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered succesfully");
 			modelAndView.setViewName("registration");
-			
+
 		}
 
 		return modelAndView;

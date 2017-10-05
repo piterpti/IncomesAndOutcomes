@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Hello World!</title>
+<title>Welcome</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -25,7 +25,8 @@
 				<li class="active"><a th:href="@{/home}">Home</a></li>
 				<li><a th:href="@{/addOutcome}">Add outcome</a></li>
 				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
-				<li><a th:href="@{/logout}">Logout</a></li>
+				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
 		</div>
 	</nav>
