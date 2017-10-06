@@ -63,4 +63,9 @@ public class Outcome {
 		this.outcomeDate = outcomeDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Outcome [id=" + id + ", value=" + value + ", shortDesc=" + shortDesc + "]";
+	}
+	
 }

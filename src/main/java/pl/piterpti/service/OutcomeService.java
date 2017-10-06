@@ -20,7 +20,7 @@ public interface OutcomeService {
 	
 	public void deleteOutcome(long outcomeId);
 	
-	public List<Outcome> findByUserIdAndInDatePeroid(int userId, Date fromDate, Date toDate);
+	public List<Outcome> findByUserIdAndInDatePeroid(long userId, Date fromDate, Date toDate);
 	
 	
 }

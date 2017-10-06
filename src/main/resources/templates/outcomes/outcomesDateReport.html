@@ -33,7 +33,7 @@
 	<div class="container">
 
 		<form th:action="@{/outcomesDateReport}" th:object="${datePeriod}"
-			method="get">
+			method="post">
 
 			<h2>Show outcomes between dates</h2>
 			<div>
@@ -45,6 +45,12 @@
 			</div>
 
 		</form>
+		
+		<div th:if="${outcomes}">
+			<ul th:each="item : ${outcomes}">
+				<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span>
+			</ul>
+		</div>
 
 	</div>
 </body>

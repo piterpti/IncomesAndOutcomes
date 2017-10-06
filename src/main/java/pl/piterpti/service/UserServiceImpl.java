@@ -1,13 +1,16 @@
 package pl.piterpti.service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.piterpti.constants.UserRoles;
+import pl.piterpti.model.Outcome;
 import pl.piterpti.model.Role;
 import pl.piterpti.model.User;
 import pl.piterpti.repository.RoleRepository;
@@ -44,5 +47,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUser(User user) {
 		userRepository.save(user);
+	}
+
+	@Override
+	public List<Outcome> findUserOutcomesInDate(long userId, Date fromDate, Date toDate) {
+		return userRepository.findUserOutcomesInTime(userId, fromDate, toDate);
 	}
 }

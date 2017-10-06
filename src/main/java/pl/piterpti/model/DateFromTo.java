@@ -2,6 +2,8 @@ package pl.piterpti.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Date to generate reports
  * 
@@ -10,7 +12,10 @@ import java.util.Date;
  */
 public class DateFromTo {
 
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fromDate;
+	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date toDate;
 
 	public DateFromTo(Date fromDate, Date toDate) {

@@ -32,10 +32,8 @@ public class OutcomeServiceImpl implements OutcomeService {
 	}
 
 	@Override
-	public List<Outcome> findByUserIdAndInDatePeroid(int userId, Date fromDate, Date toDate) {
-		// TODO Auto-generated method stub
-		
-		return null;
+	public List<Outcome> findByUserIdAndInDatePeroid(long userId, Date fromDate, Date toDate) {
+		return outcomeRepository.findByDate(userId);
 	}
 
 }

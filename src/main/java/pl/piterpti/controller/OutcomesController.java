@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,8 @@ public class OutcomesController {
 	private static final String VIEW_ADD_OUTCOME = "outcomes/addOutcome";
 	private static final String VIEW_USER_OUTCOMES = "outcomes/userOutcomes";
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
+	
+	private Logger logger = Logger.getLogger(OutcomesController.class);
 	
 	@Autowired
 	private OutcomeService outcomeService;
@@ -117,23 +120,44 @@ public class OutcomesController {
 		
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
 		
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		
-		DateFromTo dft = new DateFromTo(cal.getTime(), new Date());
-		
-		modelAndView.addObject("datePeriod", dft);
+		modelAndView.addObject("datePeriod", getDatePeriodToForm());
 	
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/outcomesDateReport")
-	public ModelAndView showOutcomeDateReport() {
+	@RequestMapping(value = "/outcomesDateReport", method = RequestMethod.POST)
+	public ModelAndView showOutcomeDateReport(DateFromTo dft, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
 		
+		if (bindingResult.hasErrors()) {
+			logger.warn("Binding result has errors when generating outcomes report");
+		}
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		
+		User user = userService.findByLogin(userName);
+		
+		List<Outcome> outcomes = userService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), dft.getToDate());
+		
+		for (Outcome outcome : outcomes) {
+			logger.info(outcome.toString());
+		}
+		
+		if (!outcomes.isEmpty()) {
+			modelAndView.addObject("outcomes", outcomes);
+		}
+		
+		modelAndView.addObject("datePeriod", dft);
 		
 		return modelAndView;
+	}
+	
+	private DateFromTo getDatePeriodToForm() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		return new DateFromTo(cal.getTime(), new Date());
 	}
 }
