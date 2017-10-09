@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param toDate
 	 * @return user outcomes
 	 */
-	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.outcomeDate >= :fromDate AND o.outcomeDate <= :toDate")
+	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.outcomeDate >= :fromDate AND o.outcomeDate <= :toDate ORDER BY o.outcomeDate")
 	public List<Outcome> findUserOutcomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
 	
 }

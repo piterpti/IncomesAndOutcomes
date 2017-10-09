@@ -46,11 +46,41 @@
 
 		</form>
 		
-		<div th:if="${outcomes}">
-			<ul th:each="item : ${outcomes}">
-				<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span>
-			</ul>
-		</div>
+		<div th:if="${opds}">
+				
+				<table class="table table-bordered">
+					<tr>
+						<th>Date</th>
+						<th>Outcomes</th>
+						<th>Value</th>
+						
+					</tr>
+					<th:block th:each="opd : ${opds}">
+						<tr>
+							<td th:text="${#dates.format(opd.outcomeDate, 'dd-MMM-yyyy')}"></td>
+							<td>
+								<ul th:each="outcome : ${opd.outcomes}">
+									<li th:text="${outcome.shortDesc}"></li>
+								</ul>
+							</td>
+							
+							<td>
+								<ul th:each="outcome : ${opd.outcomes}">
+									<li th:text="${outcome.value}"></li>
+								</ul>
+							</td>
+							
+						</tr>
+					</th:block>
+					
+					<tr>
+						<td>Summary</td>
+						<td></td>
+						<td th:text="${summary}"></td>
+					</tr>
+				</table>
+	
+			</div>
 
 	</div>
 </body>

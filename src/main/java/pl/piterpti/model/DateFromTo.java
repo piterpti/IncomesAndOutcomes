@@ -41,5 +41,4 @@ public class DateFromTo {
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
-
 }

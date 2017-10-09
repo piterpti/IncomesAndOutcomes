@@ -31,16 +31,37 @@
 	</nav>
 
 	<div class="container">
-		<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
-			all outcomes</h1>
 
-		<div>
-			<ul th:each="item : ${outcomes}">
-				<li><span th:text="${item.shortDesc} + ' ' + ${item.value}"></span>
-					<a th:href="@{'/deleteOutcome?id=' + ${item.id}}"> Delete</a></li>
-			</ul>
-
-		</div>
+		<div th:if="${outcomes}">
+	
+			<h1><a th:href="@{/outcomesDateReport}">Show outcomes in date period</a></h1>
+			
+			<br>
+		
+			<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
+				last outcomes</h1>
+	
+			<div>
+				
+				<table class="table table-bordered">
+					<th:block th:each="outcome : ${outcomes}">
+						<tr>
+							<td th:text="${outcome.shortDesc}"></td>
+							<td th:text="${outcome.value}"></td>
+							<td th:text="${#dates.format(outcome.outcomeDate, 'dd-MMM-yyyy')}"></td>
+							<td><a th:href="@{'/deleteOutcome?id=' + ${outcome.id}}">Delete</a></td>
+						</tr>
+				
+				</table>
+	
+			</div>
+			
+			</div>
+	
+			<div th:if="${message}">
+				<h1 th:text="${message}"></h1>
+			</div>
+			
 
 	</div>
 </body>
