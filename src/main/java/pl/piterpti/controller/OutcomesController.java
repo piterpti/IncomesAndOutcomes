@@ -138,7 +138,7 @@ public class OutcomesController {
 	public ModelAndView deleteOutcome(@Param("id") long id) {
 		ModelAndView modelAndView = new ModelAndView();
 
-		modelAndView.setViewName(VIEW_USER_OUTCOMES);
+		modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
 
 		outcomeService.deleteOutcome(id);
 
