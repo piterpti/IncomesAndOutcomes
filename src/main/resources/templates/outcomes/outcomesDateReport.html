@@ -48,6 +48,10 @@
 		
 		<div th:if="${opds}">
 				
+				<div>
+					Outcomes between <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MMM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MMM-yyyy')}"></span>
+				</div>
+				
 				<table class="table table-bordered">
 					<tr>
 						<th>Date</th>
@@ -74,9 +78,9 @@
 					</th:block>
 					
 					<tr>
-						<td>Summary</td>
+						<td><b>Summary</b></td>
 						<td></td>
-						<td th:text="${summary}"></td>
+						<td><b th:text="${summary}"></b></td>
 					</tr>
 				</table>
 	

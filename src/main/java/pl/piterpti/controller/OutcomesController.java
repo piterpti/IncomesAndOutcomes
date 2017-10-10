@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +34,11 @@ public class OutcomesController {
 	private static final String VIEW_ADD_OUTCOME = "outcomes/addOutcome";
 	private static final String VIEW_USER_OUTCOMES = "outcomes/userOutcomes";
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
+	
+	/**
+	 * Maximum number to display on user outcomes page
+	 */
+	private static final int MAX_OUTCOMES_TO_DISPLAY = 10;
 
 	private Logger logger = Logger.getLogger(OutcomesController.class);
 
@@ -98,17 +105,29 @@ public class OutcomesController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
 
-		User user = userService.findByLogin(userName);
+		Pageable topResults = new PageRequest(0, MAX_OUTCOMES_TO_DISPLAY);
 
-		List<Outcome> outcomes = user.getOutcomes();
-
+		List<Outcome> outcomes = outcomeService.findUserOutcomesWithLimit(userName, topResults);
+		
 		if (outcomes.isEmpty()) {
 			// show msg that there is no outcomes
-			modelAndView.addObject("message", "There is not any outcomes for user " + user.getUserName());
+			modelAndView.addObject("message", "There is not any outcomes for user " + userName);
 
 		} else {
 			// ok
-			modelAndView.addObject("outcomes", outcomes);
+			
+			List<Outcome> tmpOutcomes = outcomes;
+			if (outcomes.size() > MAX_OUTCOMES_TO_DISPLAY) {
+				tmpOutcomes = new ArrayList<>();
+				
+				int i = 0;
+				int idx = outcomes.size() - 1;
+				while (i++ < MAX_OUTCOMES_TO_DISPLAY) {
+					tmpOutcomes.add(outcomes.get(idx--));
+				}
+			}
+			
+			modelAndView.addObject("outcomes", tmpOutcomes);
 
 		}
 

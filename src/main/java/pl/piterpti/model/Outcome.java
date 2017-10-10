@@ -21,9 +21,9 @@ public class Outcome {
 	@Column(name = "outcome_id")
 	private long id;
 
-	@Column(name = "value")
+	@Column(name = "value", precision = 10, scale = 2)
 	private BigDecimal value;
-
+	
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "outcomeDate")
 	private Date outcomeDate;

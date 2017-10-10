@@ -1,7 +1,8 @@
 package pl.piterpti.service;
 
-import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 
 import pl.piterpti.model.Outcome;
 
@@ -20,7 +21,8 @@ public interface OutcomeService {
 	
 	public void deleteOutcome(long outcomeId);
 	
-	public List<Outcome> findByUserIdAndInDatePeroid(long userId, Date fromDate, Date toDate);
+	public List<Outcome> findUserOutcomesWithLimit(String login, Pageable pageable);
+	
 	
 	
 }
