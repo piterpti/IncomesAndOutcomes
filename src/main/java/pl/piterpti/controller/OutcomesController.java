@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.piterpti.model.Category;
 import pl.piterpti.model.DateFromTo;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.OutcomesPerDay;
 import pl.piterpti.model.User;
+import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
 
@@ -34,6 +37,9 @@ public class OutcomesController {
 	private static final String VIEW_ADD_OUTCOME = "outcomes/addOutcome";
 	private static final String VIEW_USER_OUTCOMES = "outcomes/userOutcomes";
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
+	
+	@Value("${pl.piterpti.currency}")
+	private String currency;
 	
 	/**
 	 * Maximum number to display on user outcomes page
@@ -47,6 +53,9 @@ public class OutcomesController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	@RequestMapping(value = "/addOutcome", method = RequestMethod.GET)
 	public ModelAndView addOutcomePage() {
@@ -55,8 +64,12 @@ public class OutcomesController {
 		Outcome outcome = new Outcome();
 
 		outcome.setOutcomeDate(new Date());
-
+		outcome.setCategory(new Category());
+		
+		List<Category> categorires = categoryService.findAll();
+		
 		modelAndView.addObject("outcome", outcome);
+		modelAndView.addObject("categories", categorires);
 
 		modelAndView.setViewName(VIEW_ADD_OUTCOME);
 
@@ -77,6 +90,14 @@ public class OutcomesController {
 
 		} else {
 
+			if (outcome != null && outcome.getCategory() != null) {
+				
+				Category category = categoryService.findByName(outcome.getCategory().getName());
+				if (category != null) {
+					outcome.setCategory(category);
+				}
+			}
+			
 			// saving outcome to DB
 			List<Outcome> outcomes = user.getOutcomes() != null ? user.getOutcomes() : new ArrayList<>();
 			outcomes.add(outcome);
@@ -89,7 +110,7 @@ public class OutcomesController {
 
 			modelAndView.addObject("outcomes", outcomes);
 
-			modelAndView.setViewName(VIEW_USER_OUTCOMES);
+			modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
 
 		}
 
@@ -221,7 +242,7 @@ public class OutcomesController {
 
 			modelAndView.addObject("opds", opds);
 			
-			String summaryStr = summary.toString() + " PLN";
+			String summaryStr = summary.toString() + " " + currency;
 			
 			modelAndView.addObject("summary", summaryStr);
 		}

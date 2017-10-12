@@ -22,7 +22,6 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li><a th:href="@{/addOutcome}">Add outcome</a></li>
 				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
@@ -56,6 +55,7 @@
 					<tr>
 						<th>Date</th>
 						<th>Outcomes</th>
+						<th>Category</th>
 						<th>Value</th>
 						
 					</tr>
@@ -70,15 +70,22 @@
 							
 							<td>
 								<ul th:each="outcome : ${opd.outcomes}">
-									<li th:text="${outcome.value}"></li>
+									<li th:if="${outcome.category != null && outcome.category.name != null}" th:text="${outcome.category.name}"> </li>
 								</ul>
 							</td>
 							
+							<td>
+								<ul th:each="outcome : ${opd.outcomes}">
+									<li th:text="${outcome.value}"></li>
+								</ul>
+							</td>							
+
 						</tr>
 					</th:block>
 					
 					<tr>
 						<td><b>Summary</b></td>
+						<td></td>
 						<td></td>
 						<td><b th:text="${summary}"></b></td>
 					</tr>

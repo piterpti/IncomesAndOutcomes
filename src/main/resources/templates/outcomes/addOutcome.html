@@ -23,7 +23,6 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li><a th:href="@{/addOutcome}">Add outcome</a></li>
 				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
@@ -40,8 +39,14 @@
 			<div>
 				Value: <input type="number" step=".01" th:field="*{value}" placeholder="Value">
 				<br> Date: <input type="text" th:field="*{outcomeDate}"
-					placeholder="Date"> <br> Short description: <input
-					type="text" th:field="*{shortDesc}" placeholder="Short description">
+					placeholder="Date"> 
+					
+					<br> Category: 
+					<select th:field="*{category.name}">
+						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
+					</select>
+					
+					<br> Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description">
 				<br>
 
 				<button type="submit">Add</button>

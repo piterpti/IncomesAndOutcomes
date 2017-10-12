@@ -22,7 +22,6 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/addOutcome}">Add outcome</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
