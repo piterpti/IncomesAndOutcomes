@@ -33,7 +33,7 @@ public class Outcome {
 	@Column(name = "short_desc")
 	private String shortDesc;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Category category;
 
 	public long getId() {

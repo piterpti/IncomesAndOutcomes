@@ -37,6 +37,7 @@ public class OutcomesController {
 	private static final String VIEW_ADD_OUTCOME = "outcomes/addOutcome";
 	private static final String VIEW_USER_OUTCOMES = "outcomes/userOutcomes";
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
+	private static final String VIEW_EDIT_OUTCOME = "outcomes/editOutcome";
 	
 	@Value("${pl.piterpti.currency}")
 	private String currency;
@@ -155,18 +156,22 @@ public class OutcomesController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/deleteOutcome")
-	public ModelAndView deleteOutcome(@Param("id") long id) {
+	@RequestMapping(value = "outcomes/deleteOutcome")
+	public ModelAndView deleteOutcome(@Param("id") long id, @Param("date") String date) {
 		ModelAndView modelAndView = new ModelAndView();
-
-		modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
+		
+		if (date != null) {
+			modelAndView.setViewName("redirect:/" + VIEW_DATE_OUTCOMES);
+		} else {
+			modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
+		}		
 
 		outcomeService.deleteOutcome(id);
 
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/outcomesDateReport", method = RequestMethod.GET)
+	@RequestMapping(value = "outcomes/outcomesDateReport", method = RequestMethod.GET)
 	public ModelAndView prepareOutcomeDateReport() {
 		ModelAndView modelAndView = new ModelAndView();
 
@@ -177,7 +182,7 @@ public class OutcomesController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/outcomesDateReport", method = RequestMethod.POST)
+	@RequestMapping(value = "outcomes/outcomesDateReport", method = RequestMethod.POST)
 	public ModelAndView showOutcomeDateReport(DateFromTo dft, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 
@@ -249,6 +254,26 @@ public class OutcomesController {
 
 		modelAndView.addObject("datePeriod", dft);
 
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "outcomes/editOutcome", method = RequestMethod.GET)
+	public ModelAndView editOutcome(@Param("id") long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		if (id < 1) {
+			// TODO display error about wrong outcome
+		}
+		
+		Outcome outcome = outcomeService.findById(id);
+		
+		if (outcome == null) {
+			// TODO display error about wrong outcome
+		}
+		
+		modelAndView.addObject("outcome", outcome);
+		
+		modelAndView.setViewName(VIEW_EDIT_OUTCOME);
 		return modelAndView;
 	}
 

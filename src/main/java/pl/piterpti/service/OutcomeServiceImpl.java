@@ -38,5 +38,10 @@ public class OutcomeServiceImpl implements OutcomeService {
 		return userRepository.findByUserWithLimit(login, pageable);		
 	}
 
+	@Override
+	public Outcome findById(long id) {
+		return outcomeRepository.findById(id);
+	}
+
 
 }

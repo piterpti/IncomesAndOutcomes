@@ -31,7 +31,7 @@
 
 	<div class="container">
 
-		<form th:action="@{/outcomesDateReport}" th:object="${datePeriod}"
+		<form th:action="@{outcomesDateReport}" th:object="${datePeriod}"
 			method="post">
 
 			<h2>Show outcomes between dates</h2>
@@ -57,6 +57,7 @@
 						<th>Outcomes</th>
 						<th>Category</th>
 						<th>Value</th>
+						<th>Modify</th>
 						
 					</tr>
 					<th:block th:each="opd : ${opds}">
@@ -78,7 +79,12 @@
 								<ul th:each="outcome : ${opd.outcomes}">
 									<li th:text="${outcome.value}"></li>
 								</ul>
-							</td>							
+							</td>
+							
+							<td>
+							<ul th:each="outcome : ${opd.outcomes}">
+								<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
+							</ul>							
 
 						</tr>
 					</th:block>

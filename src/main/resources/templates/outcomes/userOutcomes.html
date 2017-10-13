@@ -43,7 +43,7 @@
 		<div th:if="${outcomes}">
 
 			<h1>
-				<a th:href="@{/outcomesDateReport}">Show outcomes in date period</a>
+				<a th:href="@{outcomesDateReport}">Show outcomes in date period</a>
 			</h1>
 
 			<br>
@@ -60,7 +60,8 @@
 							<td th:text="${outcome.value}"></td>
 							<td
 								th:text="${#dates.format(outcome.outcomeDate, 'dd-MMM-yyyy')}"></td>
-							<td><a th:href="@{'/deleteOutcome?id=' + ${outcome.id}}">Delete</a></td>
+							<td><a th:href="@{'deleteOutcome?id=' + ${outcome.id}}">Delete</a></td>
+							<td></td>
 						</tr>
 				</table>
 
