@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Edit outcome</title>
+<title>Add outcome</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -32,24 +32,14 @@
 
 
 	<div class="container">
-			
-			<form action="#" th:action="@{editOutcome}" th:object="${outcome}" method="post" role="form">
-				<h2>Edit outcome</h2>
-				<div>
-					<input type="hidden" th:field=*{id} />
-					<input type="hidden" th:field=*{category.id} />
-					Value <input type="number"  step=".01" th:field="*{value}" placeholder="Value" th:value="@{outcome.value}"> <br>
-					Date: <input type="text" th:field="*{outcomeDate}" placeholder="Date" th:value="@{outcome.outcomeDate}"> <br>
-					Category: <select th:field="*{category.name}">
-						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
-					</select>
-					Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description"> <br>
-					
-					<button type="submit">Save</button>
-				</div>
-			
-			</form>
+		<h2>Error page</h2>
 		
+		<br>
+		
+		<div th:if="${errorMsg}">
+			<span th:text="${errorMsg}"></span>
+		</div>
+	
 	</div>
 
 

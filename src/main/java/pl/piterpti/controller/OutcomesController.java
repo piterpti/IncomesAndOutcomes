@@ -261,19 +261,67 @@ public class OutcomesController {
 	public ModelAndView editOutcome(@Param("id") long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+
+		User user = userService.findByLogin(userName);
+		
 		if (id < 1) {
-			// TODO display error about wrong outcome
+			modelAndView.setViewName("error");
+			modelAndView.addObject("errorMsg", "Wrong outcome id");
+			return modelAndView;
 		}
 		
 		Outcome outcome = outcomeService.findById(id);
 		
 		if (outcome == null) {
-			// TODO display error about wrong outcome
+			modelAndView.setViewName("error");
+			modelAndView.addObject("errorMsg", "Outcome with id " + id + " not found");
+			return modelAndView;
+		}
+		
+		boolean userOutcome = false;
+		for (Outcome o : user.getOutcomes()) {
+			if (o.getId() == outcome.getId()) {
+				userOutcome = true;
+			}
+		}
+		
+		if (!userOutcome) {
+			modelAndView.setViewName("error");
+			modelAndView.addObject("errorMsg", "You do not have access to edit note with id " + id);
+			return modelAndView;
 		}
 		
 		modelAndView.addObject("outcome", outcome);
 		
+		List<Category> categorires = categoryService.findAll();	
+		modelAndView.addObject("categories", categorires);
+		
 		modelAndView.setViewName(VIEW_EDIT_OUTCOME);
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "outcomes/editOutcome", method = RequestMethod.POST)
+	public ModelAndView saveEditedOutcome(@Param("outcome") @Valid Outcome outcome) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		if (outcome.getCategory() != null) {
+			Category category = categoryService.findByName(outcome.getCategory().getName());
+			
+			if (category != null) {
+				outcome.setCategory(category);
+			}
+		}
+		
+		if (outcome != null) {	
+			
+			outcomeService.saveOutcome(outcome);
+		}
+		
+		modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
+		
 		return modelAndView;
 	}
 
