@@ -43,5 +43,10 @@ public class OutcomeServiceImpl implements OutcomeService {
 		return outcomeRepository.findById(id);
 	}
 
+	@Override
+	public void deleteAll() {
+		outcomeRepository.deleteAll();
+	}
+
 
 }

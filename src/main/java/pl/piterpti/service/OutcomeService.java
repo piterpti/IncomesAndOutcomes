@@ -25,4 +25,6 @@ public interface OutcomeService {
 	
 	public Outcome findById(long id);
 	
+	public void deleteAll();
+	
 }
