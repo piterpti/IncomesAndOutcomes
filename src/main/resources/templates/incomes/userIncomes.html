@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Last user outcomes</title>
+<title>Last user incomes</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -25,8 +25,8 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a th:href="@{/home}">Home</a></li>
-				<li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
-				<li class="active"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+				<li class="active"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
@@ -37,31 +37,30 @@
 	<div class="container">
 
 		<div class="btn-group">
-			<a th:href="@{/addOutcome}"><button class="btn">Add
-					outcome</button></a>
+			<a th:href="@{/addIncome}"><button class="btn">Add income</button></a>
 		</div>
 
-		<div th:if="${outcomes}">
+		<div th:if="${incomes}">
 
 			<h2>
-				<a th:href="@{outcomesDateReport}">Show outcomes in date period</a>
+				<a th:href="@{incomesDateReport}">Show incomes in date period</a>
 			</h2>
 
 			<br>
 
-			<h2 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
-				last outcomes</h2>
+			<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
+				last incomes</h1>
 
 			<div>
 
 				<table class="table table-bordered">
-					<th:block th:each="outcome : ${outcomes}">
+					<th:block th:each="income : ${incomes}">
 						<tr>
-							<td th:text="${outcome.shortDesc}"></td>
-							<td th:text="${outcome.value}"></td>
+							<td th:text="${income.shortDesc}"></td>
+							<td th:text="${income.value}"></td>
 							<td
-								th:text="${#dates.format(outcome.outcomeDate, 'dd-MMM-yyyy')}"></td>
-							<td><a th:href="@{'deleteOutcome?id=' + ${outcome.id}}">Delete</a></td>
+								th:text="${#dates.format(income.incomeDate, 'dd-MMM-yyyy')}"></td>
+							<td><a th:href="@{'deleteOutcome?id=' + ${income.id}}">Delete</a></td>
 							<td></td>
 						</tr>
 				</table>

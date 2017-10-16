@@ -47,12 +47,12 @@ public class Income {
 		this.value = value;
 	}
 
-	public Date getOutcomeDate() {
+	public Date getIncomeDate() {
 		return incomeDate;
 	}
 
-	public void setOutcomeDate(Date outcomeDate) {
-		this.incomeDate = outcomeDate;
+	public void setIncomeDate(Date incomeDate) {
+		this.incomeDate = incomeDate;
 	}
 
 	public String getShortDesc() {

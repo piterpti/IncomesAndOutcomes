@@ -52,4 +52,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.login = :login ORDER BY o.outcomeDate DESC, o.id DESC")
 	public List<Outcome> findByUserWithLimit(@Param("login") String login, Pageable pageable);
 	
+	
+	/**
+	 * Find incomes for user with limit
+	 * @param login
+	 * @param pageable
+	 * @return
+	 */
+	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.login = :login ORDER BY i.incomeDate DESC, i.id DESC")
+	public List<Income> findIncomesByUserWithLimit(@Param("login") String login, Pageable pageable);
 }
