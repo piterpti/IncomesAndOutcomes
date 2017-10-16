@@ -35,6 +35,16 @@ public class Outcome {
 
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	private Category category;
+	
+	public Outcome() {
+		
+	}
+	
+	public Outcome(BigDecimal value, Date outcomeDate, String shortDesc) {
+		this.value = value;
+		this.outcomeDate = outcomeDate;
+		this.shortDesc = shortDesc;
+	}
 
 	public long getId() {
 		return id;
