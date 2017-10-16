@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.piterpti.constants.UserRoles;
+import pl.piterpti.model.Income;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.Role;
 import pl.piterpti.model.User;
@@ -52,5 +53,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Outcome> findUserOutcomesInDate(long userId, Date fromDate, Date toDate) {
 		return userRepository.findUserOutcomesInTime(userId, fromDate, toDate);
+	}
+
+	@Override
+	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate) {
+		return userRepository.findUserIncomesInTime(userId, fromDate, toDate);
 	}
 }

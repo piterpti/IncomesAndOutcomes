@@ -11,6 +11,16 @@ public class ErrorController {
 
 	public static final String VIEW_ERROR = "error"; 
 	
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public ModelAndView showError() {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.addObject("errorMsg", "Wrong request");
+
+		modelAndView.setViewName(VIEW_ERROR);
+		return modelAndView;
+	}
+	
 	/**
 	 * Mapping for errors
 	 * @param errorMsg Error msg may be be null

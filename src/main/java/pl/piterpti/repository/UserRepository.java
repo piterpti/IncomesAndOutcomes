@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import pl.piterpti.model.Income;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
 
@@ -30,6 +31,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 */
 	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.outcomeDate >= :fromDate AND o.outcomeDate <= :toDate ORDER BY o.outcomeDate")
 	public List<Outcome> findUserOutcomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+	
+	
+	/**
+	 * Find user incomes in passed date period
+	 * @param userId
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.id = :id AND i.incomeDate >= :fromDate AND i.incomeDate <= :toDate ORDER BY i.incomeDate")
+	public List<Income> findUserIncomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate); 
 	
 	/**
 	 * Find outcomes for user with limit

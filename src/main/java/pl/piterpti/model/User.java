@@ -48,6 +48,10 @@ public class User {
 	@OneToMany
 	@JoinColumn(name = "user_id")
 	private List<Outcome> outcomes;
+	
+	@OneToMany
+	@JoinColumn(name = "user_id")
+	private List<Income> incomes;
 
 	public long getId() {
 		return id;
