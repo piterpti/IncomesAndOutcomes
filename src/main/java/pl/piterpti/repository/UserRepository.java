@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param toDate
 	 * @return user outcomes
 	 */
-	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.outcomeDate >= :fromDate AND o.outcomeDate <= :toDate ORDER BY o.outcomeDate")
+	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.date >= :fromDate AND o.date <= :toDate ORDER BY o.date")
 	public List<Outcome> findUserOutcomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
 	
 	
@@ -40,7 +40,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param toDate
 	 * @return
 	 */
-	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.id = :id AND i.incomeDate >= :fromDate AND i.incomeDate <= :toDate ORDER BY i.incomeDate")
+	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.id = :id AND i.date >= :fromDate AND i.date <= :toDate ORDER BY i.date")
 	public List<Income> findUserIncomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate); 
 	
 	/**
@@ -49,7 +49,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param limit
 	 * @return user outcomes
 	 */
-	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.login = :login ORDER BY o.outcomeDate DESC, o.id DESC")
+	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.login = :login ORDER BY o.date DESC, o.id DESC")
 	public List<Outcome> findByUserWithLimit(@Param("login") String login, Pageable pageable);
 	
 	
@@ -59,6 +59,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @param pageable
 	 * @return
 	 */
-	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.login = :login ORDER BY i.incomeDate DESC, i.id DESC")
+	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.login = :login ORDER BY i.date DESC, i.id DESC")
 	public List<Income> findIncomesByUserWithLimit(@Param("login") String login, Pageable pageable);
 }

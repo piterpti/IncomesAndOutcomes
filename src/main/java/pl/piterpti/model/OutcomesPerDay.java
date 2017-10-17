@@ -5,24 +5,23 @@ import java.util.List;
 
 public class OutcomesPerDay {
 
-	private Date outcomeDate;
+	private Date date;
 
-	private List<Outcome> outcomes;
+	private List<Operation> operations;
 
-	public Date getOutcomeDate() {
-		return outcomeDate;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setOutcomeDate(Date outcomeDate) {
-		this.outcomeDate = outcomeDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public List<Outcome> getOutcomes() {
-		return outcomes;
+	public List<Operation> getOperations() {
+		return operations;
 	}
 
-	public void setOutcomes(List<Outcome> outcomes) {
-		this.outcomes = outcomes;
-	}
-
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}	
 }

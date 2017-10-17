@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.piterpti.model.Category;
 import pl.piterpti.model.DateFromTo;
+import pl.piterpti.model.Operation;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.OutcomesPerDay;
 import pl.piterpti.model.User;
@@ -64,7 +65,7 @@ public class OutcomesController {
 
 		Outcome outcome = new Outcome();
 
-		outcome.setOutcomeDate(new Date());
+		outcome.setDate(new Date());
 		outcome.setCategory(new Category());
 		
 		List<Category> categorires = categoryService.findAll();
@@ -202,7 +203,7 @@ public class OutcomesController {
 		if (!outcomes.isEmpty()) {
 
 			List<OutcomesPerDay> opds = new ArrayList<>();
-			List<Outcome> outcomeList = new ArrayList<>();
+			List<Operation> outcomeList = new ArrayList<>();
 			BigDecimal summary = new BigDecimal("0");
 			
 			for (Outcome outcome : outcomes) {
@@ -215,7 +216,7 @@ public class OutcomesController {
 
 				} else {
 
-					if (outcome.getOutcomeDate().getTime() == outcomeList.get(outcomeList.size() - 1).getOutcomeDate()
+					if (outcome.getDate().getTime() == outcomeList.get(outcomeList.size() - 1).getDate()
 							.getTime()) {
 						
 						outcomeList.add(outcome);						
@@ -223,8 +224,8 @@ public class OutcomesController {
 					} else {
 						
 						OutcomesPerDay opd = new OutcomesPerDay();
-						opd.setOutcomeDate(outcomeList.get(0).getOutcomeDate());
-						opd.setOutcomes(outcomeList);
+						opd.setDate(outcomeList.get(0).getDate());
+						opd.setOperations(outcomeList);
 						
 						opds.add(opd);
 						
@@ -238,8 +239,8 @@ public class OutcomesController {
 			
 			if (!outcomeList.isEmpty()) {
 				OutcomesPerDay opd = new OutcomesPerDay();
-				opd.setOutcomeDate(outcomeList.get(0).getOutcomeDate());
-				opd.setOutcomes(outcomeList);
+				opd.setDate(outcomeList.get(0).getDate());
+				opd.setOperations(outcomeList);
 				
 				opds.add(opd);
 				

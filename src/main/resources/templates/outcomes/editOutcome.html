@@ -40,7 +40,7 @@
 					<input type="hidden" th:field=*{id} />
 					<input type="hidden" th:field=*{category.id} />
 					Value <input type="number"  step=".01" th:field="*{value}" placeholder="Value" th:value="@{outcome.value}"> <br>
-					Date: <input type="text" th:field="*{outcomeDate}" placeholder="Date" th:value="@{outcome.outcomeDate}"> <br>
+					Date: <input type="text" th:field="*{date}" placeholder="Date" th:value="@{outcome.date}"> <br>
 					Category: <select th:field="*{category.name}">
 						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
 					</select>

@@ -63,27 +63,27 @@
 					</tr>
 					<th:block th:each="opd : ${opds}">
 						<tr>
-							<td th:text="${#dates.format(opd.outcomeDate, 'dd-MMM-yyyy')}"></td>
+							<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
+								<ul th:each="outcome : ${opd.operations}">
 									<li th:text="${outcome.shortDesc}"></li>
 								</ul>
 							</td>
 							
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
+								<ul th:each="outcome : ${opd.operations}">
 									<li th:if="${outcome.category != null && outcome.category.name != null}" th:text="${outcome.category.name}"> </li>
 								</ul>
 							</td>
 							
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
+								<ul th:each="outcome : ${opd.operations}">
 									<li th:text="${outcome.value}"></li>
 								</ul>
 							</td>
 							
 							<td>
-							<ul th:each="outcome : ${opd.outcomes}">
+							<ul th:each="outcome : ${opd.operations}">
 								<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
 							</ul>							
 
