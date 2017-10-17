@@ -1,6 +1,8 @@
 package pl.piterpti.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -48,10 +50,13 @@ public class CategoryDAOTest {
 		
 		assertEquals("Test category2", category.getName());
 		
-		categoryService.deleteByName("Test category3");
+		boolean isDeleteOk = categoryService.deleteByName("Test category3") > 0;
+		assertTrue(isDeleteOk);
 		
 		categories = categoryService.findAll();
 		assertEquals(startSize + 2, categories.size());
 		
+		isDeleteOk = categoryService.deleteByName("foo") > 0;
+		assertFalse(isDeleteOk);
 	}
 }

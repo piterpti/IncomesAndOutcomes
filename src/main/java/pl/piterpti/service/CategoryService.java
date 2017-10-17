@@ -20,6 +20,6 @@ public interface CategoryService {
 	
 	public void deleteAll();
 	
-	public void deleteByName(String name);
+	public int deleteByName(String name);
 	
 }
