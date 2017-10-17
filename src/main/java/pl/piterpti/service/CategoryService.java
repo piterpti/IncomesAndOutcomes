@@ -18,4 +18,8 @@ public interface CategoryService {
 	
 	public Category findByName(String name);
 	
+	public void deleteAll();
+	
+	public void deleteByName(String name);
+	
 }

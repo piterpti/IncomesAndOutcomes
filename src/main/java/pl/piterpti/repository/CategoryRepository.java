@@ -10,4 +10,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	public Category findByName(String name);
 	
+	public void deleteByName(String name);
+	
 }
