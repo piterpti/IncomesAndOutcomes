@@ -21,9 +21,9 @@
 				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
-				<li class="active"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+				<li><a th:href="@{/home}">Home</a></li>
+				<li class="active"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
@@ -32,10 +32,10 @@
 
 	<div class="container">
 
-		<form th:action="@{outcomesDateReport}" th:object="${datePeriod}"
+		<form th:action="@{incomesDateReport}" th:object="${datePeriod}"
 			method="post">
 
-			<h2>Show outcomes between dates</h2>
+			<h2>Show incomes between dates</h2>
 			<div>
 				Date from: <input type="text" th:field="*{fromDate}" placeholder="From"> <br>
 				Date to: <input type="text" th:field="*{toDate}" placeholder="To"> <br>

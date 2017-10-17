@@ -16,11 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.piterpti.model.Income;
 import pl.piterpti.service.IncomeService;
+import pl.piterpti.toolkit.Toolkit;
 
 @Controller
 public class IncomesController {
 	
 	public static final String VIEW_USER_INCOMES = "incomes/userIncomes";
+	public static final String VIEW_DATE_INCOMES = "incomes/incomesDateReport";
 	
 	private static final int MAX_INCOMES_TO_DISPLAY = 10;
 	
@@ -66,6 +68,23 @@ public class IncomesController {
 		}
 
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "incomes/incomesDateReport", method = RequestMethod.GET)
+	public ModelAndView prepareIncomesDateReport() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName(VIEW_USER_INCOMES);
+		mav.addObject("datePeriod", Toolkit.getDatePeriodToForm());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "incomes/incomesDateReport", method = RequestMethod.POST)
+	public ModelAndView showIncomeDateReport() {
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
 	}
 
 }

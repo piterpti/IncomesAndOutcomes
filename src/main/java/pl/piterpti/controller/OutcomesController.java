@@ -2,7 +2,6 @@ package pl.piterpti.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +29,7 @@ import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
+import pl.piterpti.toolkit.Toolkit;
 
 @Controller
 public class OutcomesController {
@@ -177,7 +177,7 @@ public class OutcomesController {
 
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
 
-		modelAndView.addObject("datePeriod", getDatePeriodToForm());
+		modelAndView.addObject("datePeriod", Toolkit.getDatePeriodToForm());
 
 		return modelAndView;
 	}
@@ -323,11 +323,5 @@ public class OutcomesController {
 		modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
 		
 		return modelAndView;
-	}
-
-	private DateFromTo getDatePeriodToForm() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		return new DateFromTo(cal.getTime(), new Date());
 	}
 }
