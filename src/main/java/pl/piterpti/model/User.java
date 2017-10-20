@@ -108,6 +108,14 @@ public class User {
 	public void setOutcomes(List<Outcome> outcomes) {
 		this.outcomes = outcomes;
 	}
+	
+	public List<Income> getIncomes() {
+		return incomes;
+	}
+
+	public void setIncomes(List<Income> incomes) {
+		this.incomes = incomes;
+	}
 
 	@Override
 	public String toString() {

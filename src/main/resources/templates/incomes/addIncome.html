@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Last user incomes</title>
+<title>Add income</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -12,11 +12,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<link th:href="@{/css/style.css}" href="../static/css/style.css"
-	rel="stylesheet" type="text/css" />
 </head>
 <body>
+
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -24,7 +22,7 @@
 				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a th:href="@{/home}">Home</a></li>
+				<li class="active"><a th:href="@{/home}">Home</a></li>
 				<li class="active"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
 				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
@@ -35,45 +33,30 @@
 
 
 	<div class="container">
-
-		<div class="btn-group">
-			<a th:href="@{addIncome}"><button class="btn">Add income</button></a>
-		</div>
-
-		<div th:if="${incomes}">
-
-			<h2>
-				<a th:href="@{incomesDateReport}">Show incomes in date period</a>
-			</h2>
-
-			<br>
-
-			<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
-				last incomes</h1>
+		<form action="#" th:action=@{addIncome} th:object="${income}"
+			method="post" role="form">
+			<h2>Add income</h2>
 
 			<div>
+				Value: <input type="number" step=".01" th:field="*{value}" placeholder="Value">
+				<br> Date: <input type="text" th:field="*{date}"
+					placeholder="Date"> 
+					
+					<br> Category: 
+					<select th:field="*{category.name}">
+						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
+					</select>
+					
+					<br> Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description">
+				<br>
 
-				<table class="table table-bordered">
-					<th:block th:each="income : ${incomes}">
-						<tr>
-							<td th:text="${income.shortDesc}"></td>
-							<td th:text="${income.value}"></td>
-							<td
-								th:text="${#dates.format(income.date, 'dd-MMM-yyyy')}"></td>
-							<td><a th:href="@{'deleteOutcome?id=' + ${income.id}}">Delete</a></td>
-							<td></td>
-						</tr>
-				</table>
+				<button type="submit">Add</button>
 
 			</div>
 
-		</div>
-
-		<div th:if="${message}">
-			<h1 th:text="${message}"></h1>
-		</div>
-		
+		</form>
 	</div>
+
 
 </body>
 </html>

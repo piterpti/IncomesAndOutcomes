@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Edit outcome</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a th:href="@{/home}">Home</a></li>
+				<li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+				<li class="active"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div class="container">
+			
+			<form action="#" th:action="@{editOutcome}" th:object="${outcome}" method="post" role="form">
+				<h2>Edit outcome</h2>
+				<div>
+					<input type="hidden" th:field=*{id} />
+					<input type="hidden" th:field=*{category.id} />
+					Value <input type="number"  step=".01" th:field="*{value}" placeholder="Value" th:value="@{outcome.value}"> <br>
+					Date: <input type="text" th:field="*{date}" placeholder="Date" th:value="@{outcome.date}"> <br>
+					Category: <select th:field="*{category.name}">
+						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
+					</select>
+					Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description"> <br>
+					
+					<button type="submit">Save</button>
+				</div>
+			
+			</form>
+		
+	</div>
+
+
+</body>
+</html>
