@@ -12,4 +12,8 @@ public interface IncomeService {
 	
 	public List<Income> findUserIncomesWithLimit(String login, Pageable pageable);
 	
+	public Income findById(long id);
+	
+	public void save(Income income);
+	
 }

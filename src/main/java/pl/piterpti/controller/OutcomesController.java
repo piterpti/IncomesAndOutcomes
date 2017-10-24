@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -21,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.piterpti.constants.Constants;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.DateFromTo;
 import pl.piterpti.model.Operation;
+import pl.piterpti.model.OperationsPerDay;
 import pl.piterpti.model.Outcome;
-import pl.piterpti.model.OutcomesPerDay;
 import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.OutcomeService;
@@ -40,8 +40,6 @@ public class OutcomesController {
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
 	private static final String VIEW_EDIT_OUTCOME = "outcomes/editOutcome";
 	
-	@Value("${pl.piterpti.currency}")
-	private String currency;
 	
 	/**
 	 * Maximum number to display on user outcomes page
@@ -202,7 +200,7 @@ public class OutcomesController {
 
 		if (!outcomes.isEmpty()) {
 
-			List<OutcomesPerDay> opds = new ArrayList<>();
+			List<OperationsPerDay> opds = new ArrayList<>();
 			List<Operation> outcomeList = new ArrayList<>();
 			BigDecimal summary = new BigDecimal("0");
 			
@@ -223,7 +221,7 @@ public class OutcomesController {
 						
 					} else {
 						
-						OutcomesPerDay opd = new OutcomesPerDay();
+						OperationsPerDay opd = new OperationsPerDay();
 						opd.setDate(outcomeList.get(0).getDate());
 						opd.setOperations(outcomeList);
 						
@@ -238,7 +236,7 @@ public class OutcomesController {
 			}
 			
 			if (!outcomeList.isEmpty()) {
-				OutcomesPerDay opd = new OutcomesPerDay();
+				OperationsPerDay opd = new OperationsPerDay();
 				opd.setDate(outcomeList.get(0).getDate());
 				opd.setOperations(outcomeList);
 				
@@ -248,7 +246,7 @@ public class OutcomesController {
 
 			modelAndView.addObject("opds", opds);
 			
-			String summaryStr = summary.toString() + " " + currency;
+			String summaryStr = summary.toString() + " " + Constants.CURRENCY;
 			
 			modelAndView.addObject("summary", summaryStr);
 		}
@@ -268,17 +266,13 @@ public class OutcomesController {
 		User user = userService.findByLogin(userName);
 		
 		if (id < 1) {
-			modelAndView.setViewName("error");
-			modelAndView.addObject("errorMsg", "Wrong outcome id");
-			return modelAndView;
+			return ErrorController.getErrorMav("Wrong outcome id");
 		}
 		
 		Outcome outcome = outcomeService.findById(id);
 		
 		if (outcome == null) {
-			modelAndView.setViewName("error");
-			modelAndView.addObject("errorMsg", "Outcome with id " + id + " not found");
-			return modelAndView;
+			return ErrorController.getErrorMav("Outcome with id " + id + " not found");
 		}
 		
 		boolean userOutcome = false;
@@ -289,9 +283,7 @@ public class OutcomesController {
 		}
 		
 		if (!userOutcome) {
-			modelAndView.setViewName("error");
-			modelAndView.addObject("errorMsg", "You do not have access to edit note with id " + id);
-			return modelAndView;
+			return ErrorController.getErrorMav("You do not have access to edit note with id " + id);
 		}
 		
 		modelAndView.addObject("outcome", outcome);

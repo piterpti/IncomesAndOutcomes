@@ -29,4 +29,14 @@ public class IncomeServiceImpl implements IncomeService {
 		return userRepository.findIncomesByUserWithLimit(login, pageable);
 	}
 
+	@Override
+	public Income findById(long id) {
+		return incomeRepository.findById(id);
+	}
+
+	@Override
+	public void save(Income income) {
+		incomeRepository.save(income);
+	}
+
 }

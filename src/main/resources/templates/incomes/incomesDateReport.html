@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Outcomes</title>
+<title>Incomes</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -65,26 +65,26 @@
 						<tr>
 							<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
-									<li th:text="${outcome.shortDesc}"></li>
+								<ul th:each="income : ${opd.operations}">
+									<li th:text="${income.shortDesc}"></li>
 								</ul>
 							</td>
 							
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
-									<li th:if="${outcome.category != null && outcome.category.name != null}" th:text="${outcome.category.name}"> </li>
+								<ul th:each="income : ${opd.operations}">
+									<li th:if="${income.category != null && income.category.name != null}" th:text="${income.category.name}"> </li>
 								</ul>
 							</td>
 							
 							<td>
-								<ul th:each="outcome : ${opd.outcomes}">
-									<li th:text="${outcome.value}"></li>
+								<ul th:each="income : ${opd.operations}">
+									<li th:text="${income.value}"></li>
 								</ul>
 							</td>
 							
 							<td>
-							<ul th:each="outcome : ${opd.outcomes}">
-								<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
+							<ul th:each="income : ${opd.operations}">
+								<li><a th:href="@{'editIncome?id=' + ${income.id}}">Edit</a> | <a th:href="@{'deleteIncome?id=' + ${income.id} + '&date=true'}">Delete</a></li>
 							</ul>							
 
 						</tr>

@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Edit outcome</title>
+<title>Welcome</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -22,8 +22,8 @@
 				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a th:href="@{/home}">Home</a></li>
-				<li class="active"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+				<li class="active"><a th:href="@{/home}">Home</a></li>
+				<li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
 				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
@@ -31,28 +31,10 @@
 		</div>
 	</nav>
 
-
 	<div class="container">
-			
-			<form action="#" th:action="@{editIncome}" th:object="${income}" method="post" role="form">
-				<h2>Edit income</h2>
-				<div>
-					<input type="hidden" th:field=*{id} />
-					<input type="hidden" th:field=*{category.id} />
-					Value <input type="number"  step=".01" th:field="*{value}" placeholder="Value" th:value="@{income.value}"> <br>
-					Date: <input type="text" th:field="*{date}" placeholder="Date" th:value="@{income.date}"> <br>
-					Category: <select th:field="*{category.name}">
-						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
-					</select>
-					Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description"> <br>
-					
-					<button type="submit">Save</button>
-				</div>
-			
-			</form>
+		
+		
 		
 	</div>
-
-
 </body>
 </html>

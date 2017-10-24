@@ -3,7 +3,7 @@ package pl.piterpti.model;
 import java.util.Date;
 import java.util.List;
 
-public class OutcomesPerDay {
+public class OperationsPerDay {
 
 	private Date date;
 

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.piterpti.constants.Constants;
+
 @Controller
 public class ErrorController {
 
@@ -41,6 +43,20 @@ public class ErrorController {
 		modelAndView.addObject("errorMsg", errorMsg);
 		
 		return modelAndView;
+	}
+	
+	/**
+	 * Get error view with message to display on error page
+	 * @param msgContent message to display
+	 * @return mav
+	 */
+	public static ModelAndView getErrorMav(String msgContent) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(Constants.VIEW_ERROR);
+		if (msgContent != null) {
+			mav.addObject(Constants.PARAM_ERROR_MSG, msgContent);
+		}
+		return mav;
 	}
 	
 	

@@ -21,7 +21,6 @@ public abstract class Operation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	@Column(name = "income_id")
 	private long id;
 
 	@Column(name = "value", precision = 10, scale = 2)
