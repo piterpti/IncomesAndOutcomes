@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 
@@ -196,7 +197,9 @@ public class OutcomesController {
 
 		User user = userService.findByLogin(userName);
 
-		List<Outcome> outcomes = userService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), dft.getToDate());
+		Date toDate = new Date(dft.getToDate().getTime() + TimeUnit.DAYS.toMillis(1));
+		
+		List<Outcome> outcomes = userService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), toDate);
 
 		if (!outcomes.isEmpty()) {
 
@@ -252,6 +255,8 @@ public class OutcomesController {
 		}
 
 		modelAndView.addObject("datePeriod", dft);
+		
+//		modelAndView.addObject("pages", attributeValue)
 
 		return modelAndView;
 	}

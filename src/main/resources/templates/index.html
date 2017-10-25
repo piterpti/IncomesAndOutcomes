@@ -41,6 +41,26 @@
 		<div sec:authorize="isAnonymous()">
 			<br> <a th:href="@{/registration}">Create account</a>
 		</div>
+		
+		
+		<div sec:authorize="isAuthenticated()">
+
+			<form th:action="@{report}" th:object="${datePeriod}" method="post">
+
+				<h2>Show outcomes/incomes between dates</h2>
+				<div>
+					Date from: <input type="text" th:field="*{fromDate}"
+						placeholder="From"> <br> Date to: <input type="text"
+						th:field="*{toDate}" placeholder="To"> <br>
+
+					<button type="submit">Show</button>
+
+				</div>
+
+			</form>
+
+		</div>
+		
 
 	</div>
 </body>

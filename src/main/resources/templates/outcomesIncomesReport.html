@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Welcome</title>
+<title>Incomes and outcomes</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -14,7 +14,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -32,9 +31,74 @@
 	</nav>
 
 	<div class="container">
+
+		<form th:action="@{report}" th:object="${datePeriod}"
+			method="post">
+
+			<h2>Show incomes between dates</h2>
+			<div>
+				Date from: <input type="text" th:field="*{fromDate}" placeholder="From"> <br>
+				Date to: <input type="text" th:field="*{toDate}" placeholder="To"> <br>
+
+				<button type="submit">Show</button>
+				
+			</div>
+
+		</form>
 		
-		
-		
+		<div th:if="${opds}">
+				
+				<div>
+					Outcomes and incomes in date period <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MMM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MMM-yyyy')}"></span>
+				</div>
+				
+				<table class="table table-bordered">
+					<tr>
+						<th>Date</th>
+						<th>Outcome/Income</th>
+						<th>Category</th>
+						<th>Value</th>
+						
+					</tr>
+					<th:block th:each="opd : ${opds}">
+						<tr>
+							<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
+							<td>
+								<ul th:each="operation : ${opd.operations}">
+									<li th:style="${operation.class.name == 'pl.piterpti.model.Income' ? 'color: green;' : 'color:red;'}" 
+									th:text="${operation.shortDesc}"></li>
+								</ul>
+							</td>
+							
+							<td>
+								<ul th:each="operation : ${opd.operations}">
+									<li th:if="${operation.category != null && operation.category.name != null}" 
+										th:style="${operation.class.name == 'pl.piterpti.model.Income' ? 'color: green;' : 'color:red;'}"
+										th:text="${operation.category.name}"></li>
+								</ul>
+							</td>
+							
+							<td>
+								<ul th:each="operation : ${opd.operations}">
+									<li th:style="${operation.class.name == 'pl.piterpti.model.Income' ? 'color: green;' : 'color:red;'}" 
+										th:text="${operation.value}"></li>
+								</ul>
+							</td>
+							
+						</tr>
+						
+					</th:block>
+					
+					<tr>
+						<td><b>Summary</b></td>
+						<td></td>
+						<td></td>
+						<td><b th:text="${summary}"></b></td>
+					</tr>
+				</table>
+	
+			</div>
+
 	</div>
 </body>
 </html>

@@ -83,9 +83,10 @@
 							</td>
 							
 							<td>
-							<ul th:each="outcome : ${opd.operations}">
-								<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
-							</ul>							
+								<ul th:each="outcome : ${opd.operations}">
+									<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
+								</ul>	
+							</td>						
 
 						</tr>
 					</th:block>

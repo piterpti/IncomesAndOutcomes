@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 
@@ -116,7 +117,8 @@ public class IncomesController {
 
 		User user = userService.findByLogin(userName);
 		
-		List<Income> incomes = userService.findUserIncomesInDate(user.getId(), dft.getFromDate(), dft.getToDate());
+		Date toDate = new Date(dft.getToDate().getTime() + TimeUnit.DAYS.toMillis(1));
+		List<Income> incomes = userService.findUserIncomesInDate(user.getId(), dft.getFromDate(), toDate);
 		
 		if (!incomes.isEmpty()) {
 			
