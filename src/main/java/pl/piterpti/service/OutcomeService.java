@@ -23,6 +23,8 @@ public interface OutcomeService {
 	
 	public List<Outcome> findUserOutcomesWithLimit(String login, Pageable pageable);
 	
+	public long userOutcomesCount(String login);
+	
 	public Outcome findById(long id);
 	
 	public void deleteAll();

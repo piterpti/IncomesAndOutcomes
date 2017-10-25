@@ -48,5 +48,10 @@ public class OutcomeServiceImpl implements OutcomeService {
 		outcomeRepository.deleteAll();
 	}
 
+	@Override
+	public long userOutcomesCount(String login) {
+		return userRepository.userOutcomesCount(login);
+	}
+
 
 }

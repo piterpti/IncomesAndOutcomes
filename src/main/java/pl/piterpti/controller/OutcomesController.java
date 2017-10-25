@@ -119,7 +119,7 @@ public class OutcomesController {
 	}
 
 	@RequestMapping(value = "/outcomes/userOutcomes", method = RequestMethod.GET)
-	public ModelAndView userOutcomes() {
+	public ModelAndView userOutcomes(@Param("page") Integer page) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(VIEW_USER_OUTCOMES);
@@ -127,7 +127,13 @@ public class OutcomesController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
 
-		Pageable topResults = new PageRequest(0, MAX_OUTCOMES_TO_DISPLAY);
+		if (page == null) {
+			page = new Integer(1);
+		}
+		
+		long count = outcomeService.userOutcomesCount(userName);
+		
+		Pageable topResults = new PageRequest(page.intValue() - 1, MAX_OUTCOMES_TO_DISPLAY);
 
 		List<Outcome> outcomes = outcomeService.findUserOutcomesWithLimit(userName, topResults);
 		
@@ -153,6 +159,8 @@ public class OutcomesController {
 
 		}
 
+		modelAndView.addObject("lastPage", (long)(Math.ceil((double)count / MAX_OUTCOMES_TO_DISPLAY)));
+		
 		return modelAndView;
 	}
 
@@ -256,7 +264,7 @@ public class OutcomesController {
 
 		modelAndView.addObject("datePeriod", dft);
 		
-//		modelAndView.addObject("pages", attributeValue)
+		
 
 		return modelAndView;
 	}

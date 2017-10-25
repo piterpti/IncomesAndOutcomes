@@ -67,6 +67,10 @@
 				</table>
 
 			</div>
+			
+			<div th:if="${lastPage}">
+				<a th:href="@{'?page=' + ${lastPage}}"><span th:text="${lastPage}"></span></a>
+			</div>
 
 		</div>
 

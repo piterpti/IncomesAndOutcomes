@@ -32,16 +32,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.date >= :fromDate AND o.date <= :toDate ORDER BY o.date")
 	public List<Outcome> findUserOutcomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
 	
-	
 	/**
-	 * Find user incomes in passed date period
+	 * Count user outcomes in passed date period
 	 * @param userId
 	 * @param fromDate
 	 * @param toDate
 	 * @return
 	 */
-	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.id = :id AND i.date >= :fromDate AND i.date <= :toDate ORDER BY i.date")
-	public List<Income> findUserIncomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate); 
+	@Query("SELECT COUNT(o) FROM User u JOIN u.outcomes o WHERE u.id = :id AND o.date >= :fromDate AND o.date <= :toDate ORDER BY o.date")
+	public long findUserOutcomesInTimeCount(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+	
 	
 	/**
 	 * Find outcomes for user with limit
@@ -51,6 +51,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 */
 	@Query("SELECT o FROM User u JOIN u.outcomes o WHERE u.login = :login ORDER BY o.date DESC, o.id DESC")
 	public List<Outcome> findByUserWithLimit(@Param("login") String login, Pageable pageable);
+	
+
+	/**
+	 * Find user incomes in passed date period
+	 * @param userId
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.id = :id AND i.date >= :fromDate AND i.date <= :toDate ORDER BY i.date")
+	public List<Income> findUserIncomesInTime(@Param("id") long userId, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+	
+	/**
+	 * Find outcomes count for user 
+	 * @param login
+	 * @return
+	 */
+	@Query("SELECT COUNT(o) FROM User u JOIN u.outcomes o WHERE u.login = :login ORDER BY o.date DESC, o.id DESC")
+	public long userOutcomesCount(@Param("login") String login);
 	
 	
 	/**
