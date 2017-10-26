@@ -69,7 +69,14 @@
 			</div>
 			
 			<div th:if="${lastPage}">
-				<a th:href="@{'?page=' + ${lastPage}}"><span th:text="${lastPage}"></span></a>
+			
+				  <a th:href="@{'?page=' + ${firstPage}}"><span th:text="${firstPage}"></span></a>
+				/ <a th:href="@{'?page=' + ${lastPage}}"><span th:text="${lastPage}"></span></a>
+				
+			</div>
+			
+			<div th:if="${pages}">
+				<a th:each="p : ${pages}" th:href="@{'?page=' + ${p}}" th:style="${p == currentPage ? 'color: green' : ''}"><span th:text="${p} + ' '"></span></a> 
 			</div>
 
 		</div>

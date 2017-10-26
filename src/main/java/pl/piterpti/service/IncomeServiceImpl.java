@@ -39,4 +39,10 @@ public class IncomeServiceImpl implements IncomeService {
 		incomeRepository.save(income);
 	}
 
+	@Override
+	public void deleteAll() {
+		incomeRepository.deleteAll();
+				
+	}
+
 }

@@ -16,4 +16,6 @@ public interface IncomeService {
 	
 	public void save(Income income);
 	
+	public void deleteAll();
+	
 }

@@ -158,8 +158,18 @@ public class OutcomesController {
 			modelAndView.addObject("outcomes", tmpOutcomes);
 
 		}
-
-		modelAndView.addObject("lastPage", (long)(Math.ceil((double)count / MAX_OUTCOMES_TO_DISPLAY)));
+		
+		long pagesCount = (long)(Math.ceil((double)count / MAX_OUTCOMES_TO_DISPLAY));
+		
+		if (pagesCount < 6) {
+			List<Integer> pages = new ArrayList<>();
+			for (int i = 1; i <= pagesCount; i++) {
+				pages.add(i);
+			}
+			modelAndView.addObject("currentPage", page.intValue());
+			modelAndView.addObject("pages", pages);
+		}
+		
 		
 		return modelAndView;
 	}

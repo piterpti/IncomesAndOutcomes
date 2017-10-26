@@ -5,9 +5,11 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,7 @@ import pl.piterpti.model.Category;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
+import pl.piterpti.service.IncomeService;
 import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
 
@@ -29,6 +32,9 @@ public class OutcomeDAOTest {
 
 	@Autowired
 	private OutcomeService outcomeService;
+	
+	@Autowired
+	private IncomeService incomeService;
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -75,7 +81,7 @@ public class OutcomeDAOTest {
 		
 		assertNotNull(user);
 		
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 45; i++) {
 			outcomes.add(generateRandomOutcome(categories, user));
 		}
 		
@@ -94,8 +100,9 @@ public class OutcomeDAOTest {
 		outcome.setValue(new BigDecimal(random.nextInt(250) + 30));
 		outcome.setCategory(categories.get(random.nextInt(categories.size())));
 		outcome.setShortDesc(randomString(random.nextInt(25) + 1));
-		outcome.setDate(new Date());
 		
+		Date date = new Date(new Date().getTime() + random.nextInt((int)TimeUnit.DAYS.toMillis(10)));
+		outcome.setDate(date);
 		return outcome;
 	}
 	
@@ -108,6 +115,15 @@ public class OutcomeDAOTest {
 		    sb.append(c);
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * Deleting all operations: incomes. outcomes from DB
+	 */
+	@Test
+	public void testClearOutcomesAndIncomes() {
+		outcomeService.deleteAll();
+		incomeService.deleteAll();
 	}
 	
 }
