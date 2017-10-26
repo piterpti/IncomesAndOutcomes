@@ -159,17 +159,44 @@ public class OutcomesController {
 
 		}
 		
-		long pagesCount = (long)(Math.ceil((double)count / MAX_OUTCOMES_TO_DISPLAY));
+		int pagesCount = (int)(Math.ceil((double)count / MAX_OUTCOMES_TO_DISPLAY));
 		
+		List<Integer> pages = new ArrayList<>();
 		if (pagesCount < 6) {
-			List<Integer> pages = new ArrayList<>();
 			for (int i = 1; i <= pagesCount; i++) {
 				pages.add(i);
 			}
-			modelAndView.addObject("currentPage", page.intValue());
+			
 			modelAndView.addObject("pages", pages);
+		} else {
+			modelAndView.addObject("lastPage", pagesCount);
+			int startIdx = page.intValue() -1;
+			if (startIdx < 2) {
+				startIdx = 2;
+			}
+			if (startIdx >= pagesCount - 3) {
+				startIdx = (int) (pagesCount - 3);
+			}
+			
+			for (int i = startIdx; i < startIdx + 3; i++) {
+				pages.add(i);
+				if (i + 1 >= pagesCount) {
+					break;
+				}
+			}
+			modelAndView.addObject("selectedPages", pages);
+			
+			if (pages.get(0) > 2) {
+				modelAndView.addObject("prefix", "...");
+			}
+			
+			if (pages.size() == 3 && pages.get(pages.size() - 1) + 1 < pagesCount) {
+				modelAndView.addObject("suffix", "...");
+			}
+			
 		}
 		
+		modelAndView.addObject("currentPage", page.intValue());
 		
 		return modelAndView;
 	}

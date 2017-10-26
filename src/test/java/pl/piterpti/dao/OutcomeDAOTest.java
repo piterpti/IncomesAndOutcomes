@@ -81,7 +81,7 @@ public class OutcomeDAOTest {
 		
 		assertNotNull(user);
 		
-		for (int i = 0; i < 45; i++) {
+		for (int i = 0; i < 105; i++) {
 			outcomes.add(generateRandomOutcome(categories, user));
 		}
 		

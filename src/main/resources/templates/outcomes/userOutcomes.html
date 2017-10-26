@@ -68,18 +68,21 @@
 
 			</div>
 			
-			<div th:if="${lastPage}">
-			
-				  <a th:href="@{'?page=' + ${firstPage}}"><span th:text="${firstPage}"></span></a>
-				/ <a th:href="@{'?page=' + ${lastPage}}"><span th:text="${lastPage}"></span></a>
-				
+				<div class="text-center">			
+					<div th:if="${pages}">
+						<a th:each="p : ${pages}" th:href="@{'?page=' + ${p}}" th:style="${p == currentPage ? 'color: green; font-weight: bold; pointer-events: none; cursor: default;' : ''}"><span th:text="${p} + ' '"></span></a> 
+					</div>
+					
+					<div th:if="${selectedPages}">
+						<a th:href="@{?page=1}" th:style="${1 == currentPage ? 'color: green; font-weight: bold; pointer-events: none; cursor: default;' : ''}"><span th:text="1"></span></a>
+						<span th:if="${prefix}">...</span>
+						<a th:each="p : ${selectedPages}" th:href="@{'?page=' + ${p}}" th:style="${p == currentPage ? 'color: green; font-weight: bold; pointer-events: none; cursor: default;' : ''}"><span th:text="${p} + ' '"></span></a>
+						<span th:if="${suffix}">...</span>
+						<a th:href="@{'?page=' + ${lastPage}}" th:style="${lastPage == currentPage ? 'color: green; font-weight: bold; pointer-events: none; cursor: default;' : ''}"><span th:text="${lastPage}"></span></a>
+					</div>
+		
+				</div>
 			</div>
-			
-			<div th:if="${pages}">
-				<a th:each="p : ${pages}" th:href="@{'?page=' + ${p}}" th:style="${p == currentPage ? 'color: green' : ''}"><span th:text="${p} + ' '"></span></a> 
-			</div>
-
-		</div>
 
 		<div th:if="${message}">
 			<h1 th:text="${message}"></h1>
