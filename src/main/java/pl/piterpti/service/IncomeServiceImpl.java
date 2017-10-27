@@ -45,4 +45,19 @@ public class IncomeServiceImpl implements IncomeService {
 				
 	}
 
+	@Override
+	public long userIncomesCount(String login) {
+		return userRepository.userIncomesCount(login);
+	}
+
+	@Override
+	public void delete(Income income) {
+		incomeRepository.delete(income);
+	}
+
+	@Override
+	public void deleteById(long id) {
+		incomeRepository.delete(id);
+	}
+
 }

@@ -18,4 +18,10 @@ public interface IncomeService {
 	
 	public void deleteAll();
 	
+	public long userIncomesCount(String login);
+	
+	public void delete(Income income);
+	
+	public void deleteById(long id);
+	
 }

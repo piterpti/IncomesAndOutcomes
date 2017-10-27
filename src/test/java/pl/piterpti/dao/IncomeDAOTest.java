@@ -1,6 +1,5 @@
 package pl.piterpti.dao;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
@@ -15,22 +14,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import pl.piterpti.model.Category;
-import pl.piterpti.model.Outcome;
+import pl.piterpti.model.Income;
 import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.IncomeService;
-import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OutcomeDAOTest {
-
-	@Autowired
-	private OutcomeService outcomeService;
+public class IncomeDAOTest {
 	
 	@Autowired
 	private IncomeService incomeService;
@@ -43,37 +38,14 @@ public class OutcomeDAOTest {
 	
 	private Random random = new Random();
 	
-	@Test
-	@Transactional 
-	public void testGetAllOutcomes() {
+	public void testAddRandomIncomes() {
 		
-		List<Outcome> outcomes = outcomeService.findAll();
-		
-		int outcomeSize = outcomes.size();
-		outcomeService.saveOutcome(new Outcome(new BigDecimal(200), new Date(), "ABC"));
-		outcomes = outcomeService.findAll();
-		
-		assertEquals(outcomeSize + 1, outcomes.size());
 	}
-	
-	@Test
-	@Transactional
-	public void testOutcomesOperations() {
-		
-		outcomeService.deleteAll();
-		
-		Outcome outcome = new Outcome(new BigDecimal(200), new Date(), "ABC");
-		outcomeService.saveOutcome(outcome);
-		List<Outcome> outcomes = outcomeService.findAll();
-		
-		assertEquals(1, outcomes.size());
-		assertEquals("ABC", outcomes.get(0).getShortDesc());
-	}
-	
+
 	@Test
 	public void testAddRandomOutcomes() {
 		
-		List<Outcome> outcomes = new ArrayList<>();
+		List<Income> incomes = new ArrayList<>();
 		List<Category> categories = categoryService.findAll();
 		
 		User user = userService.findByLogin("piter");
@@ -81,28 +53,28 @@ public class OutcomeDAOTest {
 		assertNotNull(user);
 		
 		for (int i = 0; i < 105; i++) {
-			outcomes.add(generateRandomOutcome(categories, user));
+			incomes.add(generateRandomOutcome(categories, user));
 		}
 		
-		user.setOutcomes(outcomes);
+		user.setIncomes(incomes);
 		
-		for (Outcome o : outcomes) {
-			outcomeService.saveOutcome(o);
+		for (Income i : incomes) {
+			incomeService.save(i);
 		}
 		
 		userService.updateUser(user);
 	}
 	
-	private Outcome generateRandomOutcome(List<Category> categories, User user) {
-		Outcome outcome = new Outcome();
+	private Income generateRandomOutcome(List<Category> categories, User user) {
+		Income income = new Income();
 		
-		outcome.setValue(new BigDecimal(random.nextInt(250) + 30));
-		outcome.setCategory(categories.get(random.nextInt(categories.size())));
-		outcome.setShortDesc(randomString(random.nextInt(25) + 1));
+		income.setValue(new BigDecimal(random.nextInt(250) + 30));
+		income.setCategory(categories.get(random.nextInt(categories.size())));
+		income.setShortDesc(randomString(random.nextInt(25) + 1));
 		
 		Date date = new Date(new Date().getTime() + random.nextInt((int)TimeUnit.DAYS.toMillis(10)));
-		outcome.setDate(date);
-		return outcome;
+		income.setDate(date);
+		return income;
 	}
 	
 	private String randomString(int length) {
@@ -117,12 +89,12 @@ public class OutcomeDAOTest {
 	}
 	
 	/**
-	 * Deleting all operations: incomes. outcomes from DB
+	 * Deleting all incomes from DB
 	 */
 	@Test
-	public void testClearOutcomesAndIncomes() {
-		outcomeService.deleteAll();
+	public void testClearALLIncomes() {
 		incomeService.deleteAll();
 	}
+	
 	
 }

@@ -56,14 +56,20 @@ public class IncomesController {
 	
 	
 	@RequestMapping(value = "/incomes/userIncomes", method = RequestMethod.GET)
-	public ModelAndView userIncomes() {
+	public ModelAndView userIncomes(@Param("page") Integer page) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName(VIEW_USER_INCOMES);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
 
-		Pageable topResults = new PageRequest(0, MAX_INCOMES_TO_DISPLAY);
+		if (page == null) {
+			page = new Integer(1);
+		}
+		
+		long count = incomeService.userIncomesCount(userName);
+		
+		Pageable topResults = new PageRequest(page.intValue() - 1, MAX_INCOMES_TO_DISPLAY);
 
 		List<Income> incomes = incomeService.findUserIncomesWithLimit(userName, topResults);
 		
@@ -74,21 +80,47 @@ public class IncomesController {
 		} else {
 
 			// ok
+			modelAndView.addObject("incomes", incomes);
 
-			List<Income> tmpIncomes = incomes;
-			if (incomes.size() > MAX_INCOMES_TO_DISPLAY) {
-				tmpIncomes = new ArrayList<>();
+			int pagesCount = (int) (Math.ceil((double) count / MAX_INCOMES_TO_DISPLAY));
 
-				int i = 0;
-				int idx = incomes.size() - 1;
-				while (i++ < MAX_INCOMES_TO_DISPLAY) {
-					tmpIncomes.add(incomes.get(idx--));
+			List<Integer> pages = new ArrayList<>();
+			if (pagesCount < 6) {
+				for (int i = 1; i <= pagesCount; i++) {
+					pages.add(i);
 				}
+
+				modelAndView.addObject("pages", pages);
+			} else {
+				modelAndView.addObject("lastPage", pagesCount);
+				int startIdx = page.intValue() - 1;
+				if (startIdx < 2) {
+					startIdx = 2;
+				}
+				if (startIdx >= pagesCount - 3) {
+					startIdx = (int) (pagesCount - 3);
+				}
+
+				for (int i = startIdx; i < startIdx + 3; i++) {
+					pages.add(i);
+					if (i + 1 >= pagesCount) {
+						break;
+					}
+				}
+				modelAndView.addObject("selectedPages", pages);
+
+				if (pages.get(0) > 2) {
+					modelAndView.addObject("prefix", "...");
+				}
+
+				if (pages.size() == 3 && pages.get(pages.size() - 1) + 1 < pagesCount) {
+					modelAndView.addObject("suffix", "...");
+				}
+
 			}
-
-			modelAndView.addObject("incomes", tmpIncomes);
-
 		}
+
+		modelAndView.addObject("currentPage", page.intValue());
 
 		return modelAndView;
 	}
@@ -294,6 +326,23 @@ public class IncomesController {
 		}
 		
 		mav.setViewName("redirect:/" + VIEW_USER_INCOMES);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "incomes/deleteIncome")
+	public ModelAndView deleteIncome(@Param("id") long id, @Param("date") String date) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(null);
+		
+
+		if (date != null) {
+			mav.setViewName("redirect:/" + VIEW_DATE_INCOMES);
+		} else {
+			mav.setViewName("redirect:/" + VIEW_USER_INCOMES);
+		}		
+		
+		incomeService.deleteById(id);
 		
 		return mav;
 	}
