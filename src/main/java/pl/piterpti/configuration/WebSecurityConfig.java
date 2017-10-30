@@ -47,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/home").permitAll()
 		.antMatchers("/registration").permitAll()
 		.antMatchers("/about").permitAll()
+		.antMatchers("/css/**").permitAll()
 		.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
 		.authenticated().and().csrf().disable().formLogin()
 		.loginPage("/login").failureUrl("/login?error=true")
@@ -60,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/*.css");
+		web.ignoring().antMatchers("*.css");
 		web.ignoring().antMatchers("/*.js");
 	}
 }

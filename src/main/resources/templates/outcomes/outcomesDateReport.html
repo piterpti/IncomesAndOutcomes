@@ -12,6 +12,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<link th:href="@{/css/style.css}" href="../static/css/style.css"
+	rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -21,7 +24,7 @@
 				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{/home}">Home</a></li>
+				<li><a th:href="@{/home}">Home</a></li>
 				<li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
 				<li class="active"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>

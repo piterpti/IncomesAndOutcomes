@@ -122,4 +122,36 @@ public class User {
 		return "User [id=" + id + ", login=" + login + ", password=" + Arrays.toString(password) + ", userName="
 				+ userName + "]";
 	}
+	
+	
+	public boolean hasOperation(long operationId) {
+		Operation o = new Outcome();
+		o.setId(operationId);
+		return hasOperation(o);
+	}
+	
+	/**
+	 * Verify that passed incomes/outcomes are available for user 
+	 * @param operation
+	 * @return
+	 */
+	public boolean hasOperation(Operation operation) {
+		if (incomes != null) {
+			for (Operation o : incomes) {
+				if (o.getId() == operation.getId()) {
+					return true;
+				}
+			}
+		}
+		
+		if (outcomes != null) {
+			for (Operation o : outcomes) {
+				if (o.getId() == operation.getId()) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 }

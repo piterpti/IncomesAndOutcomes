@@ -335,7 +335,19 @@ public class IncomesController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(null);
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
 
+		User user = userService.findByLogin(userName);
+
+		if (id < 1) {
+			return ErrorController.getErrorMav("Wrong operation to delete");
+		}
+		
+		if (!user.hasOperation(id)) {
+			return ErrorController.getErrorMav("User " + userName + " cannot delete selected income.");
+		}
+		
 		if (date != null) {
 			mav.setViewName("redirect:/" + VIEW_DATE_INCOMES);
 		} else {

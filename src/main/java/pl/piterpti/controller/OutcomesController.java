@@ -205,6 +205,20 @@ public class OutcomesController {
 	public ModelAndView deleteOutcome(@Param("id") long id, @Param("date") String date) {
 		ModelAndView modelAndView = new ModelAndView();
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+
+		User user = userService.findByLogin(userName);
+
+		
+		if (id < 1) {
+			return ErrorController.getErrorMav("Wrong operation to delete");
+		}
+		
+		if (!user.hasOperation(id)) {
+			return ErrorController.getErrorMav("User " + userName + " cannot delete selected outcome.");
+		}
+		
 		if (date != null) {
 			modelAndView.setViewName("redirect:/" + VIEW_DATE_OUTCOMES);
 		} else {

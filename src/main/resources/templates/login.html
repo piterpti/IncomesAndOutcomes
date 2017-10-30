@@ -12,6 +12,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<link th:href="@{/css/style.css}" href="static/css/style.css"
+	rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -30,21 +33,19 @@
 	<div class="container">
 		<div th:if="${param.error}">Invalid username and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
+		
 		<form th:action="@{/login}" method="post">
-			<div>
-				<label> User Name : <input type="text" id="login"
-					name="login" th:placeholder="Login" />
-				</label>
-			</div>
-			<div>
-				<label> Password: <input type="password" id="password"
-					name="password" th:placeholder="Password" />
-				</label>
-			</div>
-			<div>
-				<input type="submit" value="Sign In" />
-			</div>
+			<div class="form-group">
+		      <label for="login">Username</label>
+		      <input type="text" class="form-control" id="login" placeholder="Enter login" name="login">
+    		</div>
+    		<div class="form-group">
+		      <label for="password">Password</label>
+		      <input type="text" class="form-control" id="password" placeholder="Enter password" name="password">
+    		</div>
+			 <button type="submit" class="btn btn-default">Sign in</button>
 		</form>
+		
 	</div>
 </body>
 </html>

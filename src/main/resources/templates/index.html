@@ -12,6 +12,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<link th:href="@{/css/style.css}" href="static/css/style.css"
+	rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -35,7 +38,8 @@
 		<h1>Welcome!</h1>
 
 		<p>
-			Click <a th:href="@{/hello}">here</a> to see a greeting.
+			Incomes and outcomes is app to help you to manage your finances.
+			<br> Just click on "Outcomes" or "Incomes" to add some operations or see report.
 		</p>
 
 		<div sec:authorize="isAnonymous()">
@@ -46,18 +50,20 @@
 		<div sec:authorize="isAuthenticated()">
 
 			<form th:action="@{report}" th:object="${datePeriod}" method="post">
-
-				<h2>Show outcomes/incomes between dates</h2>
-				<div>
-					Date from: <input type="text" th:field="*{fromDate}"
-						placeholder="From"> <br> Date to: <input type="text"
-						th:field="*{toDate}" placeholder="To"> <br>
-
-					<button type="submit">Show</button>
-
-				</div>
-
-			</form>
+				<h3>Show operations report</h3>
+				
+				<div class="form-group">
+			      <label for="Date from">Date from</label>
+			      <input type="text" class="form-control" id="dateFrom" th:field="*{fromDate}" placeholder="From" name="fromDate">
+    			</div>
+    			
+    			<div class="form-group">
+			      <label for="Date to">Date to</label>
+			      <input type="text" class="form-control" id="dateTo" th:field="*{toDate}" placeholder="To" name="toDate">
+    			</div>
+    			
+    			<button type="submit" class="btn btn-default">Show reports</button>
+    		</form>
 
 		</div>
 		
