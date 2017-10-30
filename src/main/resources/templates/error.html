@@ -26,8 +26,21 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+				<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li class="kopie"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+						<li><a th:href="@{/incomes/addIncome}">Add income</a></li>
+						<li><a th:href="@{/incomes/incomesDateReport}">Incomes date report</a></li>
+					</ul>
+				</li>
+				
+				<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li class="kopie"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+						<li><a th:href="@{/outcomes/addOutcome}">Add outcome</a></li>
+						<li><a th:href="@{/outcomes/outcomesDateReport}">Outcomes date report</a></li>
+					</ul>
+				</li>
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>

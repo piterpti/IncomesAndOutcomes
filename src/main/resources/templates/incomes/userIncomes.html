@@ -25,8 +25,22 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a th:href="@{/home}">Home</a></li>
-				<li class="active"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
-				<li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+					<li class="active dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li class="kopie"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+						<li><a th:href="@{/incomes/addIncome}">Add income</a></li>
+						<li><a th:href="@{/incomes/incomesDateReport}">Incomes date report</a></li>
+					</ul>
+				</li>
+				
+				<li class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li class="kopie"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+						<li><a th:href="@{/outcomes/addOutcome}">Add outcome</a></li>
+						<li><a th:href="@{/outcomes/outcomesDateReport}">Outcomes date report</a></li>
+					</ul>
+				</li>
+
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
@@ -48,8 +62,7 @@
 
 			<br>
 
-			<h1 th:inline="text">User [[${#httpServletRequest.remoteUser}]]
-				last incomes</h1>
+			<h3 th:inline="text">User [[${#httpServletRequest.remoteUser}]]	last incomes</h3>
 
 			<div>
 

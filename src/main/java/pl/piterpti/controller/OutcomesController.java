@@ -59,7 +59,7 @@ public class OutcomesController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "/addOutcome", method = RequestMethod.GET)
+	@RequestMapping(value = "/outcomes/addOutcome", method = RequestMethod.GET)
 	public ModelAndView addOutcomePage() {
 		ModelAndView modelAndView = new ModelAndView();
 
@@ -78,7 +78,7 @@ public class OutcomesController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/addOutcome", method = RequestMethod.POST)
+	@RequestMapping(value = "/outcomes/addOutcome", method = RequestMethod.POST)
 	public ModelAndView addOutcome(@Valid Outcome outcome, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 
