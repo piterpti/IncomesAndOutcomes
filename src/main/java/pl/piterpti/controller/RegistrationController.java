@@ -29,7 +29,7 @@ public class RegistrationController {
 
 		if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
 
-			modelAndView.setViewName("index");
+			modelAndView.setViewName("redirect:/index");
 
 		} else {
 

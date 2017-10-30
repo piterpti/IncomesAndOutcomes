@@ -38,12 +38,19 @@
 		<form th:action="@{report}" th:object="${datePeriod}"
 			method="post">
 
-			<h2>Show incomes between dates</h2>
+			<h2>Show operations between dates</h2>
 			<div>
-				Date from: <input type="text" th:field="*{fromDate}" placeholder="From"> <br>
-				Date to: <input type="text" th:field="*{toDate}" placeholder="To"> <br>
-
-				<button type="submit">Show</button>
+				<div class="form-group">
+					<label for="dateFrom">Date from</label>
+					<input type="text" class="form-control" id="fromDate" th:field="*{fromDate}" placeholder="From">
+				</div>
+				
+				<div class="form-group">
+					<label for="dateTo">Date to</label>
+					<input type="text" class="form-control" id="toDate" th:field="*{toDate}" placeholder="To">
+				</div>
+			
+				<button type="submit" class="btn btn-default">Show report</button>
 				
 			</div>
 

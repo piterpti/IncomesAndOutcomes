@@ -1,6 +1,7 @@
 package pl.piterpti.controller;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -156,6 +157,7 @@ public class IncomesController {
 			
 			List<OperationsPerDay> opds = new ArrayList<>();
 			List<Operation> incomeList = new ArrayList<>();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			
 			BigDecimal summary = new BigDecimal("0");
 			
@@ -169,10 +171,12 @@ public class IncomesController {
 
 				} else {
 
-					if (income.getDate().getTime() == incomeList.get(incomeList.size() - 1).getDate()
-							.getTime()) {
+					Date firstDate = income.getDate();
+					Date secondDate = incomeList.get(incomeList.size() - 1).getDate();
+					
+					if (sdf.format(firstDate).equals(sdf.format(secondDate))) {
 						
-						incomeList.add(income);						
+						incomeList.add(income);
 						
 					} else {
 						

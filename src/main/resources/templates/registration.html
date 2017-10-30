@@ -25,6 +25,7 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a th:href="@{/home}">Home</a></li>
+				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -36,16 +37,29 @@
 			<h2>Registration form</h2>
 
 
-			Name: <input type="text" th:field="*{userName}" placeholder="Name">
-			<br> Login: <input type="text" th:field="*{login}"
-				placeholder="Login"> <br> Password: <input
-				type="password" th:field="*{password}"><br>
+			<div class="form-group">
+				<label for="Name">Username</label>
+				<input type="text" class="form-control" th:field="*{userName}" id="Username" placeholder="" name="Username">
+			</div>
+			
+			<div class="form-group">
+				<label for="Login">Login</label>
+				<input type="text" class="form-control" th:field="*{login}" id="Login" placeholder="" name="Login">
+			</div>
+			
+			<div class="form-group">
+				<label for="Password">Password</label>
+				<input type="password" class="form-control" th:field="*{password}" id="Password" placeholder="" name="Password">
+			</div>
 
-			<button type="submit">Register user</button>
-
-			<span th:utext="${successMessage}"></span>
-
+			<button type="submit" class="btn btn-default">Register user</button>
+			
 		</form>
+		
+		<div>
+			<span th:utext="${successMessage}"></span>
+		</div>
+		
 	</div>
 
 </body>

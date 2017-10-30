@@ -40,13 +40,20 @@
 
 			<h2>Show outcomes between dates</h2>
 			<div>
-				Date from: <input type="text" th:field="*{fromDate}" placeholder="From"> <br>
-				Date to: <input type="text" th:field="*{toDate}" placeholder="To"> <br>
+				
+				<div class="form-group">
+			      <label for="DateFrom">Date from</label>
+			      <input type="text" class="form-control" th:field="*{fromDate}" id="DateFrom" placeholder="From" name="DateFrom">
+    			</div>
+			
+				<div class="form-group">
+			      <label for="DateTo">Date to</label>
+			      <input type="text" class="form-control" th:field="*{toDate}" id="DateTo" placeholder="To" name="DateTo">
+    			</div>
 
-				<button type="submit">Show</button>
+				<button type="submit" class="btn btn-default">Show</button>
 				
 			</div>
-
 		</form>
 		
 		<div th:if="${opds}">
