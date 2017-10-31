@@ -56,14 +56,29 @@
 				<div>
 					<input type="hidden" th:field=*{id} />
 					<input type="hidden" th:field=*{category.id} />
-					Value <input type="number"  step=".01" th:field="*{value}" placeholder="Value" th:value="@{income.value}"> <br>
-					Date: <input type="text" th:field="*{date}" placeholder="Date" th:value="@{income.date}"> <br>
-					Category: <select th:field="*{category.name}">
-						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
-					</select>
-					Short description: <input type="text" th:field="*{shortDesc}" placeholder="Short description"> <br>
+					<div class="form-group">
+				      <label for="Value">Value</label>
+				      <input type="number" step=".01" th:field="*{value}" class="form-control" id="Value" placeholder="Value" name="Value">
+    		   	    </div>
+					<div class="form-group">
+				      <label for="Date">Date</label>
+				      <input type="text" th:field="*{date}" class="form-control" id="Date" placeholder="Date" name="Date">
+    		   		</div>
+    		   		
+    		   		<div class="form-group">
+    		   			<label for="Category">Category</label>
+    		   			<select class="form-control" th:field="*{category.name}">
+							<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
+						</select>
+    		   		</div>
+    		   		
+					<div class="form-group">
+				      <label for="ShortDescription">Short description</label>
+				      <input type="text" th:field="*{shortDesc}" class="form-control" id="ShortDescription" placeholder="Short description" name="ShortDescription">
+    		   		</div>
 					
-					<button type="submit">Save</button>
+
+				<button type="submit" class="btn btn-default">Save</button>
 				</div>
 			
 			</form>

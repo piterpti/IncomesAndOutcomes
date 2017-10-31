@@ -324,7 +324,7 @@ public class OutcomesController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "outcomes/editOutcome", method = RequestMethod.GET)
+	@RequestMapping(value = "/outcomes/editOutcome", method = RequestMethod.GET)
 	public ModelAndView editOutcome(@Param("id") long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -364,7 +364,7 @@ public class OutcomesController {
 	}
 	
 	
-	@RequestMapping(value = "outcomes/editOutcome", method = RequestMethod.POST)
+	@RequestMapping(value = "/outcomes/editOutcome", method = RequestMethod.POST)
 	public ModelAndView saveEditedOutcome(@Param("outcome") @Valid Outcome outcome) {
 		ModelAndView modelAndView = new ModelAndView();
 		

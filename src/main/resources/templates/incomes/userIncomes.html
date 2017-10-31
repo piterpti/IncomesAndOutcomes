@@ -46,26 +46,12 @@
 			</ul>
 		</div>
 	</nav>
-
-
+	
 	<div class="container">
 
-		<div class="btn-group">
-			<a th:href="@{addIncome}"><button class="btn">Add income</button></a>
-		</div>
-
 		<div th:if="${incomes}">
-
-			<h2>
-				<a th:href="@{incomesDateReport}">Show incomes in date period</a>
-			</h2>
-
-			<br>
-
 			<h3 th:inline="text">User [[${#httpServletRequest.remoteUser}]]	last incomes</h3>
-
 			<div>
-
 				<table class="table table-bordered">
 					<th:block th:each="income : ${incomes}">
 						<tr>
@@ -76,7 +62,6 @@
 							<td><a th:href="@{'deleteIncome?id=' + ${income.id}}">Delete</a></td>
 						</tr>
 				</table>
-
 			</div>
 
 		</div>
