@@ -57,7 +57,11 @@
 		</form>
 		
 		<div>
-			<span th:utext="${successMessage}"></span>
+			<span th:text="${successMessage}"></span>
+		</div>
+		
+		<div th:if="${errorMessage}">
+			<span style="color: red;" th:text="${errorMessage}"></span>
 		</div>
 		
 	</div>

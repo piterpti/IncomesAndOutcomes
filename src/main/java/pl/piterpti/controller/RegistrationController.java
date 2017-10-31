@@ -47,21 +47,39 @@ public class RegistrationController {
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExist = userService.findByLogin(user.getLogin());
+
+		modelAndView.setViewName("registration");
+		
+		if (user.getLogin() == null || user.getLogin().isEmpty()) {
+			modelAndView.addObject("errorMessage", "Field login can not be empty");
+			return modelAndView;
+		}
+		
+		if (user.getPassword() == null || user.getPassword().length < 1) {
+			modelAndView.addObject("errorMessage", "Password can not be empty");
+			return modelAndView;
+		}
+		
+		if (user.getUserName() == null || user.getUserName().isEmpty()) {
+			modelAndView.addObject("errorMessage", "Username can not be empty");
+			return modelAndView;
+		}
+		
 		if (userExist != null) {
 
-			bindingResult.rejectValue("login", "error.user",
-					"There is already user registered with the login provided");
+			modelAndView.addObject("errorMessage", "There is user with login " + userExist.getLogin() + " already");
+			return modelAndView;
 		}
 
 		if (bindingResult.hasErrors()) {
 
-			modelAndView.setViewName("registration");
+			modelAndView.addObject("errorMessage", "Error when user adding");
+			return modelAndView;
 
 		} else {
 
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered succesfully");
-			modelAndView.setViewName("registration");
 
 		}
 
