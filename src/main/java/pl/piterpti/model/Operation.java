@@ -1,4 +1,4 @@
-package pl.piterpti.model;
+package pl.piterpti.model; 
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class Operation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
 	@Column(name = "value", precision = 10, scale = 2)
