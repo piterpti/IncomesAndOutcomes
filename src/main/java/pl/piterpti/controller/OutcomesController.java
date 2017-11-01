@@ -249,6 +249,15 @@ public class OutcomesController {
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
 
 		modelAndView.addObject("datePeriod", Toolkit.getDatePeriodToForm());
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		
+		long count = outcomeService.userOutcomesCount(userName);
+		
+		if (count < 1) {
+			modelAndView.addObject("errorMessage", "There is not any outcomes. Try add some");
+		}
 
 		return modelAndView;
 	}

@@ -34,6 +34,13 @@ public class IncomeOutcomeReportController {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value = "report", method = RequestMethod.GET)
+	public ModelAndView goToIndex() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/index");
+		return mav;
+	}
+	
 	@RequestMapping(value = "report", method = RequestMethod.POST)
 	public ModelAndView showIncomeDateReport(DateFromTo dft, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();

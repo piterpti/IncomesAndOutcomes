@@ -134,6 +134,15 @@ public class IncomesController {
 		mav.setViewName(VIEW_DATE_INCOMES);
 		mav.addObject("datePeriod", Toolkit.getDatePeriodToForm());
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		
+		long count = incomeService.userIncomesCount(userName);
+		
+		if (count < 1) {
+			mav.addObject("errorMessage", "There is not any intcomes. Try add some");
+		}
+		
 		return mav;
 	}
 	

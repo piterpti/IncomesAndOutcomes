@@ -69,22 +69,29 @@
 		
 		
 		<div sec:authorize="isAuthenticated()">
+			<div th:if="${errorMessage == null}">
 
-			<form th:action="@{report}" th:object="${datePeriod}" method="post">
-				<h3>Show operations report</h3>
-				
-				<div class="form-group">
-			      <label for="Date from">Date from</label>
-			      <input type="text" class="form-control" id="dateFrom" th:field="*{fromDate}" placeholder="From" name="fromDate">
-    			</div>
-    			
-    			<div class="form-group">
-			      <label for="Date to">Date to</label>
-			      <input type="text" class="form-control" id="dateTo" th:field="*{toDate}" placeholder="To" name="toDate">
-    			</div>
-    			
-    			<button type="submit" class="btn btn-default">Show reports</button>
-    		</form>
+				<form th:action="@{report}" th:object="${datePeriod}" method="post">
+					<h3>Show operations report</h3>
+					
+					<div class="form-group">
+				      <label for="Date from">Date from</label>
+				      <input type="text" class="form-control" id="dateFrom" th:field="*{fromDate}" placeholder="From" name="fromDate">
+	    			</div>
+	    			
+	    			<div class="form-group">
+				      <label for="Date to">Date to</label>
+				      <input type="text" class="form-control" id="dateTo" th:field="*{toDate}" placeholder="To" name="toDate">
+	    			</div>
+	    			
+	    			<button type="submit" class="btn btn-default">Show reports</button>
+	    		</form>
+	    		
+    		</div>
+    		
+    		<div th:if="${errorMessage}">
+    			<h3 th:text="${errorMessage}"></h3>
+    		</div>
 
 		</div>
 		

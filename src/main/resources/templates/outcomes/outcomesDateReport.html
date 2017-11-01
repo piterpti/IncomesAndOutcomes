@@ -56,80 +56,86 @@
 
 	<div class="container">
 
-		<form th:action="@{outcomesDateReport}" th:object="${datePeriod}"
-			method="post">
-
-			<h2>Show outcomes between dates</h2>
-			<div>
-				
-				<div class="form-group">
-			      <label for="DateFrom">Date from</label>
-			      <input type="text" class="form-control" th:field="*{fromDate}" id="DateFrom" placeholder="From" name="DateFrom">
-    			</div>
-			
-				<div class="form-group">
-			      <label for="DateTo">Date to</label>
-			      <input type="text" class="form-control" th:field="*{toDate}" id="DateTo" placeholder="To" name="DateTo">
-    			</div>
-
-				<button type="submit" class="btn btn-default">Show</button>
-				
-			</div>
-		</form>
-		
-		<div th:if="${opds}">
-				
-				<div>
-					Outcomes between <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MMM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MMM-yyyy')}"></span>
-				</div>
-				
-				<table class="table table-bordered">
-					<tr>
-						<th>Date</th>
-						<th>Outcomes</th>
-						<th>Category</th>
-						<th>Value</th>
-						<th>Modify</th>
-						
-					</tr>
-					<th:block th:each="opd : ${opds}">
-						<tr>
-							<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
-							<td>
-								<ul th:each="outcome : ${opd.operations}">
-									<li th:text="${outcome.shortDesc}"></li>
-								</ul>
-							</td>
-							
-							<td>
-								<ul th:each="outcome : ${opd.operations}">
-									<li th:if="${outcome.category != null && outcome.category.name != null}" th:text="${outcome.category.name}"> </li>
-								</ul>
-							</td>
-							
-							<td>
-								<ul th:each="outcome : ${opd.operations}">
-									<li th:text="${outcome.value}"></li>
-								</ul>
-							</td>
-							
-							<td>
-								<ul th:each="outcome : ${opd.operations}">
-									<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
-								</ul>	
-							</td>						
-
-						</tr>
-					</th:block>
-					
-					<tr>
-						<td><b>Summary</b></td>
-						<td></td>
-						<td></td>
-						<td><b th:text="${summary}"></b></td>
-					</tr>
-				</table>
+		<div th:if="${errorMessage == null}">
+			<form th:action="@{outcomesDateReport}" th:object="${datePeriod}"
+				method="post">
 	
+				<h2>Show outcomes between dates</h2>
+				<div>
+					
+					<div class="form-group">
+				      <label for="DateFrom">Date from</label>
+				      <input type="text" class="form-control" th:field="*{fromDate}" id="DateFrom" placeholder="From" name="DateFrom">
+	    			</div>
+				
+					<div class="form-group">
+				      <label for="DateTo">Date to</label>
+				      <input type="text" class="form-control" th:field="*{toDate}" id="DateTo" placeholder="To" name="DateTo">
+	    			</div>
+	
+					<button type="submit" class="btn btn-default">Show</button>
+					
+				</div>
+			</form>
+			
+			<div th:if="${opds}">
+					
+					<div>
+						Outcomes between <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MMM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MMM-yyyy')}"></span>
+					</div>
+					
+					<table class="table table-bordered">
+						<tr>
+							<th>Date</th>
+							<th>Outcomes</th>
+							<th>Category</th>
+							<th>Value</th>
+							<th>Modify</th>
+							
+						</tr>
+						<th:block th:each="opd : ${opds}">
+							<tr>
+								<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
+								<td>
+									<ul th:each="outcome : ${opd.operations}">
+										<li th:text="${outcome.shortDesc}"></li>
+									</ul>
+								</td>
+								
+								<td>
+									<ul th:each="outcome : ${opd.operations}">
+										<li th:if="${outcome.category != null && outcome.category.name != null}" th:text="${outcome.category.name}"> </li>
+									</ul>
+								</td>
+								
+								<td>
+									<ul th:each="outcome : ${opd.operations}">
+										<li th:text="${outcome.value}"></li>
+									</ul>
+								</td>
+								
+								<td>
+									<ul th:each="outcome : ${opd.operations}">
+										<li><a th:href="@{'editOutcome?id=' + ${outcome.id}}">Edit</a> | <a th:href="@{'deleteOutcome?id=' + ${outcome.id} + '&date=true'}">Delete</a></li>
+									</ul>	
+								</td>						
+	
+							</tr>
+						</th:block>
+						
+						<tr>
+							<td><b>Summary</b></td>
+							<td></td>
+							<td></td>
+							<td><b th:text="${summary}"></b></td>
+						</tr>
+					</table>
+		
+				</div>
+			</div>
+			
+			<div th:if="${errorMessage}">
+				<h3 th:text="${errorMessage}"></h3>
 			</div>
 
 	</div>
