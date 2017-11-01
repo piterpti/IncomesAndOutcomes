@@ -32,6 +32,7 @@ import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.IncomeService;
 import pl.piterpti.service.UserService;
+import pl.piterpti.toolkit.OperationToolkit;
 import pl.piterpti.toolkit.Toolkit;
 
 @Controller
@@ -76,7 +77,7 @@ public class IncomesController {
 		
 		if (incomes.isEmpty()) {
 			// show msg that there is no outcomes
-			modelAndView.addObject("message", "There is not any outcomes for user " + userName);
+			modelAndView.addObject("message", "There is not any incomes for user " + userName);
 
 		} else {
 
@@ -225,7 +226,7 @@ public class IncomesController {
 		
 		mav.addObject("income", income);
 		
-		List<Category> categories = categoryService.findAll();
+		List<Category> categories = categoryService.findActive();
 		mav.addObject("categories", categories);
 		
 		
@@ -236,6 +237,17 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/addIncome", method = RequestMethod.POST)
 	public ModelAndView addIncome(@Valid Income income, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
+		
+		String errorMsg = OperationToolkit.validateOperation(income);
+		
+		if (errorMsg != null) {
+			mav = addIncomeView();
+			mav.addObject("errorMessage", errorMsg);
+			if (income != null) {
+				mav.addObject("income", income);
+			}
+			return mav;
+		}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
@@ -276,6 +288,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/editIncome", method = RequestMethod.GET)
 	public ModelAndView editIncome(@Param("id") long id) {
 		ModelAndView mav = new ModelAndView();
+		
 		mav.setViewName(VIEW_EDIT_INCOME);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -307,7 +320,7 @@ public class IncomesController {
 
 		mav.addObject("income", income);
 		
-		List<Category> categorires = categoryService.findAll();	
+		List<Category> categorires = categoryService.findActive();	
 		mav.addObject("categories", categorires);
 		
 		return mav;
@@ -316,6 +329,16 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/editIncome", method = RequestMethod.POST)
 	public ModelAndView editIncome(@Param("income") @Valid Income income) {
 		ModelAndView mav = new ModelAndView();
+		
+		// validate income
+		String errorMsg = OperationToolkit.validateOperation(income);
+		
+		if (errorMsg != null) {
+			mav = editIncome(income.getId());
+			mav.addObject("errorMessage", errorMsg);
+			mav.addObject("income", income);
+			return mav;
+		}
 		
 		if (income.getCategory() != null) {
 			Category category = categoryService.findByName(income.getCategory().getName());

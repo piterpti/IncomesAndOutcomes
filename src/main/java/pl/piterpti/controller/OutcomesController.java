@@ -32,6 +32,7 @@ import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
+import pl.piterpti.toolkit.OperationToolkit;
 import pl.piterpti.toolkit.Toolkit;
 
 @Controller
@@ -60,7 +61,7 @@ public class OutcomesController {
 	private CategoryService categoryService;
 
 	@RequestMapping(value = "/outcomes/addOutcome", method = RequestMethod.GET)
-	public ModelAndView addOutcomePage() {
+	public ModelAndView addOutcome() {
 		ModelAndView modelAndView = new ModelAndView();
 
 		Outcome outcome = new Outcome();
@@ -68,7 +69,7 @@ public class OutcomesController {
 		outcome.setDate(new Date());
 		outcome.setCategory(new Category());
 		
-		List<Category> categorires = categoryService.findAll();
+		List<Category> categorires = categoryService.findActive();
 		
 		modelAndView.addObject("outcome", outcome);
 		modelAndView.addObject("categories", categorires);
@@ -81,6 +82,16 @@ public class OutcomesController {
 	@RequestMapping(value = "/outcomes/addOutcome", method = RequestMethod.POST)
 	public ModelAndView addOutcome(@Valid Outcome outcome, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		
+		// validate outcome
+		String errorMsg = OperationToolkit.validateOperation(outcome);
+		
+		if (errorMsg != null) {
+			modelAndView = addOutcome();
+			modelAndView.addObject("errorMessage", errorMsg);
+			modelAndView.addObject("outcome", outcome);
+			return modelAndView;
+		}
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
@@ -356,7 +367,7 @@ public class OutcomesController {
 		
 		modelAndView.addObject("outcome", outcome);
 		
-		List<Category> categorires = categoryService.findAll();	
+		List<Category> categorires = categoryService.findActive();	
 		modelAndView.addObject("categories", categorires);
 		
 		modelAndView.setViewName(VIEW_EDIT_OUTCOME);
@@ -367,6 +378,16 @@ public class OutcomesController {
 	@RequestMapping(value = "/outcomes/editOutcome", method = RequestMethod.POST)
 	public ModelAndView saveEditedOutcome(@Param("outcome") @Valid Outcome outcome) {
 		ModelAndView modelAndView = new ModelAndView();
+		
+		// validate outcome
+		String errorMsg = OperationToolkit.validateOperation(outcome);
+		
+		if (errorMsg != null) {
+			modelAndView = editOutcome(outcome.getId());
+			modelAndView.addObject("errorMessage", errorMsg);
+			modelAndView.addObject("outcome", outcome);
+			return modelAndView;
+		}
 		
 		if (outcome.getCategory() != null) {
 			Category category = categoryService.findByName(outcome.getCategory().getName());

@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import pl.piterpti.constants.UserRoles;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.Role;
-import pl.piterpti.repository.CategoryRepository;
 import pl.piterpti.repository.RoleRepository;
+import pl.piterpti.service.CategoryService;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -26,6 +26,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	private Logger logger = Logger.getLogger(InitialDataLoader.class);
 	
 	private static final String CATEGORIES_FILE_URL = "categories.txt";
+	
+	private final String[] START_CATEGORIES = new String[] {
+		"Others", "Food", "Fuel", "Sport", "Alcohol", "Entertaiment"	
+	};
 
 	boolean alreadySetup = false;
 
@@ -33,7 +37,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	private RoleRepository roleRepository;
 	
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
@@ -50,6 +54,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			importCategoriesFromFile(categoriesFile);
 			
 		}
+		
+		importExampleCategories();
 	}
 	
 	/**
@@ -101,13 +107,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		if (ok) {
 			// import to DB
 			logger.info("Deleting all categories and add new: " + categoryList);
-			categoryRepository.deleteAll();
+			categoryService.deleteAll();
 			
 			Category category;
 			for (String s : categoryList) {
 				category = new Category();
 				category.setName(s);
-				categoryRepository.save(category);
+				
+				categoryService.save(category);
 			}
 		}
 	}
@@ -135,5 +142,29 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		}
 
 		alreadySetup = true;
+	}
+	
+	/**
+	 * Import categories on app startup
+	 */
+	private void importExampleCategories() {
+		
+		List<Category> categories = categoryService.findAll();
+		
+		for (String categoryName : START_CATEGORIES) {
+			boolean add = true;
+			for (Category cat : categories) {
+				if (cat.getName().equalsIgnoreCase(categoryName)) {
+					add = false;
+					break;
+				}
+			}
+			if (add) {
+				Category cat = new Category();
+				cat.setName(categoryName);
+				
+				categoryService.save(cat);
+			}
+		}
 	}
 }

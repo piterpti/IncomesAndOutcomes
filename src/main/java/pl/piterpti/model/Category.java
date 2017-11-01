@@ -18,6 +18,9 @@ public class Category {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "active")
+	private boolean active;
 
 	public long getId() {
 		return id;
@@ -33,6 +36,14 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override

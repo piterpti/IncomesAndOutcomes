@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Welcome</title>
+<title>Categories</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -13,7 +13,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
-	<link th:href="@{/css/style.css}" href="static/css/style.css"
+	<link th:href="@{/css/style.css}" href="../static/css/style.css"
 	rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -25,40 +25,59 @@
 				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{/home}">Home</a></li>
-				<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
+				<li><a th:href="@{/home}">Home</a></li>
+				<li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-                        <li class="kopie"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
+                        <li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
 						<li><a th:href="@{/incomes/addIncome}">Add income</a></li>
 						<li><a th:href="@{/incomes/incomesDateReport}">Incomes date report</a></li>
 					</ul>
 				</li>
 				
-				<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
+				<li class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-                        <li class="kopie"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
+                        <li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 						<li><a th:href="@{/outcomes/addOutcome}">Add outcome</a></li>
 						<li><a th:href="@{/outcomes/outcomesDateReport}">Outcomes date report</a></li>
 					</ul>
 				</li>
 				
-				<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Categories<span class="caret"></span></a>
+				<li class="active dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Categories<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						 <li><a th:href="@{/categories}">Categories</a></li>
 						 <li><a th:href="@{/categories/addCategory}">Add category</a></li>
 					</ul>
 				</li>
-				
+
 				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 			</ul>
 		</div>
 	</nav>
 
-	<div class="container">
 
-		<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h2>
+	<div class="container">
+	
+		<h3>Category list</h3>
 		
+		<div th:if="${categories}">
+			<table class="table table-bordered">
+				<tr>
+					<th>Category</th>
+					<th>Active</th>
+					<th>Operation</th>
+				</tr>
+				<th:block th:each="category : ${categories}">
+					<tr>
+						<td th:text="${category.name}"></td>
+						<td><span th:text="${category.active ? 'true' : 'false'}"></span></td>
+						<td th:if="${category.active == true}"><a th:href="@{'/categories/deleteCategory?id=' + ${category.id}}">Delete</a></td>
+						<td th:if="${category.active == false}"><a th:href="@{'/categories/activateCategory?id=' + ${category.id}}">Activate</a></td>
+					</tr>
+			</table>
+		</div>
 	</div>
+
+
 </body>
 </html>

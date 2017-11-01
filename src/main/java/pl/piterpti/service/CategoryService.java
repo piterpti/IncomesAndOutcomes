@@ -22,4 +22,10 @@ public interface CategoryService {
 	
 	public int deleteByName(String name);
 	
+	public Category findById(long id);
+	
+	public void update(Category category);
+	
+	public List<Category> findActive();
+	
 }

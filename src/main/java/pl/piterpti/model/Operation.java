@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class Operation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
 	@Column(name = "value", precision = 10, scale = 2)

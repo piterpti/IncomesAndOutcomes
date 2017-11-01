@@ -44,6 +44,8 @@
 			 <button type="submit" class="btn btn-default">Sign in</button>
 		</form>
 		
+		<br>
+		
 		<div th:if="${param.error}" style="color:red;">Invalid username and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
 		
