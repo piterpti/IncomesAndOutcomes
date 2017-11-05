@@ -13,12 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.piterpti.model.Category;
 import pl.piterpti.service.CategoryService;
+import pl.piterpti.service.UserService;
+import pl.piterpti.toolkit.Toolkit;
 
 @Controller
 public class CategoryController {
 
 	private static final String VIEW_CATEGORIES = "/categories/categories";
 	private static final String VIEW_ADD_CATEGORY = "/categories/addCategory";
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -32,7 +37,9 @@ public class CategoryController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_CATEGORIES);
 		
-		List<Category> categories = categoryService.findAll();
+		String userName = Toolkit.getLoggedUser().getLogin();
+		
+		List<Category> categories = userService.findUserCategories(userName);
 		
 		mav.addObject("categories", categories);
 		
@@ -62,7 +69,17 @@ public class CategoryController {
 			return mav;
 		}
 		
-		Category categoryExist = categoryService.findByName(category.getName());
+		String userName = Toolkit.getLoggedUser().getLogin();
+		
+		List<Category> categories = userService.findUserCategories(userName);
+		
+		Category categoryExist = null;
+		
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName())) {
+				categoryExist = c;
+			}
+		}
 		
 		if (categoryExist != null) {
 			mav = addCategory();
@@ -80,20 +97,31 @@ public class CategoryController {
 	public ModelAndView deactivateCategory(@Param("id") long id) {
 		ModelAndView mav = new ModelAndView();
 		
-		// TODO categories should be assigned to users..
-//		User user = OperationToolkit.getLoggedUser();
-		
 		if (id < 1) {
 			return ErrorController.getErrorMav("Wrong category id (" + id + ")");
 		}
 		
-		Category category = categoryService.findById(id);
+		String userName = Toolkit.getLoggedUser().getLogin();
+		List<Category> categories = userService.findUserCategories(userName);
 		
+		
+		boolean exist = false;
+		for (Category cat : categories) {
+			if (cat.getId() == id) {
+				exist = true;
+				break;
+			}
+		}
+		
+		if (!exist) {
+			return ErrorController.getErrorMav("You do not have permission to delete this category");
+		}
+		
+		
+		Category category = categoryService.findById(id);
 		if (category == null) {
 			return ErrorController.getErrorMav("Category not found");
 		}
-		
-		category.setActive(false);
 		
 		categoryService.update(category);
 		
@@ -120,7 +148,7 @@ public class CategoryController {
 			return ErrorController.getErrorMav("Category not found");
 		}
 		
-		category.setActive(true);
+		// TODO category to user..
 		
 		categoryService.update(category);
 		

@@ -26,6 +26,4 @@ public interface CategoryService {
 	
 	public void update(Category category);
 	
-	public List<Category> findActive();
-	
 }

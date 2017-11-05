@@ -27,11 +27,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	
 	private static final String CATEGORIES_FILE_URL = "categories.txt";
 	
-	private final String[] START_CATEGORIES = new String[] {
-		"Others", "Food", "Fuel", "Sport", "Alcohol", "Entertaiment"	
-	};
-
 	boolean alreadySetup = false;
+	
+	boolean readCategoriesFromFile = false;
 
 	@Autowired
 	private RoleRepository roleRepository;
@@ -48,14 +46,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		}
 		
-		File categoriesFile = new File(CATEGORIES_FILE_URL);
-		if (categoriesFile.exists()) {
-			
-			importCategoriesFromFile(categoriesFile);
-			
+		if (readCategoriesFromFile) {
+			logger.info("Loading categories from file: " + CATEGORIES_FILE_URL);
+			File categoriesFile = new File(CATEGORIES_FILE_URL);
+			if (categoriesFile.exists()) {
+				
+				importCategoriesFromFile(categoriesFile);
+				
+			}
 		}
-		
-		importExampleCategories();
 	}
 	
 	/**
@@ -142,29 +141,5 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		}
 
 		alreadySetup = true;
-	}
-	
-	/**
-	 * Import categories on app startup
-	 */
-	private void importExampleCategories() {
-		
-		List<Category> categories = categoryService.findAll();
-		
-		for (String categoryName : START_CATEGORIES) {
-			boolean add = true;
-			for (Category cat : categories) {
-				if (cat.getName().equalsIgnoreCase(categoryName)) {
-					add = false;
-					break;
-				}
-			}
-			if (add) {
-				Category cat = new Category();
-				cat.setName(categoryName);
-				
-				categoryService.save(cat);
-			}
-		}
 	}
 }

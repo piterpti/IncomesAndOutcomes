@@ -1,17 +1,8 @@
 package pl.piterpti.toolkit;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import pl.piterpti.model.Operation;
-import pl.piterpti.model.User;
-import pl.piterpti.service.UserService;
 
 public class OperationToolkit {
-	
-	@Autowired
-	private static UserService userService;
 	
 	/**
 	 * Validating operation before add/edit to db
@@ -37,14 +28,4 @@ public class OperationToolkit {
 		
 		return null;
 	}
-	
-	public static User getLoggedUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
-
-		User user = userService.findByLogin(userName);
-		
-		return user;
-	}
-
 }

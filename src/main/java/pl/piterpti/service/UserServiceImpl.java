@@ -10,12 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.piterpti.constants.UserRoles;
+import pl.piterpti.model.Category;
 import pl.piterpti.model.Income;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.Role;
 import pl.piterpti.model.User;
 import pl.piterpti.repository.RoleRepository;
 import pl.piterpti.repository.UserRepository;
+import pl.piterpti.toolkit.Toolkit;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@Override
 	public User findByLogin(String login) {
@@ -42,6 +46,13 @@ public class UserServiceImpl implements UserService {
 		user.setEnabled(true);
 		Role userRole = roleRepository.findByRole(UserRoles.USER_ROLE_ADMIN);
 		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		
+		user.setCategories(Toolkit.getUserStartCategories());
+		
+		for (Category category : user.getCategories()) {
+			categoryService.save(category);
+		}
+		
 		userRepository.save(user);
 	}
 	
@@ -58,5 +69,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate) {
 		return userRepository.findUserIncomesInTime(userId, fromDate, toDate);
+	}
+
+	@Override
+	public List<Category> findUserCategories(String login) {
+		return userRepository.findUserCategories(login);
+	}
+
+	@Override
+	public Category findUserCategoryByName(String login, String category) {
+		return userRepository.findUserCategoryByName(login, category);
 	}
 }

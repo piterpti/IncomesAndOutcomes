@@ -3,6 +3,7 @@ package pl.piterpti.service;
 import java.util.Date;
 import java.util.List;
 
+import pl.piterpti.model.Category;
 import pl.piterpti.model.Income;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
@@ -22,6 +23,10 @@ public interface UserService {
 	public List<Outcome> findUserOutcomesInDate(long userId, Date fromDate, Date toDate);
 	
 	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate);
+	
+	public List<Category> findUserCategories(String login);
+	
+	public Category findUserCategoryByName(String login, String category);
 	
 
 }

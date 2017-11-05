@@ -56,6 +56,12 @@ public class IncomesController {
 	@Autowired
 	private UserService userService;
 	
+	private String userName;
+	
+	public IncomesController() {
+		
+	}
+	
 	
 	@RequestMapping(value = "/incomes/userIncomes", method = RequestMethod.GET)
 	public ModelAndView userIncomes(@Param("page") Integer page) {
@@ -235,7 +241,7 @@ public class IncomesController {
 		
 		mav.addObject("income", income);
 		
-		List<Category> categories = categoryService.findActive();
+		List<Category> categories = userService.findUserCategories(Toolkit.getLoggedUser().getLogin());
 		mav.addObject("categories", categories);
 		
 		
@@ -270,7 +276,7 @@ public class IncomesController {
 			
 			if (income != null && income.getCategory() != null) {
 				
-				Category category = categoryService.findByName(income.getCategory().getName());
+				Category category = userService.findUserCategoryByName(userName, income.getCategory().getName());
 				if (category != null) {
 					income.setCategory(category);
 				}
@@ -329,8 +335,8 @@ public class IncomesController {
 
 		mav.addObject("income", income);
 		
-		List<Category> categorires = categoryService.findActive();	
-		mav.addObject("categories", categorires);
+		List<Category> categories = userService.findUserCategories(Toolkit.getLoggedUser().getLogin());	
+		mav.addObject("categories", categories);
 		
 		return mav;
 	}
@@ -350,7 +356,7 @@ public class IncomesController {
 		}
 		
 		if (income.getCategory() != null) {
-			Category category = categoryService.findByName(income.getCategory().getName());
+			Category category = userService.findUserCategoryByName(Toolkit.getLoggedUser().getLogin() ,income.getCategory().getName());
 			
 			if (category != null) {
 				income.setCategory(category);

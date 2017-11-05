@@ -52,6 +52,10 @@ public class User {
 	@OneToMany
 	@JoinColumn(name = "user_id")
 	private List<Income> incomes;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_categories", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+	private List<Category> categories;
 
 	public long getId() {
 		return id;
@@ -115,6 +119,14 @@ public class User {
 
 	public void setIncomes(List<Income> incomes) {
 		this.incomes = incomes;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override

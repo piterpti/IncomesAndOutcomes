@@ -43,7 +43,6 @@ public class OutcomesController {
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
 	private static final String VIEW_EDIT_OUTCOME = "outcomes/editOutcome";
 	
-	
 	/**
 	 * Maximum number to display on user outcomes page
 	 */
@@ -69,7 +68,7 @@ public class OutcomesController {
 		outcome.setDate(new Date());
 		outcome.setCategory(new Category());
 		
-		List<Category> categorires = categoryService.findActive();
+		List<Category> categorires = categoryService.findAll();
 		
 		modelAndView.addObject("outcome", outcome);
 		modelAndView.addObject("categories", categorires);
@@ -376,7 +375,7 @@ public class OutcomesController {
 		
 		modelAndView.addObject("outcome", outcome);
 		
-		List<Category> categorires = categoryService.findActive();	
+		List<Category> categorires = categoryService.findAll();	
 		modelAndView.addObject("categories", categorires);
 		
 		modelAndView.setViewName(VIEW_EDIT_OUTCOME);
