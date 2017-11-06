@@ -5,14 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import pl.piterpti.model.Category;
 import pl.piterpti.model.DateFromTo;
-import pl.piterpti.model.User;
-import pl.piterpti.service.UserService;
 
 /**
  * Toolkit for various operation
@@ -20,10 +17,7 @@ import pl.piterpti.service.UserService;
  *
  */
 public class Toolkit {
-	
-	@Autowired
-	private static UserService userService;
-	
+		
 	/**
 	 * Start operation categories 
 	 */
@@ -69,12 +63,8 @@ public class Toolkit {
 	 * Get logged user
 	 * @return
 	 */
-	public static User getLoggedUser() {
+	public static String getLoggerUserName() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
-
-		User user = userService.findByLogin(userName);
-		
-		return user;
+		return auth.getName();
 	}
 }

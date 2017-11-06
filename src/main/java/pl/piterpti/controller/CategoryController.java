@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.piterpti.model.Category;
+import pl.piterpti.model.User;
 import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.UserService;
 import pl.piterpti.toolkit.Toolkit;
@@ -37,9 +38,9 @@ public class CategoryController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_CATEGORIES);
 		
-		String userName = Toolkit.getLoggedUser().getLogin();
+		String userName = Toolkit.getLoggerUserName();
 		
-		List<Category> categories = userService.findUserCategories(userName);
+		List<Category> categories = categoryService.findUserCategories(userName);
 		
 		mav.addObject("categories", categories);
 		
@@ -69,9 +70,9 @@ public class CategoryController {
 			return mav;
 		}
 		
-		String userName = Toolkit.getLoggedUser().getLogin();
+		String userName = Toolkit.getLoggerUserName();
 		
-		List<Category> categories = userService.findUserCategories(userName);
+		List<Category> categories = categoryService.findUserCategories(userName);
 		
 		Category categoryExist = null;
 		
@@ -87,7 +88,14 @@ public class CategoryController {
 			return mav;
 		}
 		
+		User user = userService.findByLogin(userName);
+		
+		categories.add(category);
+		user.setCategories(categories);
+		
 		categoryService.save(category);
+		userService.updateUser(user);
+		
 		mav = getCategories();
 		
 		return mav;
@@ -101,8 +109,8 @@ public class CategoryController {
 			return ErrorController.getErrorMav("Wrong category id (" + id + ")");
 		}
 		
-		String userName = Toolkit.getLoggedUser().getLogin();
-		List<Category> categories = userService.findUserCategories(userName);
+		String userName = Toolkit.getLoggerUserName();
+		List<Category> categories = categoryService.findUserCategories(userName);
 		
 		
 		boolean exist = false;
@@ -123,6 +131,7 @@ public class CategoryController {
 			return ErrorController.getErrorMav("Category not found");
 		}
 		
+		category.setActive(false);
 		categoryService.update(category);
 		
 		mav = getCategories();
@@ -135,21 +144,31 @@ public class CategoryController {
 	public ModelAndView activateCategory(@Param("id") long id) {
 		ModelAndView mav = new ModelAndView();
 		
-		// TODO categories should be assigned to users..
-//		User user = OperationToolkit.getLoggedUser();
-		
 		if (id < 1) {
 			return ErrorController.getErrorMav("Wrong category id (" + id + ")");
 		}
 		
-		Category category = categoryService.findById(id);
+		String userName = Toolkit.getLoggerUserName();
+		List<Category> categories = categoryService.findUserCategories(userName);
 		
+		boolean exist = false;
+		for (Category cat : categories) {
+			if (cat.getId() == id) {
+				exist = true;
+				break;
+			}
+		}
+		
+		if (!exist) {
+			return ErrorController.getErrorMav("You do not have permission to activate this category");
+		}
+		
+		Category category = categoryService.findById(id);
 		if (category == null) {
 			return ErrorController.getErrorMav("Category not found");
 		}
 		
-		// TODO category to user..
-		
+		category.setActive(true);
 		categoryService.update(category);
 		
 		mav = getCategories();

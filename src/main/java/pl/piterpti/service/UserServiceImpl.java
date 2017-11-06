@@ -70,14 +70,4 @@ public class UserServiceImpl implements UserService {
 	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate) {
 		return userRepository.findUserIncomesInTime(userId, fromDate, toDate);
 	}
-
-	@Override
-	public List<Category> findUserCategories(String login) {
-		return userRepository.findUserCategories(login);
-	}
-
-	@Override
-	public Category findUserCategoryByName(String login, String category) {
-		return userRepository.findUserCategoryByName(login, category);
-	}
 }

@@ -21,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void save(Category category) {
+		category.setActive(true);
 		categoryRepository.save(category);	}
 
 	@Override
@@ -34,11 +35,6 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public int deleteByName(String name) {
-		return categoryRepository.deleteByName(name);
-	}
-
-	@Override
 	public Category findById(long id) {
 		return categoryRepository.findOne(id);
 	}
@@ -47,5 +43,20 @@ public class CategoryServiceImpl implements CategoryService {
 	public void update(Category category) {
 		
 		categoryRepository.save(category);		
+	}
+
+	@Override
+	public Category findUserCategoryByName(String login, String category) {
+		return categoryRepository.findUserCategoryByName(login, category);
+	}
+
+	@Override
+	public List<Category> findUserCategories(String login) {
+		return categoryRepository.findUserCategories(login);
+	}
+
+	@Override
+	public List<Category> findUserActiveCategories(String login) {
+		return categoryRepository.findUserActiveCategories(login);
 	}	
 }

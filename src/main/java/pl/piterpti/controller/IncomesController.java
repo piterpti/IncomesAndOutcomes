@@ -55,14 +55,7 @@ public class IncomesController {
 	
 	@Autowired
 	private UserService userService;
-	
-	private String userName;
-	
-	public IncomesController() {
 		
-	}
-	
-	
 	@RequestMapping(value = "/incomes/userIncomes", method = RequestMethod.GET)
 	public ModelAndView userIncomes(@Param("page") Integer page) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -241,7 +234,7 @@ public class IncomesController {
 		
 		mav.addObject("income", income);
 		
-		List<Category> categories = userService.findUserCategories(Toolkit.getLoggedUser().getLogin());
+		List<Category> categories = categoryService.findUserActiveCategories(Toolkit.getLoggerUserName());
 		mav.addObject("categories", categories);
 		
 		
@@ -276,7 +269,7 @@ public class IncomesController {
 			
 			if (income != null && income.getCategory() != null) {
 				
-				Category category = userService.findUserCategoryByName(userName, income.getCategory().getName());
+				Category category = categoryService.findUserCategoryByName(userName, income.getCategory().getName());
 				if (category != null) {
 					income.setCategory(category);
 				}
@@ -335,7 +328,7 @@ public class IncomesController {
 
 		mav.addObject("income", income);
 		
-		List<Category> categories = userService.findUserCategories(Toolkit.getLoggedUser().getLogin());	
+		List<Category> categories = categoryService.findUserActiveCategories(Toolkit.getLoggerUserName());	
 		mav.addObject("categories", categories);
 		
 		return mav;
@@ -356,7 +349,7 @@ public class IncomesController {
 		}
 		
 		if (income.getCategory() != null) {
-			Category category = userService.findUserCategoryByName(Toolkit.getLoggedUser().getLogin() ,income.getCategory().getName());
+			Category category = categoryService.findUserCategoryByName(Toolkit.getLoggerUserName() ,income.getCategory().getName());
 			
 			if (category != null) {
 				income.setCategory(category);
@@ -376,10 +369,9 @@ public class IncomesController {
 	public ModelAndView deleteIncome(@Param("id") long id, @Param("date") String date) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(null);
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String userName = auth.getName();
 
+		String userName = Toolkit.getLoggerUserName();
+		
 		User user = userService.findByLogin(userName);
 
 		if (id < 1) {

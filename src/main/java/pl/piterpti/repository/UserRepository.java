@@ -77,21 +77,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 */
 	@Query("SELECT i FROM User u JOIN u.incomes i WHERE u.login = :login ORDER BY i.date DESC, i.id DESC")
 	public List<Income> findIncomesByUserWithLimit(@Param("login") String login, Pageable pageable);
-	
-	/**
-	 * Find user categories by user
-	 * @param login
-	 * @return user category list
-	 */
-	@Query("SELECT c FROM User u JOIN u.categories c WHERE u.login = :login")
-	public List<Category> findUserCategories(@Param("login") String login);
-	
-	/**
-	 * Search category in user categories by name
-	 * @param login
-	 * @param name
-	 * @return
-	 */
-	@Query("SELECT c FROM User u JOIN u.categories c WHERE u.login = :login AND c.name = :category")
-	public Category findUserCategoryByName(@Param("login") String login, @Param("category") String cateogry);
 }

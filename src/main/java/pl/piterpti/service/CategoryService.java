@@ -20,10 +20,13 @@ public interface CategoryService {
 	
 	public void deleteAll();
 	
-	public int deleteByName(String name);
-	
 	public Category findById(long id);
 	
 	public void update(Category category);
 	
+	public Category findUserCategoryByName(String login, String category);
+	
+	public List<Category> findUserCategories(String login);
+	
+	public List<Category> findUserActiveCategories(String login);
 }

@@ -68,7 +68,7 @@ public class OutcomesController {
 		outcome.setDate(new Date());
 		outcome.setCategory(new Category());
 		
-		List<Category> categorires = categoryService.findAll();
+		List<Category> categorires = categoryService.findUserActiveCategories(Toolkit.getLoggerUserName());
 		
 		modelAndView.addObject("outcome", outcome);
 		modelAndView.addObject("categories", categorires);
@@ -375,7 +375,7 @@ public class OutcomesController {
 		
 		modelAndView.addObject("outcome", outcome);
 		
-		List<Category> categorires = categoryService.findAll();	
+		List<Category> categorires = categoryService.findUserActiveCategories(Toolkit.getLoggerUserName());	
 		modelAndView.addObject("categories", categorires);
 		
 		modelAndView.setViewName(VIEW_EDIT_OUTCOME);
