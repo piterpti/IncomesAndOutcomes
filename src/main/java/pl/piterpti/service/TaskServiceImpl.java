@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import pl.piterpti.model.Task;
 import pl.piterpti.repository.TaskRepository;
 
+@Service
 public class TaskServiceImpl implements TaskService {
 
 	@Autowired
@@ -27,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<Task> getUserTodaysTasks(String login) {
+	public List<Task> getUserTodayTasks(String login) {
 		return taskRepository.getUserTasksInDate(login, new Date());
 	}
 

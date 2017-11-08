@@ -65,7 +65,7 @@
 							<td th:text="${income.shortDesc}"></td>
 							<td th:text="${income.value}"></td>
 							<td
-								th:text="${#dates.format(income.date, 'dd-MMM-yyyy')}"></td>
+								th:text="${#dates.format(income.date, 'dd-MM-yyyy')}"></td>
 							<td><a th:href="@{'deleteIncome?id=' + ${income.id}}">Delete</a></td>
 						</tr>
 				</table>

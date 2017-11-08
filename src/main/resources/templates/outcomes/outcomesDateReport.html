@@ -81,7 +81,7 @@
 			<div th:if="${opds}">
 					
 					<div>
-						Outcomes between <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MMM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MMM-yyyy')}"></span>
+						Outcomes between <span th:text="${#dates.format(datePeriod.fromDate, 'dd-MM-yyyy') + ' - ' + #dates.format(datePeriod.toDate, 'dd-MM-yyyy')}"></span>
 					</div>
 					
 					<table class="table table-bordered">
@@ -95,7 +95,7 @@
 						</tr>
 						<th:block th:each="opd : ${opds}">
 							<tr>
-								<td th:text="${#dates.format(opd.date, 'dd-MMM-yyyy')}"></td>
+								<td th:text="${#dates.format(opd.date, 'dd-MM-yyyy')}"></td>
 								<td>
 									<ul th:each="outcome : ${opd.operations}">
 										<li th:text="${outcome.shortDesc}"></li>

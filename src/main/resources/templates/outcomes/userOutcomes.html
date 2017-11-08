@@ -72,7 +72,7 @@
 							<td th:text="${outcome.shortDesc}"></td>
 							<td th:text="${outcome.value}"></td>
 							<td
-								th:text="${#dates.format(outcome.date, 'dd-MMM-yyyy')}"></td>
+								th:text="${#dates.format(outcome.date, 'dd-MM-yyyy')}"></td>
 							<td><a th:href="@{'deleteOutcome?id=' + ${outcome.id}}">Delete</a></td>
 						</tr>
 				</table>

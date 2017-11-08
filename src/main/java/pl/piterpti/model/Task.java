@@ -39,10 +39,14 @@ public class Task {
 	@Column(name = "estimatedTime")
 	private int estimatedTime;
 	
+	@Column(name = "priority")
+	private int priority;
+	
+	@Column(name = "completed")
+	private boolean completed;
+	
 	public Task() {}
 	
-	
-
 	public Task(String title, String description, Date date) {
 		super();
 		this.title = title;
@@ -97,4 +101,20 @@ public class Task {
 	public void setEstimatedTime(int estimatedTime) {
 		this.estimatedTime = estimatedTime;
 	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}	
 }

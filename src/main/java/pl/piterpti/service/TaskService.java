@@ -25,7 +25,7 @@ public interface TaskService {
 	 * @param login user login
 	 * @return list of user tasks
 	 */
-	public List<Task> getUserTodaysTasks(String login);
+	public List<Task> getUserTodayTasks(String login);
 	
 	/**
 	 * Add task to DB
