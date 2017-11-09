@@ -43,7 +43,10 @@ public class IncomesController {
 	public static final String VIEW_ADD_INCOME = "incomes/addIncome";
 	public static final String VIEW_EDIT_INCOME = "incomes/editIncome";
 	
-	private static final int MAX_INCOMES_TO_DISPLAY = 10;
+	/**
+	 * Maximum operation number to display in user incomes page
+	 */
+	private static final int MAX_INCOMES_TO_DISPLAY = 25;
 	
 	private Logger logger = Logger.getLogger(IncomesController.class);
 	

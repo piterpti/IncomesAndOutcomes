@@ -46,7 +46,7 @@ public class OutcomesController {
 	/**
 	 * Maximum number to display on user outcomes page
 	 */
-	private static final int MAX_OUTCOMES_TO_DISPLAY = 10;
+	private static final int MAX_OUTCOMES_TO_DISPLAY = 25;
 
 	private Logger logger = Logger.getLogger(OutcomesController.class);
 

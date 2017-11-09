@@ -51,7 +51,8 @@
 					</li>
 					
 					<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout [<span th:text="${#authentication.getPrincipal().getUsername()}" style="color: black; font-weight: bold;"></span>]</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/account}">Account settings</a></li>
 				</ul>
 			</div>
 		</nav>
