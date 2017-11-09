@@ -70,4 +70,16 @@ public class UserServiceImpl implements UserService {
 	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate) {
 		return userRepository.findUserIncomesInTime(userId, fromDate, toDate);
 	}
+
+	@Override
+	public boolean deactivateUser(long id) {
+		User u = userRepository.findOne(id);
+		if (u == null) {
+			throw new IllegalArgumentException("User with id " + id + " not found - can not delete") ;
+		}
+		
+		u.setEnabled(false);
+		
+		return userRepository.save(u) != null;
+	}
 }

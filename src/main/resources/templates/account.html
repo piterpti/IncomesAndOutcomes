@@ -23,11 +23,39 @@
 	
 	<div class="container">
 		
-		<h3>User <span th:text="${#authentication.getPrincipal().getUsername()}"></span> account managment</h3>
+		<h3>User <span th:text="${#authentication.getPrincipal().getUsername()}"></span> account management</h3>
 		
+		<a th:href="@{/deleteAccount}">Delete account</a>
+
+		<form th:action="@{/changePassword}" method="post">
+			<h3>Change password</h3>
+
+			<div class="form-group">
+				<label for="OldPassword">Old password</label>
+				 <input type="password"	class="form-control" id="oldPassword" th:value="${oldPassword}" name="oldPassword">
+			</div>
+			
+			<div class="form-group">
+				<label for="NewPassword">New password</label>
+				 <input type="password"	class="form-control" id="NewPassword" th:value="${newPassword}" name="newPassword">
+			</div>
+			
+			<div class="form-group">
+				<label for="NewPasswordRepeat">New password (confirm)</label>
+				 <input type="password"	class="form-control" id="NewPasswordRepeat" th:value="${newPasswordRepeat}" name="newPasswordRepeat">
+			</div>
+			
+			<button type="submit" class="btn btn-default">Change password</button>
+		</form>
 		
+		<div th:if="${changePswdError}">
+			<span th:text="${changePswdError}" style="color:red;"></span> 
+		</div>
 		
-				
+		<div th:if="${changePswdMsg}">
+			<span th:text="${changePswdMsg}" style="color:green;"></span>
+		</div>
+		
 	</div>
 </body>
 </html>
