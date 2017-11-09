@@ -19,43 +19,8 @@
 <body>
 
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a th:href="@{/home}">Home</a></li>
-				<li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-                        <li><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
-						<li><a th:href="@{/incomes/addIncome}">Add income</a></li>
-						<li><a th:href="@{/incomes/incomesDateReport}">Incomes date report</a></li>
-					</ul>
-				</li>
-				
-				<li class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-                        <li><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
-						<li><a th:href="@{/outcomes/addOutcome}">Add outcome</a></li>
-						<li><a th:href="@{/outcomes/outcomesDateReport}">Outcomes date report</a></li>
-					</ul>
-				</li>
-				
-				<li class="active dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Categories<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						 <li><a th:href="@{/categories}">Categories</a></li>
-						 <li><a th:href="@{/categories/addCategory}">Add category</a></li>
-					</ul>
-				</li>
-
-				<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-			</ul>
-		</div>
-	</nav>
-
-
+	<div th:replace="fragments/navigationFragment :: navigation"></div>
+	
 	<div class="container">
 		
 		<form action="#" th:action=@{/categories/addCategory} th:object="${category}" method="post" role="form">

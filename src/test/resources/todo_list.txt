@@ -1,0 +1,6 @@
+@TODO:
+- user password change
+- user allow account delete
+- task List: adding tasks, deleting tasks, editing task, today task list, get task list in date period
+- display username in nav
+- export nav to some file (now editing navigation is terrible)
