@@ -23,6 +23,8 @@ public class CategoryController {
 	private static final String VIEW_CATEGORIES = "/categories/categories";
 	private static final String VIEW_ADD_CATEGORY = "/categories/addCategory";
 	
+	private static final String ACTIVE_CATEGORIES = "activeCategories";
+	
 	@Autowired
 	private UserService userService;
 	
@@ -43,6 +45,7 @@ public class CategoryController {
 		List<Category> categories = categoryService.findUserCategories(userName);
 		
 		mav.addObject("categories", categories);
+		mav.addObject(ACTIVE_CATEGORIES, "active");
 		
 		return mav;
 	}
@@ -56,6 +59,7 @@ public class CategoryController {
 		Category category = new Category();
 		
 		mav.addObject("category", category);
+		mav.addObject(ACTIVE_CATEGORIES, "active");
 		
 		return mav;
 	}
@@ -97,6 +101,7 @@ public class CategoryController {
 		userService.updateUser(user);
 		
 		mav = getCategories();
+		
 		
 		return mav;
 	}

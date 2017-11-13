@@ -43,6 +43,8 @@ public class IncomesController {
 	public static final String VIEW_ADD_INCOME = "incomes/addIncome";
 	public static final String VIEW_EDIT_INCOME = "incomes/editIncome";
 	
+	private static final String ACTIVE_INCOMES = "activeIncomes";
+	
 	/**
 	 * Maximum operation number to display in user incomes page
 	 */
@@ -62,6 +64,7 @@ public class IncomesController {
 	@RequestMapping(value = "/incomes/userIncomes", method = RequestMethod.GET)
 	public ModelAndView userIncomes(@Param("page") Integer page) {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject(ACTIVE_INCOMES, "active");
 		modelAndView.setViewName(VIEW_USER_INCOMES);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -135,6 +138,7 @@ public class IncomesController {
 		
 		mav.setViewName(VIEW_DATE_INCOMES);
 		mav.addObject("datePeriod", Toolkit.getDatePeriodToForm());
+		mav.addObject(ACTIVE_INCOMES, "active");
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
@@ -152,6 +156,7 @@ public class IncomesController {
 	public ModelAndView showIncomeDateReport(DateFromTo dft, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_DATE_INCOMES);
+		mav.addObject(ACTIVE_INCOMES, "active");
 
 		if (bindingResult.hasErrors()) {
 			logger.warn("Binding result has errors when generating outcomes report");
@@ -233,6 +238,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/addIncome", method = RequestMethod.GET)
 	public ModelAndView addIncomeView() {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(ACTIVE_INCOMES, "active");
 		
 		Income income = new Income();
 		income.setDate(new Date());
@@ -250,6 +256,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/addIncome", method = RequestMethod.POST)
 	public ModelAndView addIncome(@Valid Income income, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(ACTIVE_INCOMES, "active");
 		
 		String errorMsg = OperationToolkit.validateOperation(income);
 		
@@ -301,6 +308,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/editIncome", method = RequestMethod.GET)
 	public ModelAndView editIncome(@Param("id") long id) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(ACTIVE_INCOMES, "active");
 		
 		mav.setViewName(VIEW_EDIT_INCOME);
 		
@@ -342,6 +350,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/editIncome", method = RequestMethod.POST)
 	public ModelAndView editIncome(@Param("income") @Valid Income income) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject(ACTIVE_INCOMES, "active");
 		
 		// validate income
 		String errorMsg = OperationToolkit.validateOperation(income);
@@ -373,7 +382,7 @@ public class IncomesController {
 	@RequestMapping(value = "incomes/deleteIncome")
 	public ModelAndView deleteIncome(@Param("id") long id, @Param("date") String date) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName(null);
+		mav.addObject(ACTIVE_INCOMES, "active");
 
 		String userName = Toolkit.getLoggerUserName();
 		

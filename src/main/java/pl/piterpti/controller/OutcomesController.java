@@ -43,6 +43,8 @@ public class OutcomesController {
 	private static final String VIEW_DATE_OUTCOMES = "outcomes/outcomesDateReport";
 	private static final String VIEW_EDIT_OUTCOME = "outcomes/editOutcome";
 	
+	private static final String ACTIVE_OUTCOMES = "activeOutcomes";
+	
 	/**
 	 * Maximum number to display on user outcomes page
 	 */
@@ -74,6 +76,7 @@ public class OutcomesController {
 		modelAndView.addObject("categories", categorires);
 
 		modelAndView.setViewName(VIEW_ADD_OUTCOME);
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 
 		return modelAndView;
 	}
@@ -100,6 +103,7 @@ public class OutcomesController {
 
 			modelAndView.setViewName(VIEW_ADD_OUTCOME);
 
+
 		} else {
 
 			if (outcome != null && outcome.getCategory() != null) {
@@ -124,6 +128,7 @@ public class OutcomesController {
 			modelAndView.addObject("outcomes", outcomes);
 
 			modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);
+			modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 
 		}
 
@@ -209,6 +214,7 @@ public class OutcomesController {
 		}
 		
 		modelAndView.addObject("currentPage", page.intValue());
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 		
 		return modelAndView;
 	}
@@ -238,6 +244,7 @@ public class OutcomesController {
 		}		
 
 		outcomeService.deleteOutcome(id);
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 
 		return modelAndView;
 	}
@@ -247,6 +254,7 @@ public class OutcomesController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 
 		modelAndView.addObject("datePeriod", Toolkit.getDatePeriodToForm());
 		
@@ -267,6 +275,7 @@ public class OutcomesController {
 		ModelAndView modelAndView = new ModelAndView();
 
 		modelAndView.setViewName(VIEW_DATE_OUTCOMES);
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 
 		if (bindingResult.hasErrors()) {
 			logger.warn("Binding result has errors when generating outcomes report");
@@ -347,6 +356,7 @@ public class OutcomesController {
 	@RequestMapping(value = "/outcomes/editOutcome", method = RequestMethod.GET)
 	public ModelAndView editOutcome(@Param("id") long id) {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String userName = auth.getName();
@@ -387,6 +397,7 @@ public class OutcomesController {
 	@RequestMapping(value = "/outcomes/editOutcome", method = RequestMethod.POST)
 	public ModelAndView saveEditedOutcome(@Param("outcome") @Valid Outcome outcome) {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject(ACTIVE_OUTCOMES, "active");
 		
 		// validate outcome
 		String errorMsg = OperationToolkit.validateOperation(outcome);

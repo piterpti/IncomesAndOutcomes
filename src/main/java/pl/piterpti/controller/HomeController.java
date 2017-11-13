@@ -18,6 +18,8 @@ public class HomeController {
 
 	public static final String VIEW_HOME = "index";
 	
+	public static final String ACTIVE_HOME = "activeHome";
+	
 	@Autowired
 	private OutcomeService outcomeService;
 	
@@ -44,6 +46,8 @@ public class HomeController {
 			}
 			
 		}
+		
+		mav.addObject(ACTIVE_HOME, "active");
 		
 		return mav;
 	}

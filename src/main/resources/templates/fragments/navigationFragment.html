@@ -26,8 +26,8 @@
 					<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a th:href="@{/home}">Home</a></li>
-					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
+					<li th:class="${activeHome}"><a th:href="@{/home}">Home</a></li>
+					<li sec:authorize="isAuthenticated()" th:class="${activeIncomes}" class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 	                        <li class="kopie"><a th:href="@{/incomes/userIncomes}">Incomes</a></li>
 							<li><a th:href="@{/incomes/addIncome}">Add income</a></li>
@@ -35,7 +35,7 @@
 						</ul>
 					</li>
 					
-					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
+					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu" th:class="${activeOutcomes}"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Outcomes <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 	                        <li class="kopie"><a th:href="@{/outcomes/userOutcomes}">Outcomes</a></li>
 							<li><a th:href="@{/outcomes/addOutcome}">Add outcome</a></li>
@@ -43,16 +43,16 @@
 						</ul>
 					</li>
 					
-					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Categories<span class="caret"></span></a>
+					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu" th:class="${activeCategories}"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Categories<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							 <li><a th:href="@{/categories}">Categories</a></li>
 							 <li><a th:href="@{/categories/addCategory}">Add category</a></li>
 						</ul>
 					</li>
 					
-					<li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+					<li sec:authorize="isAnonymous()" th:class="${activeLogin}"><a th:href="@{/login}">Login</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout [<span th:text="${#authentication.getPrincipal().getUsername()}" style="color: black; font-weight: bold;"></span>]</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/account}">Account settings</a></li>
+					<li sec:authorize="isAuthenticated()" th:class="${activeAccountSettings}"><a th:href="@{/account}">Account settings</a></li>
 				</ul>
 			</div>
 		</nav>

@@ -24,6 +24,8 @@ public class AccountController {
 	
 	private static final String VIEW_ACCOUNT = "/account";
 	
+	private static final String ACTIVE_ACCOUNT_SETTINGS = "activeAccountSettings";
+	
 	/**
 	 * Get account managment page
 	 * @return
@@ -46,6 +48,7 @@ public class AccountController {
 		mav.addObject("oldPassword", oldPassword);
 		mav.addObject("newPassword", newPassword);
 		mav.addObject("newPasswordRepeat", newPasswordRepeat);
+		mav.addObject(ACTIVE_ACCOUNT_SETTINGS , "active");
 		
 		return mav;
 	}
@@ -75,6 +78,7 @@ public class AccountController {
 	public ModelAndView changePassword(String oldPassword, String newPassword, String newPasswordRepeat) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_ACCOUNT);
+		mav.addObject(ACTIVE_ACCOUNT_SETTINGS , "active");
 		
 		if (oldPassword == null || oldPassword.isEmpty() || newPassword == null || newPassword.isEmpty()
 				|| newPasswordRepeat == null || newPasswordRepeat.isEmpty()) {
