@@ -163,7 +163,9 @@ public class IncomesController {
 		User user = userService.findByLogin(userName);
 		
 		Date toDate = new Date(dft.getToDate().getTime() + TimeUnit.DAYS.toMillis(1));
-		List<Income> incomes = userService.findUserIncomesInDate(user.getId(), dft.getFromDate(), toDate);
+		List<Income> incomes = incomeService.findUserIncomesInDate(user.getId(), dft.getFromDate(), toDate);
+		
+		
 		
 		if (!incomes.isEmpty()) {
 			
@@ -284,7 +286,7 @@ public class IncomesController {
 			
 			user.setIncomes(incomes);
 			
-			incomeService.addIncome(income);
+			incomeService.save(income);
 			
 			userService.updateUser(user);
 			

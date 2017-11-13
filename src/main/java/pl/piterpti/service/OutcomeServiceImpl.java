@@ -1,5 +1,6 @@
 package pl.piterpti.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import pl.piterpti.model.Outcome;
 import pl.piterpti.repository.OutcomeRepository;
-import pl.piterpti.repository.UserRepository;
 
 @Service("outcomeService")
 public class OutcomeServiceImpl implements OutcomeService {
@@ -16,11 +16,8 @@ public class OutcomeServiceImpl implements OutcomeService {
 	@Autowired
 	private OutcomeRepository outcomeRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
 	@Override
-	public void saveOutcome(Outcome outcome) {
+	public void save(Outcome outcome) {
 		outcomeRepository.save(outcome);
 	}
 
@@ -35,12 +32,12 @@ public class OutcomeServiceImpl implements OutcomeService {
 	}
 	
 	public List<Outcome> findUserOutcomesWithLimit(String login, Pageable pageable) {
-		return userRepository.findByUserWithLimit(login, pageable);		
+		return outcomeRepository.findUserOutcomesWithLimit(login, pageable);		
 	}
 
 	@Override
 	public Outcome findById(long id) {
-		return outcomeRepository.findById(id);
+		return outcomeRepository.findOne(id);
 	}
 
 	@Override
@@ -50,7 +47,12 @@ public class OutcomeServiceImpl implements OutcomeService {
 
 	@Override
 	public long userOutcomesCount(String login) {
-		return userRepository.userOutcomesCount(login);
+		return outcomeRepository.userOutcomesCount(login);
+	}
+
+	@Override
+	public List<Outcome> findUserOutcomesInDate(long userId, Date fromDate, Date toDate) {
+		return outcomeRepository.findUserOutcomesInTime(userId, fromDate, toDate);
 	}
 
 

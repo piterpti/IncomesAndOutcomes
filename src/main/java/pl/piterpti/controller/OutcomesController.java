@@ -117,7 +117,7 @@ public class OutcomesController {
 
 			user.setOutcomes(outcomes);
 
-			outcomeService.saveOutcome(outcome);
+			outcomeService.save(outcome);
 
 			userService.updateUser(user);
 
@@ -279,7 +279,7 @@ public class OutcomesController {
 
 		Date toDate = new Date(dft.getToDate().getTime() + TimeUnit.DAYS.toMillis(1));
 		
-		List<Outcome> outcomes = userService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), toDate);
+		List<Outcome> outcomes = outcomeService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), toDate);
 
 		if (!outcomes.isEmpty()) {
 
@@ -409,7 +409,7 @@ public class OutcomesController {
 		
 		if (outcome != null) {	
 			
-			outcomeService.saveOutcome(outcome);
+			outcomeService.save(outcome);
 		}
 		
 		modelAndView.setViewName("redirect:/" + VIEW_USER_OUTCOMES);

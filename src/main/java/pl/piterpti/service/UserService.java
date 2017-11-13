@@ -1,10 +1,5 @@
 package pl.piterpti.service;
 
-import java.util.Date;
-import java.util.List;
-
-import pl.piterpti.model.Income;
-import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
 
 /**
@@ -33,24 +28,6 @@ public interface UserService {
 	 * @param user
 	 */
 	public void updateUser(User user);
-	
-	/**
-	 * Find user outcomes in passed date period
-	 * @param userId
-	 * @param fromDate
-	 * @param toDate
-	 * @return user ourcomes in date period
-	 */
-	public List<Outcome> findUserOutcomesInDate(long userId, Date fromDate, Date toDate);
-	
-	/**
-	 * Find user incomes in passed date period
-	 * @param userId
-	 * @param fromDate
-	 * @param toDate
-	 * @return user incomes in date period
-	 */
-	public List<Income> findUserIncomesInDate(long userId, Date fromDate, Date toDate);
 	
 	/**
 	 * Deactivate user with passed id

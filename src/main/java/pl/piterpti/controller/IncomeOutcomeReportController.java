@@ -28,6 +28,8 @@ import pl.piterpti.model.Operation;
 import pl.piterpti.model.OperationsPerDay;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
+import pl.piterpti.service.IncomeService;
+import pl.piterpti.service.OutcomeService;
 import pl.piterpti.service.UserService;
 
 @Controller
@@ -39,6 +41,12 @@ public class IncomeOutcomeReportController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private IncomeService incomeService;
+	
+	@Autowired
+	private OutcomeService outcomeService;
 	
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 	
@@ -111,8 +119,8 @@ public class IncomeOutcomeReportController {
 		
 		Date toDate = new Date(dft.getToDate().getTime() + TimeUnit.DAYS.toMillis(1));
 		
-		List<Operation> operations = new ArrayList<>(userService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), toDate));
-		operations.addAll(userService.findUserIncomesInDate(user.getId(), dft.getFromDate(), toDate));
+		List<Operation> operations = new ArrayList<>(outcomeService.findUserOutcomesInDate(user.getId(), dft.getFromDate(), toDate));
+		operations.addAll(incomeService.findUserIncomesInDate(user.getId(), dft.getFromDate(), toDate));
 		
 		if (sortBy == null) {
 			sortBy = "date";

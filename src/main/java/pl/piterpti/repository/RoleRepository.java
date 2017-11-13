@@ -15,6 +15,11 @@ import pl.piterpti.model.Role;
 @Repository("roleRepository")
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
+	/**
+	 * Find role by name
+	 * @param role
+	 * @return
+	 */
 	public Role findByRole(String role);
 	
 }

@@ -1,10 +1,8 @@
 package pl.piterpti.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -20,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
-import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.IncomeService;
 import pl.piterpti.service.OutcomeService;
-import pl.piterpti.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,12 +31,6 @@ public class OutcomeDAOTest {
 	@Autowired
 	private IncomeService incomeService;
 	
-	@Autowired
-	private CategoryService categoryService;
-
-	@Autowired
-	private UserService userService;
-	
 	private Random random = new Random();
 	
 	@Test
@@ -50,7 +40,7 @@ public class OutcomeDAOTest {
 		List<Outcome> outcomes = outcomeService.findAll();
 		
 		int outcomeSize = outcomes.size();
-		outcomeService.saveOutcome(new Outcome(new BigDecimal(200), new Date(), "ABC"));
+		outcomeService.save(new Outcome(new BigDecimal(200), new Date(), "ABC"));
 		outcomes = outcomeService.findAll();
 		
 		assertEquals(outcomeSize + 1, outcomes.size());
@@ -63,36 +53,14 @@ public class OutcomeDAOTest {
 		outcomeService.deleteAll();
 		
 		Outcome outcome = new Outcome(new BigDecimal(200), new Date(), "ABC");
-		outcomeService.saveOutcome(outcome);
+		outcomeService.save(outcome);
 		List<Outcome> outcomes = outcomeService.findAll();
 		
 		assertEquals(1, outcomes.size());
 		assertEquals("ABC", outcomes.get(0).getShortDesc());
 	}
 	
-	@Test
-	public void testAddRandomOutcomes() {
-		
-		List<Outcome> outcomes = new ArrayList<>();
-		List<Category> categories = categoryService.findAll();
-		
-		User user = userService.findByLogin("piter");
-		
-		assertNotNull(user);
-		
-		for (int i = 0; i < 105; i++) {
-			outcomes.add(generateRandomOutcome(categories, user));
-		}
-		
-		user.setOutcomes(outcomes);
-		
-		for (Outcome o : outcomes) {
-			outcomeService.saveOutcome(o);
-		}
-		
-		userService.updateUser(user);
-	}
-	
+	@SuppressWarnings("unused")
 	private Outcome generateRandomOutcome(List<Category> categories, User user) {
 		Outcome outcome = new Outcome();
 		

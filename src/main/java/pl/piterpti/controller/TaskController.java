@@ -2,10 +2,7 @@ package pl.piterpti.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,10 +36,9 @@ public class TaskController {
 	
 	@RequestMapping(value = "tasks/addTask", method = RequestMethod.POST)
 	public ModelAndView addTask() {
-		String userName = Toolkit.getLoggerUserName();
+//		String userName = Toolkit.getLoggerUserName();
 		
-		
-		
+		// TODO add task management
 		
 		return getTodaysUserTask();
 	}
