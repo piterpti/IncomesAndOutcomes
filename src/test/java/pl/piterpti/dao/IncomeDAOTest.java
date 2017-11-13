@@ -1,6 +1,7 @@
 package pl.piterpti.dao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -15,7 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.Income;
 import pl.piterpti.model.User;
+import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.IncomeService;
+import pl.piterpti.service.UserService;
 
 
 @RunWith(SpringRunner.class)
@@ -25,10 +28,16 @@ public class IncomeDAOTest {
 	@Autowired
 	private IncomeService incomeService;
 	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
 	private Random random = new Random();
 	
 	@SuppressWarnings("unused")
-	private Income generateRandomOutcome(List<Category> categories, User user) {
+	private Income generateRandomIncome(List<Category> categories) {
 		Income income = new Income();
 		
 		income.setValue(new BigDecimal(random.nextInt(250) + 30));
@@ -57,6 +66,27 @@ public class IncomeDAOTest {
 	@Test
 	public void testClearALLIncomes() {
 		incomeService.deleteAll();
+	}
+	
+	@SuppressWarnings("unused")
+	// ONLY FOR TEST USAGES
+	private void testGenerateRandomIncomes() {
+		
+		User user = userService.findByLogin("piter");
+		
+		List<Income> incomesList = new ArrayList<>();
+		List<Category> categories =  categoryService.findUserActiveCategories(user.getLogin());
+		
+		if (user != null) {
+			for (int i = 0; i < 100; i++) {
+				Income income = generateRandomIncome(categories);
+				incomesList.add(income);
+				incomeService.save(income);
+			}
+		}
+		
+		user.setIncomes(incomesList);
+		userService.updateUser(user);
 	}
 	
 	

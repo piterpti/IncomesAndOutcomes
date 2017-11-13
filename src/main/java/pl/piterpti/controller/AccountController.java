@@ -108,7 +108,7 @@ public class AccountController {
 					
 				} else {
 					mav = getAccountPage(null, null ,null);
-					mav.addObject("changePswdError", "Password must be min 6 chars length and contains mminimum one digit!");
+					mav.addObject("changePswdError", "Password must be at least 6 chars length and contain minimum one digit!");
 				}
 				
 			} else {

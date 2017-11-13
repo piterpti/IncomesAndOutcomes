@@ -55,4 +55,12 @@ public class UserDAOTest {
 	}
 	
 	
+	@Test
+	public void testActivateAllUsers() {
+		User piter = userService.findByLogin("piter");
+		piter.setEnabled(true);
+		userService.updateUser(piter);
+		
+	}
+	
 }

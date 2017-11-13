@@ -14,5 +14,4 @@ public class OtherTests extends TestCase {
 		String a = String.valueOf(((long)(Math.ceil((double)l / MAX_OUTCOMES_TO_DISPLAY))));
 		assertEquals("11", a);
 	}
-	
 }

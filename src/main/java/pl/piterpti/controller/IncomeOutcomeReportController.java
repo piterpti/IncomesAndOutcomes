@@ -61,6 +61,7 @@ public class IncomeOutcomeReportController {
 		
 		
 		mav.setViewName("redirect:/index");
+		mav.addObject(HomeController.ACTIVE_HOME, "active");
 		return mav;
 	}
 	
@@ -90,6 +91,7 @@ public class IncomeOutcomeReportController {
 			mav = goToIndex(null, null, null, null);
 		}
 		
+		mav.addObject(HomeController.ACTIVE_HOME, "active");
 		return mav;
 	}
 	
@@ -212,6 +214,7 @@ public class IncomeOutcomeReportController {
 		}
 		
 		mav.addObject("datePeriod", dft);
+		mav.addObject(HomeController.ACTIVE_HOME, "active");
 		return mav;
 	}
 

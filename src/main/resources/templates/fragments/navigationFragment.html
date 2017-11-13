@@ -20,12 +20,18 @@
 
 	<div th:fragment="navigation">
 	
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
-				</div>
-				<ul class="nav navbar-nav">
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>                        
+		      </button>
+		      <a class="navbar-brand" th:href="@{/home}">Incomes And Outcomes</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		     	 <ul class="nav navbar-nav">
 					<li th:class="${activeHome}"><a th:href="@{/home}">Home</a></li>
 					<li sec:authorize="isAuthenticated()" th:class="${activeIncomes}" class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Incomes<span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -49,12 +55,15 @@
 							 <li><a th:href="@{/categories/addCategory}">Add category</a></li>
 						</ul>
 					</li>
-					
-					<li sec:authorize="isAnonymous()" th:class="${activeLogin}"><a th:href="@{/login}">Login</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout [<span th:text="${#authentication.getPrincipal().getUsername()}" style="color: black; font-weight: bold;"></span>]</a></li>
 					<li sec:authorize="isAuthenticated()" th:class="${activeAccountSettings}"><a th:href="@{/account}">Account settings</a></li>
+					
 				</ul>
-			</div>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li sec:authorize="isAnonymous()" th:class="${activeLogin}"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout [<span th:text="${#authentication.getPrincipal().getUsername()}" style="color: white; font-weight: bold;"></span>]</a></li>
+		      </ul>
+		    </div>
+		  </div>
 		</nav>
 		
 	</div>

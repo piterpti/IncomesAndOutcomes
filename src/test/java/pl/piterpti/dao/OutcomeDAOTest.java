@@ -3,6 +3,7 @@ package pl.piterpti.dao;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -18,8 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.Outcome;
 import pl.piterpti.model.User;
+import pl.piterpti.service.CategoryService;
 import pl.piterpti.service.IncomeService;
 import pl.piterpti.service.OutcomeService;
+import pl.piterpti.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,6 +33,12 @@ public class OutcomeDAOTest {
 	
 	@Autowired
 	private IncomeService incomeService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	private Random random = new Random();
 	
@@ -61,7 +70,7 @@ public class OutcomeDAOTest {
 	}
 	
 	@SuppressWarnings("unused")
-	private Outcome generateRandomOutcome(List<Category> categories, User user) {
+	private Outcome generateRandomOutcome(List<Category> categories) {
 		Outcome outcome = new Outcome();
 		
 		outcome.setValue(new BigDecimal(random.nextInt(250) + 30));
@@ -91,6 +100,27 @@ public class OutcomeDAOTest {
 	public void testClearOutcomesAndIncomes() {
 		outcomeService.deleteAll();
 		incomeService.deleteAll();
+	}
+	
+	@SuppressWarnings("unused")
+	// ONLY FOR TEST USAGES
+	private void testGenerateRandomOutcomes() {
+		
+		User user = userService.findByLogin("piter");
+		
+		List<Outcome> outcomesList = new ArrayList<>();
+		List<Category> categories =  categoryService.findUserActiveCategories(user.getLogin());
+		
+		if (user != null) {
+			for (int i = 0; i < 100; i++) {
+				Outcome outcome = generateRandomOutcome(categories);
+				outcomesList.add(outcome);
+				outcomeService.save(outcome);
+			}
+		}
+		
+		user.setOutcomes(outcomesList);
+		userService.updateUser(user);
 	}
 	
 }

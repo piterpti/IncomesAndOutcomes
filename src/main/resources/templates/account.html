@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Title</title>
+<title>Account management</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -16,6 +16,7 @@
 	<link th:href="@{/css/style.css}" href="static/css/style.css"
 	rel="stylesheet" type="text/css" />
 </head>
+
 <body>
 
 
@@ -25,7 +26,16 @@
 		
 		<h3>User <span th:text="${#authentication.getPrincipal().getUsername()}"></span> account management</h3>
 		
-		<a th:href="@{/deleteAccount}">Delete account</a>
+		<div>
+			If you want to delete Your account <a id="deleteAccount" href="#" onclick="showDeleteButton();">click here</a>.
+		</div>
+		
+		<div id="deleteAccountForm" style="display: none;">
+			<p style="color: red;">Warning! This operation is irreversible</p>
+			<form th:action="@{/deleteAccount}">
+				<button type="submit" class="btn btn-danger">Delete account</button>
+			</form>
+		</div>
 
 		<form th:action="@{/changePassword}" method="post">
 			<h3>Change password</h3>
@@ -45,7 +55,7 @@
 				 <input type="password"	class="form-control" id="NewPasswordRepeat" th:value="${newPasswordRepeat}" name="newPasswordRepeat">
 			</div>
 			
-			<button type="submit" class="btn btn-default">Change password</button>
+			<button type="submit" class="btn btn-success">Change password</button>
 		</form>
 		
 		<div th:if="${changePswdError}">
@@ -57,5 +67,22 @@
 		</div>
 		
 	</div>
+	
+	
+	<script>
+	
+		function showDeleteButton() {
+			var element = document.getElementById("deleteAccountForm");
+			var textEl = document.getElementById("deleteAccountTxt");
+			if (element.style.display === "none") {
+				element.style.display = "block";
+			} else {
+				element.style.display = "none";
+			}
+		}
+	
+	</script>
+	
+	
 </body>
 </html>
