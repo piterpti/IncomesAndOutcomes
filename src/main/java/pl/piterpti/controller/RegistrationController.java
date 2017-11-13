@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.piterpti.model.User;
 import pl.piterpti.service.UserService;
+import pl.piterpti.toolkit.Toolkit;
 
 @Controller
 public class RegistrationController {
@@ -71,6 +72,13 @@ public class RegistrationController {
 			return modelAndView;
 		}
 
+		if (!Toolkit.validatePassword(String.valueOf(user.getPassword()))) {
+			
+			modelAndView.addObject("errorMessage", "Password must be min 6 chars length and contains mminimum one digit!");
+			return modelAndView;
+			
+		}
+		
 		if (bindingResult.hasErrors()) {
 
 			modelAndView.addObject("errorMessage", "Error when user adding");
@@ -80,7 +88,7 @@ public class RegistrationController {
 
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered succesfully");
-
+			modelAndView.setViewName("redirect:/login");
 		}
 
 		return modelAndView;

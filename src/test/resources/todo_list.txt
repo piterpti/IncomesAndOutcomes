@@ -1,6 +1,4 @@
 @TODO:
-- user password change
-^^ acount setting page (working on)
 - task List: adding tasks, deleting tasks, editing task, today task list, get task list in date period
 - active page higlighted in navigation (actual only "home" page is higlighted all time)
 - add login and password validation

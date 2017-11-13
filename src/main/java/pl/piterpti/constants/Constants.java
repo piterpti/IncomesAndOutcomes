@@ -10,5 +10,8 @@ public class Constants {
 	
 	/** Error msg parameter name */
 	public static final String PARAM_ERROR_MSG = "errorMsg";
+	
+	/** Minimal user password length */
+	public static final int USER_PASSWORD_MIN_LENGTH = 6;
 
 }

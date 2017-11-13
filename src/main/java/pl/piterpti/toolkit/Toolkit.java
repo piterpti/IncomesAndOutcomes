@@ -7,9 +7,12 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import pl.piterpti.constants.Constants;
 import pl.piterpti.model.Category;
 import pl.piterpti.model.DateFromTo;
+import pl.piterpti.model.User;;
 
 /**
  * Toolkit for various operation
@@ -67,4 +70,45 @@ public class Toolkit {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getName();
 	}
+	
+	/**
+	 * USer password validator
+	 * @param password
+	 * @return validate ok or not
+	 */
+	public static boolean validatePassword(String password) {
+		if (password.length() < Constants.USER_PASSWORD_MIN_LENGTH) {
+			return false;
+		}
+		
+		boolean isDigit = false;
+		boolean isLetter = false;
+		for (int i = 0; i < password.length(); i++) {
+			if (Character.isDigit(password.charAt(i))) {
+				isDigit = true;
+			} else if (Character.isLetter(password.charAt(i))) {
+				isLetter = true;
+			}
+		}
+		
+		return isDigit && isLetter;
+	}
+	
+	public static boolean validateUserPassword(User user, String oldPassword) {
+		
+		if (user == null || oldPassword == null || oldPassword.isEmpty()) {
+			throw new IllegalArgumentException("Data not complete - validating password failed");
+		}
+		
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String old = String.valueOf(user.getPassword());
+		
+		if (bCryptPasswordEncoder.matches(oldPassword, old)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 }

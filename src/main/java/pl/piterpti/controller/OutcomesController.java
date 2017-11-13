@@ -104,7 +104,8 @@ public class OutcomesController {
 
 			if (outcome != null && outcome.getCategory() != null) {
 				
-				Category category = categoryService.findByName(outcome.getCategory().getName());
+				Category category = categoryService.findUserCategoryByName(Toolkit.getLoggerUserName(),
+						outcome.getCategory().getName());
 				if (category != null) {
 					outcome.setCategory(category);
 				}
@@ -398,7 +399,8 @@ public class OutcomesController {
 		}
 		
 		if (outcome.getCategory() != null) {
-			Category category = categoryService.findByName(outcome.getCategory().getName());
+			Category category = categoryService.findUserCategoryByName(Toolkit.getLoggerUserName(),
+					outcome.getCategory().getName());
 			
 			if (category != null) {
 				outcome.setCategory(category);

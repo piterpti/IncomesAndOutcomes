@@ -78,14 +78,38 @@ public class AccountController {
 		
 		if (oldPassword == null || oldPassword.isEmpty() || newPassword == null || newPassword.isEmpty()
 				|| newPasswordRepeat == null || newPasswordRepeat.isEmpty()) {
+			
 			mav = getAccountPage(oldPassword, newPassword, newPasswordRepeat);
 			mav.addObject("changePswdError", "You need to fill all fields");
+			
+			
+		} else if (!newPassword.equals(newPasswordRepeat)) {
+			mav = getAccountPage(null, null ,null);
+			mav.addObject("changePswdError", "Entered passwords are diffrent!");
+			
 		} else {
-			// TODO validating password
-			boolean validateSucces = true;
+			User user = userService.findByLogin(Toolkit.getLoggerUserName());
+			
+			boolean validateSucces = Toolkit.validateUserPassword(user, oldPassword);
 			
 			if (validateSucces) {
-				mav.addObject("changePswdMsg", "Password has changed");
+				
+				validateSucces = Toolkit.validatePassword(newPassword);
+				if (validateSucces) {
+					
+					user.setPassword(newPassword.toCharArray());
+					
+					userService.saveUser(user);
+					mav.addObject("changePswdMsg", "Password has changed");
+					
+				} else {
+					mav = getAccountPage(null, null ,null);
+					mav.addObject("changePswdError", "Password must be min 6 chars length and contains mminimum one digit!");
+				}
+				
+			} else {
+				mav = getAccountPage(null, null ,null);
+				mav.addObject("changePswdError", "Old password is incorrect!");
 			}
 		}
 		

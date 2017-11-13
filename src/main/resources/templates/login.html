@@ -24,18 +24,21 @@
 	<div class="container">
 		<form th:action="@{/login}" method="post">
 			<div class="form-group">
-		      <label for="login">Username</label>
+		      <label for="login">User name</label>
 		      <input type="text" class="form-control" id="login" placeholder="Enter login" name="login">
     		</div>
     		<div class="form-group">
 		      <label for="password">Password</label>
-		      <input type="text" class="form-control" id="password" placeholder="Enter password" name="password">
+		      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
     		</div>
 			 <button type="submit" class="btn btn-default">Sign in</button>
 		</form>
 		
 		<br>
 		
+		<div th:if="${successMessage}">
+			<span th:text="${successMessage}" style="color: green;"></span>
+		</div>
 		<div th:if="${param.error}" style="color:red;">Invalid username and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
 		
