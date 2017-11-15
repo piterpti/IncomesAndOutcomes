@@ -15,6 +15,9 @@
 	
 	<link th:href="@{/css/style.css}" href="../static/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
+	
 </head>
 <body>
 
@@ -22,7 +25,7 @@
 	<div th:replace="fragments/navigationFragment :: navigation"></div>
 
 	<div class="container">
-		<form action="#" th:action=@{addIncome} th:object="${income}"
+		<form action="#" th:action=@{addIncome} th:object="${income}" onsubmit="return(addOperationValidate('Income'));"
 			method="post" role="form">
 			<h3>Add income</h3>
 
@@ -40,7 +43,7 @@
 			
 				<div class="form-group">
 					<label for="Category">Category</label>
-					<select class="form-control" th:field="*{category.name}">
+					<select class="form-control" th:field="*{category.name}" id="Category">
 						<option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"/>
 					</select>
 				</div>
@@ -56,6 +59,10 @@
 			</div>
 			
 			<br>
+			
+			<div>
+				<span id="jsValidator" style="color:red;"></span>
+			</div>
 			
 			<div th:if="${errorMessage}">
 				<span th:text="${errorMessage}" style="color:red;"></span>
