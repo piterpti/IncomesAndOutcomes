@@ -1,0 +1,5 @@
+.activePage {
+	font-weight: bold; 
+	pointer-events: none; 
+	cursor: default;
+}

@@ -74,7 +74,7 @@ public class RegistrationController {
 
 		if (!Toolkit.validatePassword(String.valueOf(user.getPassword()))) {
 			
-			modelAndView.addObject("errorMessage", "Password must be min 6 chars length and contains mminimum one digit!");
+			modelAndView.addObject("errorMessage", "Password must be min 6 chars length and contains minimum one digit!");
 			return modelAndView;
 			
 		}

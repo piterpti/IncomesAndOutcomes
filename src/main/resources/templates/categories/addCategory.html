@@ -15,6 +15,9 @@
 	
 	<link th:href="@{/css/style.css}" href="../static/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
+	
 </head>
 <body>
 
@@ -23,7 +26,8 @@
 	
 	<div class="container">
 		
-		<form action="#" th:action=@{/categories/addCategory} th:object="${category}" method="post" role="form">
+		<form action="#" th:action=@{/categories/addCategory} th:object="${category}" method="post"  onsubmit="return(validateCategory());"
+			role="form">
 			<h2>Add category</h2>
 			
 			<div>
@@ -37,6 +41,10 @@
 		</form>
 		
 		<br>
+		
+		<div>
+				<span id="jsValidator" style="color:red;"></span>
+			</div>
 		
 		<div th:if="${errorMessage}">
 				<span th:text="${errorMessage}" style="color:red;"></span>

@@ -15,25 +15,27 @@
 	
 	<link th:href="@{/css/style.css}" href="static/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
 </head>
 <body>
 
 <div th:replace="fragments/navigationFragment :: navigation"></div>
 	<div class="container">
 
-		<form th:action="@{report}" th:object="${datePeriod}"
+		<form th:action="@{report}" th:object="${datePeriod}" onsubmit="return(validateReportDates());"
 			method="post">
 
 			<h2>Show operations between dates</h2>
 			<div>
 				<div class="form-group">
 					<label for="dateFrom">Date from</label>
-					<input type="text" class="form-control" id="fromDate" th:field="*{fromDate}" placeholder="From">
+					<input type="text" class="form-control" id="fromDate" th:field="*{fromDate}" placeholder="From" id="fromDate">
 				</div>
 				
 				<div class="form-group">
 					<label for="dateTo">Date to</label>
-					<input type="text" class="form-control" id="toDate" th:field="*{toDate}" placeholder="To">
+					<input type="text" class="form-control" id="toDate" th:field="*{toDate}" placeholder="To" id="toDate">
 				</div>
 			
 				<button type="submit" class="btn btn-primary">Show report</button>
@@ -41,6 +43,12 @@
 			</div>
 
 		</form>
+		
+		<div>
+			<span id="jsValidator" style="color:red;"></span>
+		</div>
+		
+		<br><br>
 		
 		<div th:if="${opds}">
 				
