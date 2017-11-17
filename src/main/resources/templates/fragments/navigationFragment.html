@@ -59,6 +59,7 @@
 					
 				</ul>
 		      <ul class="nav navbar-nav navbar-right">
+		        <li sec:authorize="isAnonymous()" th:class="${activeRegistration}"><a th:href="@{/registration}">Create account</a></li>
 		        <li sec:authorize="isAnonymous()" th:class="${activeLogin}"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout [<span th:text="${#authentication.getPrincipal().getUsername()}" style="color: white; font-weight: bold;"></span>]</a></li>
 		      </ul>

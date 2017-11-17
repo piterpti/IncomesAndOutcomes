@@ -19,6 +19,8 @@ import pl.piterpti.toolkit.Toolkit;
 @Controller
 public class RegistrationController {
 
+	private static final String ACTIVE_REGISTRATION = "activeRegistration";
+	
 	@Autowired
 	private UserService userService;
 
@@ -31,6 +33,7 @@ public class RegistrationController {
 		if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
 
 			modelAndView.setViewName("redirect:/index");
+			modelAndView.addObject(HomeController.ACTIVE_HOME, "active");
 
 		} else {
 
@@ -39,6 +42,7 @@ public class RegistrationController {
 			User user = new User();
 
 			modelAndView.addObject("user", user);
+			modelAndView.addObject(ACTIVE_REGISTRATION, "active");
 		}
 
 		return modelAndView;
@@ -50,6 +54,7 @@ public class RegistrationController {
 		User userExist = userService.findByLogin(user.getLogin());
 
 		modelAndView.setViewName("registration");
+		modelAndView.addObject("", "active");
 		
 		if (user.getLogin() == null || user.getLogin().isEmpty()) {
 			modelAndView.addObject("errorMessage", "Field login can not be empty");
