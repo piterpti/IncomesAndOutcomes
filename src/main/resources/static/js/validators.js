@@ -39,9 +39,9 @@ function validateReportDates() {
 	
 	var text;
 	if (isEmpty(fromDate)) {
-		text = "From date can not be empty!";
+		text = "Date 'from' can not be empty!";
 	} else if (isEmpty(toDate)) {
-		text = "To date can not be empty!";
+		text = "Date 'to' can not be empty!";
 	} else if (!datePattern.test(fromDate)) {
 		text = "Date 'from' should be in format DD-MM-YYYY!";
 	} else if (!datePattern.test(toDate)) {
@@ -107,6 +107,34 @@ function validatePassword(password) {
 	    return true;
 	} else {
 		return false;
+	}
+}
+
+function validatePasswordChange() {
+	var oldPassword = document.getElementById("oldPassword").value;
+	var newPassword = document.getElementById("newPassword").value;
+	var newPasswordRepeat = document.getElementById("newPasswordRepeat").value;
+	
+	var text;
+	if (isEmpty(oldPassword)) {
+		text = "Old password can no be empty!";
+	} else if (isEmpty(newPassword)) {
+		text = "Next password can not be empty!";
+	} else if (isEmpty(newPasswordRepeat)) {
+		text = "New password repeat can not be empty";
+	} else if (newPassword.length < 6) {
+		text = "Password must be at least 6 characters length!";
+	} else if (!validatePassword(newPassword)) {
+		text = "Password must contain at least 1 digit!";
+	} else if (newPassword != newPasswordRepeat) {
+		text = "Entered password are not equals";
+	}
+	
+	if (!isEmpty(text)) {
+		document.getElementById("jsValidator").innerHTML = text;
+		return false;
+	} else {
+		return true
 	}
 }
 

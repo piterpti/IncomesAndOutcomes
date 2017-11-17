@@ -15,6 +15,8 @@
 	
 	<link th:href="@{/css/style.css}" href="static/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 			</form>
 		</div>
 
-		<form th:action="@{/changePassword}" method="post">
+		<form th:action="@{/changePassword}" method="post" onsubmit="return(validatePasswordChange());">
 			<h3>Change password</h3>
 
 			<div class="form-group">
@@ -47,16 +49,22 @@
 			
 			<div class="form-group">
 				<label for="NewPassword">New password</label>
-				 <input type="password"	class="form-control" id="NewPassword" th:value="${newPassword}" name="newPassword">
+				 <input type="password"	class="form-control" id="newPassword" th:value="${newPassword}" name="newPassword">
 			</div>
 			
 			<div class="form-group">
 				<label for="NewPasswordRepeat">New password (confirm)</label>
-				 <input type="password"	class="form-control" id="NewPasswordRepeat" th:value="${newPasswordRepeat}" name="newPasswordRepeat">
+				 <input type="password"	class="form-control" id="newPasswordRepeat" th:value="${newPasswordRepeat}" name="newPasswordRepeat">
 			</div>
 			
 			<button type="submit" class="btn btn-success">Change password</button>
 		</form>
+		
+		<br>
+		
+		<div>
+			<span id="jsValidator" style="color:red;"></span>
+		</div>
 		
 		<div th:if="${changePswdError}">
 			<span th:text="${changePswdError}" style="color:red;"></span> 
