@@ -96,6 +96,30 @@ public class TaskController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "tasks/changeCompleted", method = RequestMethod.GET)
+	public ModelAndView setCompleted(long id) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/tasks");
+		
+		if (id < 1) {
+			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
+		}
+		
+		String userName = Toolkit.getLoggerUserName();
+		List<Task> userTasks = taskService.getUserTaskById(userName, id);
+		
+		if (userTasks == null || userTasks.isEmpty()) {
+			return ErrorController.getErrorMav("You do not have permission to delete selected task");
+		}
+		
+		for (Task task : userTasks) {
+			task.setCompleted(!task.isCompleted());
+			taskService.updateTask(task);
+		}
+		
+		return mav;
+	}
 
 	private static List<PairNameValue> getPriorities() {
 		List<PairNameValue> priorities = new ArrayList<>();
@@ -107,6 +131,7 @@ public class TaskController {
 
 		return priorities;
 	}
+	
 	
 	/**
 	 * Validating task, if null return then its ok

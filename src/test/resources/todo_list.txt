@@ -1,6 +1,5 @@
 @TODO:
 - task List: adding tasks, deleting tasks, editing task, today task list, get task list in date period
-- task validation when add in JS
 - taks editing
 - task completing
 - task show in dates

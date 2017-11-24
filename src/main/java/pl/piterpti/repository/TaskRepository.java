@@ -42,4 +42,14 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login AND t.date >= :fromDate AND t.date <= :toDate")
 	public List<Task> getUserTasksInDatePeriod(@Param("login") String login, @Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
 	
+	/**
+	 * Get user tasks by id
+	 * @param login user login
+	 * @param id task id
+	 * @return
+	 */
+	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login AND t.task_id = :id")
+	public List<Task> getUserTaskById(@Param("login") String login, @Param("id") long id);
+	
+	
 }

@@ -138,6 +138,32 @@ function validatePasswordChange() {
 	}
 }
 
+function validateTask() {
+	
+	var title = document.getElementById("Title").value;
+	var date = document.getElementById("Date").value;
+	var priority = document.getElementById("Priority").value;
+	
+	var text;
+	
+	if (isEmpty(title)) {
+		text = "Task title can not be empty";
+	} else if (isEmpty(date)) {
+		text = "Task date can not be empty";
+	} else if (!datePattern.test(date)) {
+		text = "Date should be in format DD-MM-YYYY!";
+	} else if (isEmpty(priority)) {
+		text = "Task priority can not be empty";
+	}
+	
+	if (!isEmpty(text)) {
+		document.getElementById("jsValidator").innerHTML = text;
+		return false;
+	} else {
+		return true
+	}
+}
+
 function isEmpty(str) {
     return (!str || 0 === str.length);
 }

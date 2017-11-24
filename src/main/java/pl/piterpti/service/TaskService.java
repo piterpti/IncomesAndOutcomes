@@ -56,4 +56,12 @@ public interface TaskService {
 	 * @return list of user task in date period
 	 */
 	public List<Task> getUserTasksInDatePeriod(String login, Date fromDate, Date toDate);
+	
+	/**
+	 * Find all task for passed username and task id
+	 * @param login user login
+	 * @param id task id
+	 * @return list of tasks
+	 */
+	public List<Task> getUserTaskById(String login, long id);
 }

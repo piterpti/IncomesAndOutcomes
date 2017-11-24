@@ -10,6 +10,9 @@ import pl.piterpti.constants.Constants;
 
 @Controller
 public class ErrorController {
+	
+	// bad request
+	public static final int ERROR_BAD_REQUEST = 404;
 
 	public static final String VIEW_ERROR = "error"; 
 	
@@ -57,6 +60,17 @@ public class ErrorController {
 			mav.addObject(Constants.PARAM_ERROR_MSG, msgContent);
 		}
 		return mav;
+	}
+	
+	public static ModelAndView getErrorPage(int code) {
+		
+		if (code == ERROR_BAD_REQUEST) {
+			return getErrorMav("Bad request(404)");
+		} else {
+			return getErrorMav("Internal server error (500)");
+		}
+		
+		
 	}
 	
 	

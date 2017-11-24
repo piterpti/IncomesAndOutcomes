@@ -56,7 +56,6 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<Task> getUserTasksInDatePeriod(String login, Date fromDate, Date toDate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -68,4 +67,8 @@ public class TaskServiceImpl implements TaskService {
 		}
 	}
 
+	@Override
+	public List<Task> getUserTaskById(String login, long id) {
+		return taskRepository.getUserTaskById(login, id);
+	}
 }
