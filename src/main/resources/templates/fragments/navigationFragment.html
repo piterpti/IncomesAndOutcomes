@@ -55,6 +55,14 @@
 							 <li><a th:href="@{/categories/addCategory}">Add category</a></li>
 						</ul>
 					</li>
+					
+					<li sec:authorize="isAuthenticated()" class="dropdown dropdown-submenu" th:class="${activeTasks}"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Tasks<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							 <li><a th:href="@{/tasks}">Tasks</a></li>
+							 <li><a th:href="@{/tasks/addTask}">Add task</a></li>
+						</ul>
+					</li>
+					
 					<li sec:authorize="isAuthenticated()" th:class="${activeAccountSettings}"><a th:href="@{/account}">Account settings</a></li>
 					
 				</ul>

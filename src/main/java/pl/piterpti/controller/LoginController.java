@@ -14,7 +14,7 @@ public class LoginController {
 	private static final String ACTIVE_LOGIN = "activeLogin";
 
 	@RequestMapping(value = "/login",  method = RequestMethod.GET)
-	public ModelAndView login() {
+	public ModelAndView login(String successMessage) {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -30,6 +30,9 @@ public class LoginController {
 			// user not logged in
 			modelAndView.setViewName("login");
 			modelAndView.addObject(ACTIVE_LOGIN, "active");			
+			if (successMessage != null && "true".equals(successMessage)) {
+				modelAndView.addObject("successMessage", "User has been registered succesfully");
+			}
 		}
 		
 		return modelAndView;

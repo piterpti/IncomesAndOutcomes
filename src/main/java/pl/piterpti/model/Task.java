@@ -48,14 +48,12 @@ public class Task {
 	public Task() {}
 	
 	public Task(String title, String description, Date date) {
-		super();
 		this.title = title;
 		this.description = description;
 		this.date = date;
 	}
 	
 	public Task(String title, String description, Date date, int estimatedTime) {
-		super();
 		this.title = title;
 		this.description = description;
 		this.date = date;

@@ -1,5 +1,7 @@
 package pl.piterpti.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,8 @@ import pl.piterpti.repository.TaskRepository;
 @Service
 public class TaskServiceImpl implements TaskService {
 
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@Autowired
 	private TaskRepository taskRepository;
 	
@@ -30,16 +34,18 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<Task> getUserTodayTasks(String login) {
-		return taskRepository.getUserTasksInDate(login, new Date());
+		return taskRepository.getUserTasksInDate(login, getTaskDate(new Date()));
 	}
 
 	@Override
 	public Task saveTask(Task task) {
+		task.setDate(getTaskDate(task.getDate()));
 		return taskRepository.save(task);
 	}
 
 	@Override
 	public Task updateTask(Task task) {
+		task.setDate(getTaskDate(task.getDate()));
 		return taskRepository.save(task);
 	}
 
@@ -52,6 +58,14 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> getUserTasksInDatePeriod(String login, Date fromDate, Date toDate) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private Date getTaskDate(Date date) {
+		try {
+			return sdf.parse(sdf.format(date));
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 
 }

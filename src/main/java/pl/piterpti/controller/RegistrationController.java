@@ -92,7 +92,7 @@ public class RegistrationController {
 		} else {
 
 			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered succesfully");
+			modelAndView.addObject("successMessage", "true");
 			modelAndView.setViewName("redirect:/login");
 		}
 
