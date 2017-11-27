@@ -46,11 +46,6 @@
     		</div>
     		
     		<div class="form-group">
-			      <label for="estTime">Estimated time (optional)</label>
-			      <input type="number" step="1" th:field="*{estimatedTime}" class="form-control" id="EstimatedTime" placeholder="Estimated time" name="EstimatedTime">
-    		</div>
-    		
-    		<div class="form-group">
 					<label for="pr">Priority</label>
 					<select class="form-control" th:field="*{priority}" id="Priority">
 						<option th:each="prior : ${priorities}" th:value="${prior.value}" th:text="${prior.name}"/>

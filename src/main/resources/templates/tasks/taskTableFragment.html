@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Title</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link th:href="@{/css/style.css}" href="static/css/style.css"
+	rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+	<div th:replace="fragments/navigationFragment :: navigation"></div>
+
+	<div class="container">
+
+		<div th:fragment="tasks">
+			<table class="table table-bordered">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Priority</th>
+					<th>Date</th>
+					<th>Completed</th>
+				</tr>
+				<th:block th:each="task : ${todayTasks}">
+					<tr>
+						<td th:text="${task.title}"></td>
+						<td th:text="${task.description}"></td>
+						<td th:text="${task.priority}"></td>
+						<td th:text="${#dates.format(task.date, 'dd-MM-yyyy')}"></td>
+						<td><a
+							th:href="@{'tasks/changeCompleted?id=' + ${task.task_id}}"><span
+								th:text="${task.completed ? 'Completed' : 'Not completed'}"
+								th:style="${task.completed ? 'color:green;' : 'color:red;'}"></span></a></td>
+					</tr>
+			</table>
+		</div>
+
+
+
+	</div>
+</body>
+</html>

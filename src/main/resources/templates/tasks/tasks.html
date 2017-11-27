@@ -27,27 +27,9 @@
 			
 			<h3>User today tasks</h3>
 			
-			<div>
-				<table class="table table-bordered">
-					<tr>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Date</th>
-						<th>Completed</th>
-					</tr>
-					<th:block th:each="task : ${todayTasks}">
-					<tr>
-						<td th:text="${task.title}"></td>
-						<td th:text="${task.description}"></td>
-						<td	th:text="${#dates.format(task.date, 'dd-MM-yyyy')}"></td>
-						<td><a th:href="@{'tasks/changeCompleted?id=' + ${task.task_id}}"><span th:text="${task.completed ? 'Completed' : 'Not completed'}"
-							th:style="${task.completed ? 'color:green;' : 'color:red;'}"></span></a></td>
-					</tr>
-				</table>
-			</div>
+			<div th:replace="tasks/taskTableFragment :: tasks"></div>
+			
 		</div>
-		
-		
 	
 		<div th:if="${message}">
 			<span th:text="${message}"></span>

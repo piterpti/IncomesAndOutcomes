@@ -1,6 +1,8 @@
 package pl.piterpti.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class TaskController {
 		if (userTodayTasks.isEmpty()) {
 			mav.addObject("message", "There is not any task for today! Enjoy your day!");
 		} else {
+			sortTaskByCompletedAndPriority(userTodayTasks);
 			mav.addObject("todayTasks", userTodayTasks);
 		}
 
@@ -153,6 +156,29 @@ public class TaskController {
 		}
 		
 		return null;
+	}
+	
+	private void sortTaskByCompletedAndPriority(List<Task> tasks) {
+		
+		Collections.sort(tasks, new Comparator<Task>() {
+
+			@Override
+			public int compare(Task o1, Task o2) {
+				if (o1.isCompleted() && o2.isCompleted()) {
+					
+					return - o1.getPriority() - o2.getPriority();
+				}
+				if (o1.isCompleted()) {
+					return 1;
+				}
+				if (o2.isCompleted()) {
+					return -1;
+				}
+				
+				return - o1.getPriority() - o2.getPriority();
+			}
+		});
+		
 	}
 
 }

@@ -35,10 +35,6 @@ public class Task {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date date;
 	
-	// estimated time to do task in minutes
-	@Column(name = "estimatedTime")
-	private int estimatedTime;
-	
 	@Column(name = "priority")
 	private int priority;
 	
@@ -53,13 +49,6 @@ public class Task {
 		this.date = date;
 	}
 	
-	public Task(String title, String description, Date date, int estimatedTime) {
-		this.title = title;
-		this.description = description;
-		this.date = date;
-		this.estimatedTime = estimatedTime;
-	}
-
 	public long getTask_id() {
 		return task_id;
 	}
@@ -90,14 +79,6 @@ public class Task {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getEstimatedTime() {
-		return estimatedTime;
-	}
-
-	public void setEstimatedTime(int estimatedTime) {
-		this.estimatedTime = estimatedTime;
 	}
 
 	public int getPriority() {
