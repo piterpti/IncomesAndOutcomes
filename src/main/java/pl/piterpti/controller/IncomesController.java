@@ -227,6 +227,7 @@ public class IncomesController {
 			String summaryStr = summary.toString() + " " + Constants.CURRENCY;
 			
 			mav.addObject("summary", summaryStr);
+			mav.addObject("operationsByCat", OperationToolkit.getOperationsSortedByCateogryValue(incomes));
 		}
 
 		

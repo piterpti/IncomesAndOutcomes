@@ -344,6 +344,7 @@ public class OutcomesController {
 			String summaryStr = summary.toString() + " " + Constants.CURRENCY;
 			
 			modelAndView.addObject("summary", summaryStr);
+			modelAndView.addObject("operationsByCat", OperationToolkit.getOperationsSortedByCateogryValue(outcomes));
 		}
 
 		modelAndView.addObject("datePeriod", dft);
@@ -427,4 +428,6 @@ public class OutcomesController {
 		
 		return modelAndView;
 	}
+	
+	
 }

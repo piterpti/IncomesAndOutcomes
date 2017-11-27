@@ -105,6 +105,26 @@
 							<td><b th:text="${summary}"></b></td>
 						</tr>
 					</table>
+					
+					<br>
+					
+					<h3>Summary by category</h3>
+					
+					<table class="table table-bordered">
+						<tr>
+							<th>Category</th>
+							<th>Value</th>
+							<th>Percent %</th>
+						</tr>
+						<th:block th:each="o : ${operationsByCat}">
+							<tr>
+								<td th:text="${o.name}"></td>
+								<td th:text="${o.value}"></td>
+								<td th:text="${o.value2}"></td>
+							</tr>
+						</th:block>
+					</table>
+					
 		
 				</div>
 			</div>
