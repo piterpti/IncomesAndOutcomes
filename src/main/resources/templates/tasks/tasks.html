@@ -23,9 +23,9 @@
 	
 	<div class="container">
 		
-		<div th:if="${todayTasks}">
+		<div th:if="${tasks}">
 			
-			<h3>User today tasks</h3>
+			<h3>Today tasks</h3>
 			
 			<div th:replace="tasks/taskTableFragment :: tasks"></div>
 			

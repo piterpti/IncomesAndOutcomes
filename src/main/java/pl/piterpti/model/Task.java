@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 /**
@@ -40,6 +41,9 @@ public class Task {
 	
 	@Column(name = "completed")
 	private boolean completed;
+	
+	@Transient
+	private String priorityStr;
 	
 	public Task() {}
 	
@@ -95,5 +99,13 @@ public class Task {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+
+	public String getPriorityStr() {
+		return priorityStr;
+	}
+
+	public void setPriorityStr(String priorityStr) {
+		this.priorityStr = priorityStr;
 	}	
 }

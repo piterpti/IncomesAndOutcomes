@@ -32,14 +32,14 @@
 					<th>Date</th>
 					<th>Completed</th>
 				</tr>
-				<th:block th:each="task : ${todayTasks}">
+				<th:block th:each="task : ${tasks}">
 					<tr>
 						<td th:text="${task.title}"></td>
 						<td th:text="${task.description}"></td>
-						<td th:text="${task.priority}"></td>
+						<td th:text="${task.priorityStr}"></td>
 						<td th:text="${#dates.format(task.date, 'dd-MM-yyyy')}"></td>
 						<td><a
-							th:href="@{'tasks/changeCompleted?id=' + ${task.task_id}}"><span
+							th:href="@{'/tasks/changeCompleted?id=' + ${task.task_id}}"><span
 								th:text="${task.completed ? 'Completed' : 'Not completed'}"
 								th:style="${task.completed ? 'color:green;' : 'color:red;'}"></span></a></td>
 					</tr>

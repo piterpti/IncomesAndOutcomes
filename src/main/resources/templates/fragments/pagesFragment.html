@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Title</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<link th:href="@{/css/style.css}" href="static/css/style.css"
+	rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+	<div th:fragment="pages">
+		<div class="text-center">			
+			<div th:if="${pages}">
+				<a th:each="p : ${pages}" th:href="@{'?page=' + ${p}}" th:class="${p == currentPage ? 'activePage' : ''}"><span th:text="${p} + ' '"></span></a> 
+			</div>
+			
+			<div th:if="${selectedPages}">
+				<a th:href="@{?page=1}" th:class="${p == currentPage ? 'activePage' : ''}"><span th:text="1"></span></a>
+				<span th:if="${prefix}">...</span>
+				<a th:each="p : ${selectedPages}" th:href="@{'?page=' + ${p}}" th:class="${p == currentPage ? 'activePage' : ''}"><span th:text="${p} + ' '"></span></a>
+				<span th:if="${suffix}">...</span>
+				<a th:href="@{'?page=' + ${lastPage}}" th:class="${p == currentPage ? 'activePage' : ''}"><span th:text="${lastPage}"></span></a>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

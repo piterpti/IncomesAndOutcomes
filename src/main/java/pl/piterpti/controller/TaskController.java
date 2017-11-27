@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +27,12 @@ public class TaskController {
 
 	private static final String VIEW_TASKS = "/tasks/tasks";
 	private static final String VIEW_ADD_TASKS = "/tasks/addTask";
+	private static final String VIEW_TASKS_HISTORY = "/tasks/tasksHistory";
 	
-	private static final String[] TASK_PRIORITIES = new String[] { "LOW", "NORMAL", "HIGH" };
-
+	private static final String ACTIVE_TASKS = "activeTasks";
+	
+	private static final int TASKS_PER_PAGE = 3;
+	
 	@Autowired
 	private TaskService taskService;
 	
@@ -45,10 +51,11 @@ public class TaskController {
 			mav.addObject("message", "There is not any task for today! Enjoy your day!");
 		} else {
 			sortTaskByCompletedAndPriority(userTodayTasks);
-			mav.addObject("todayTasks", userTodayTasks);
+			mav.addObject("tasks", userTodayTasks);
 		}
 
 		mav.setViewName(VIEW_TASKS);
+		mav.addObject(ACTIVE_TASKS, "active");
 		return mav;
 	}
 
@@ -56,6 +63,7 @@ public class TaskController {
 	public ModelAndView getAddTaskPage() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_ADD_TASKS);
+		mav.addObject(ACTIVE_TASKS, "active");
 
 		Task task = new Task();
 		task.setDate(new Date());
@@ -91,6 +99,7 @@ public class TaskController {
 			} else {
 				
 				mav.setViewName(VIEW_ADD_TASKS);
+				mav.addObject(ACTIVE_TASKS, "active");
 				mav.addObject("errorMessage", taskValidationResult);
 				
 			}
@@ -104,6 +113,7 @@ public class TaskController {
 	public ModelAndView setCompleted(long id) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/tasks");
+		mav.addObject(ACTIVE_TASKS, "active");
 		
 		if (id < 1) {
 			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
@@ -123,12 +133,85 @@ public class TaskController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "tasks/tasksHistory", method = RequestMethod.GET)
+	public ModelAndView getTaskHistory(@Param("page") Integer page) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(VIEW_TASKS_HISTORY);
+		mav.addObject(ACTIVE_TASKS, "active");
+		
+		if (page == null || page.intValue() < 1) {
+			page = new Integer(1);
+		}
+		
+		String userName = Toolkit.getLoggerUserName();
+		
+		long count = taskService.countUserTasks(userName);
+		
+		if (page.intValue() > count) {
+			page = new Integer(1);
+		}
+		
+		Pageable topResults = new PageRequest(page.intValue() - 1, TASKS_PER_PAGE);
+		
+		List<Task> userTasks = taskService.findUserTasks(userName, topResults);
+		
+		if (userTasks.isEmpty()) {
+			mav.addObject("message", "There is not any task added already!");
+		} else {
+			
+			mav.addObject("tasks", userTasks);
+			getPages(page, mav, count);
+		}
+		
+		return mav;
+	}
+
+	private void getPages(Integer page, ModelAndView mav, long count) {
+		int pagesCount = (int)(Math.ceil((double)count / TASKS_PER_PAGE));
+		
+		List<Integer> pages = new ArrayList<>();
+		if (pagesCount < 6) {
+			for (int i = 1; i <= pagesCount; i++) {
+				pages.add(i);
+			}
+
+			mav.addObject("pages", pages);
+		} else {
+			mav.addObject("lastPage", pagesCount);
+			int startIdx = page.intValue() - 1;
+			if (startIdx < 2) {
+				startIdx = 2;
+			}
+			if (startIdx >= pagesCount - 3) {
+				startIdx = (int) (pagesCount - 3);
+			}
+
+			for (int i = startIdx; i < startIdx + 3; i++) {
+				pages.add(i);
+				if (i + 1 >= pagesCount) {
+					break;
+				}
+			}
+			mav.addObject("selectedPages", pages);
+
+			if (pages.get(0) > 2) {
+				mav.addObject("prefix", "...");
+			}
+
+			if (pages.size() == 3 && pages.get(pages.size() - 1) + 1 < pagesCount) {
+				mav.addObject("suffix", "...");
+			}
+		}
+		
+		mav.addObject("currentPage", page.intValue());
+	}
 
 	private static List<PairNameValue> getPriorities() {
 		List<PairNameValue> priorities = new ArrayList<>();
 
 		int idx = 1;
-		for (String s : TASK_PRIORITIES) {
+		for (String s : TaskService.TASK_PRIORITIES) {
 			priorities.add(new PairNameValue(s, idx++ + ""));
 		}
 
@@ -164,18 +247,21 @@ public class TaskController {
 
 			@Override
 			public int compare(Task o1, Task o2) {
+				
 				if (o1.isCompleted() && o2.isCompleted()) {
-					
-					return - o1.getPriority() - o2.getPriority();
+					return -(new Integer(o1.getPriority()).compareTo(new Integer(o2.getPriority())));
 				}
+				
 				if (o1.isCompleted()) {
-					return 1;
-				}
-				if (o2.isCompleted()) {
 					return -1;
 				}
 				
-				return - o1.getPriority() - o2.getPriority();
+				if (o2.isCompleted()) {
+					return 1;
+				} 
+				
+				return -(new Integer(o1.getPriority()).compareTo(new Integer(o2.getPriority())));
+				
 			}
 		});
 		

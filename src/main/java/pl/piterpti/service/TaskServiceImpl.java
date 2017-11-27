@@ -34,7 +34,13 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<Task> getUserTodayTasks(String login) {
-		return taskRepository.getUserTasksInDate(login, getTaskDate(new Date()));
+		List<Task> tasks = taskRepository.getUserTasksInDate(login, getTaskDate(new Date()));
+		
+		for (Task task : tasks) {
+			task.setPriorityStr(TASK_PRIORITIES[task.getPriority()-1]);
+		}
+		
+		return tasks;
 	}
 
 	@Override
@@ -70,5 +76,15 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<Task> getUserTaskById(String login, long id) {
 		return taskRepository.getUserTaskById(login, id);
+	}
+
+	@Override
+	public long countUserTasks(String login) {
+		return taskRepository.countUserTasks(login);
+	}
+
+	@Override
+	public List<Task> findUserTasks(String login, Pageable pageable) {
+		return taskRepository.findUserTasks(login, pageable);
 	}
 }

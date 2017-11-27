@@ -3,9 +3,14 @@ package pl.piterpti.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import pl.piterpti.model.Task;
 
 public interface TaskService {
+	
+	// task priorities human readable
+	public static final String[] TASK_PRIORITIES = new String[] { "LOW", "NORMAL", "HIGH" };
 	
 	/**
 	 * Finds all tasks
@@ -64,4 +69,20 @@ public interface TaskService {
 	 * @return list of tasks
 	 */
 	public List<Task> getUserTaskById(String login, long id);
+	
+	/**
+	 * Count user tasks
+	 * @param login user login
+	 * @return user task count
+	 */
+	public long countUserTasks(String login);
+	
+	
+	/**
+	 * Gets all user tasks
+	 * @param login user login
+	 * @param pageable result set
+	 * @return
+	 */
+	public List<Task> findUserTasks(String login, Pageable pageable);
 }

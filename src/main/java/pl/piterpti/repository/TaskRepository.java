@@ -51,5 +51,22 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login AND t.task_id = :id")
 	public List<Task> getUserTaskById(@Param("login") String login, @Param("id") long id);
 	
+	/**
+	 * Count user tasks
+	 * @param login
+	 * @return count user tasks
+	 */
+	@Query("SELECT COUNT(t) FROM User u JOIN u.tasks t WHERE u.login = :login")
+	public long countUserTasks(@Param("login") String login);
+	
+	/**
+	 * Get all user tasks
+	 * @param login user login
+	 * @param pageable result set
+	 * @return
+	 */
+	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login")
+	public List<Task> findUserTasks(@Param("login") String login, Pageable pageable);
+	
 	
 }

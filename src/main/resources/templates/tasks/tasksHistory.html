@@ -23,9 +23,16 @@
 	
 	<div class="container">
 		
+		<div th:if="${message}">
+			<span th:text="${message}"></span>
+		</div>
 		
-		
-		
+		<div th:if="${tasks}">
+			<h3>Tasks history</h3>
+			<div th:replace="tasks/taskTableFragment :: tasks"></div>
+			<div th:replace="fragments/pagesFragment :: pages"></div>
+			
+		</div>
 				
 	</div>
 </body>
