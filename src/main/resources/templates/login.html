@@ -22,26 +22,44 @@
 	<div th:replace="fragments/navigationFragment :: navigation"></div>
 	
 	<div class="container">
-		<form th:action="@{/login}" method="post">
-			<div class="form-group">
-		      <label for="login">User name</label>
-		      <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" required>
-    		</div>
-    		<div class="form-group">
-		      <label for="password">Password</label>
-		      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
-    		</div>
-			 <button type="submit" class="btn btn-primary">Sign in</button>
-		</form>
-		
-		<br>
-		
+	
 		<div th:if="${successMessage}">
 			<span th:text="${successMessage}" style="color: green;"></span>
+			<br>
 		</div>
-		<div th:if="${param.error}" style="color:red;">Invalid username and password.</div>
-		<div th:if="${param.logout}">You have been logged out.</div>
+	
+	
+		<h3>Enter your login and password</h3>
+		<form th:action="@{/login}" method="post">
+			<div class="row">
+				<div class="form-group col-lg-3">
+			      <label class="input-medium" for="login">User name</label>
+			      <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" required>
+	    		</div>
+    		</div>
+    		<div class="row">
+	    		<div class="form-group col-lg-3">
+			      <label for="password">Password</label>
+			      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+	    		</div>
+    		</div>
+    		
+    		<div class="row form-group col-lg-3">
+    			 <label for="submit" th:if="${param.error}" style="color:red;">Invalid login or password!</label>
+				 <button id="submit" type="submit" class="btn btn-primary">Sign in</button>
+			</div>
+			
+			<br>
+			
+				
+			<div th:if="${param.logout}"><br>You have been logged out.</div>	
+			
+			
+		</form>
+		
+		
 		
 	</div>
+	
 </body>
 </html>

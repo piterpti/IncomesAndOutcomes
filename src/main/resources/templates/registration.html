@@ -28,39 +28,33 @@
 			th:object="${user}" method="post" role="form">
 			<h2>Registration form</h2>
 
-
-			<div class="form-group">
-				<label for="Name">Username</label>
-				<input type="text" class="form-control" th:field="*{userName}" id="Username" placeholder="" name="Username">
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="Name">Username</label>
+					<input type="text" class="form-control" th:field="*{userName}" id="Username" placeholder="User name" name="Username">
+				</div>
 			</div>
 			
-			<div class="form-group">
-				<label for="Login">Login</label>
-				<input type="text" class="form-control" th:field="*{login}" id="Login" placeholder="" name="Login">
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="Login">Login</label>
+					<input type="text" class="form-control" th:field="*{login}" id="Login" placeholder="Login" name="Login">
+				</div>
 			</div>
 			
-			<div class="form-group">
-				<label for="Password">Password</label>
-				<input type="password" class="form-control" th:field="*{password}" id="Password" placeholder="" name="Password">
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="Password">Password</label>
+					<input type="password" class="form-control" th:field="*{password}" id="Password" placeholder="Password" name="Password">
+				</div>
 			</div>
 
-			<button type="submit" class="btn btn-default">Register user</button>
+			<div class="row form-group col-lg-6">
+				<label for="submit" id="jsValidator" style="color:red;" th:text="${errorMessage}"></label><br>
+				<button id="submit" type="submit" class="btn btn-primary">Register user</button>
+			</div>
 			
 		</form>
-		
-		<div>
-			<span th:text="${successMessage}"></span>
-		</div>
-		
-		<br>
-		
-		<div>
-			<span id="jsValidator" style="color:red;"></span>
-		</div>
-		
-		<div th:if="${errorMessage}">
-			<span style="color: red;" th:text="${errorMessage}"></span>
-		</div>
 		
 	</div>
 

@@ -65,7 +65,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	 * @param pageable result set
 	 * @return
 	 */
-	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login")
+	@Query("SELECT t FROM User u JOIN u.tasks t WHERE u.login = :login ORDER BY t.date DESC")
 	public List<Task> findUserTasks(@Param("login") String login, Pageable pageable);
 	
 	

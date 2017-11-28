@@ -6,10 +6,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,7 @@ public class TaskController {
 	
 	private static final String ACTIVE_TASKS = "activeTasks";
 	
-	private static final int TASKS_PER_PAGE = 3;
+	private static final int TASKS_PER_PAGE = 30;
 	
 	@Autowired
 	private TaskService taskService;
@@ -110,10 +111,11 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value = "tasks/changeCompleted", method = RequestMethod.GET)
-	public ModelAndView setCompleted(long id) {
+	public ModelAndView setCompleted(HttpServletRequest request, long id) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/tasks");
-		mav.addObject(ACTIVE_TASKS, "active");
+		
+		final String referer = request.getHeader("referer");
 		
 		if (id < 1) {
 			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
@@ -131,14 +133,35 @@ public class TaskController {
 			taskService.updateTask(task);
 		}
 		
+		if (referer.endsWith("tasks")) {
+			mav.setViewName("redirect:/tasks");
+		} else if (referer.contains("tasksHistory")) {
+			int page = 1;
+			if (referer.indexOf("page") != -1) {
+				String pageStr = referer.split("page=")[1];
+				page = Integer.valueOf(pageStr);
+			}
+			mav.setViewName("redirect:/tasks/tasksHistory?page=" + page);
+		}
+		
 		return mav;
 	}
 	
 	@RequestMapping(value = "tasks/tasksHistory", method = RequestMethod.GET)
-	public ModelAndView getTaskHistory(@Param("page") Integer page) {
+	public ModelAndView getTaskHistory(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(VIEW_TASKS_HISTORY);
 		mav.addObject(ACTIVE_TASKS, "active");
+		
+		Object pageObj = request.getParameter("page");
+		Integer page = new Integer(1);
+		if (pageObj instanceof String) {
+			try {
+				page = Integer.valueOf((String) pageObj);
+			} catch (Exception e) {
+				// ignore
+			}
+		}
 		
 		if (page == null || page.intValue() < 1) {
 			page = new Integer(1);
@@ -148,7 +171,9 @@ public class TaskController {
 		
 		long count = taskService.countUserTasks(userName);
 		
-		if (page.intValue() > count) {
+		int pagesCount = (int) (Math.ceil((double) count / TASKS_PER_PAGE));
+		
+		if (page.intValue() > pagesCount) {
 			page = new Integer(1);
 		}
 		
@@ -253,11 +278,11 @@ public class TaskController {
 				}
 				
 				if (o1.isCompleted()) {
-					return -1;
+					return 1;
 				}
 				
 				if (o2.isCompleted()) {
-					return 1;
+					return -1;
 				} 
 				
 				return -(new Integer(o1.getPriority()).compareTo(new Integer(o2.getPriority())));

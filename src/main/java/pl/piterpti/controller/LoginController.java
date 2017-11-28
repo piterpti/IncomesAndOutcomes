@@ -31,7 +31,7 @@ public class LoginController {
 			modelAndView.setViewName("login");
 			modelAndView.addObject(ACTIVE_LOGIN, "active");			
 			if (successMessage != null && "true".equals(successMessage)) {
-				modelAndView.addObject("successMessage", "User has been registered succesfully");
+				modelAndView.addObject("successMessage", "User has been registered succesfully!");
 			}
 		}
 		

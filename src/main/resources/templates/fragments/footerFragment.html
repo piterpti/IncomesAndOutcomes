@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Error</title>
+<title>Incomes and Outcomes</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -16,25 +16,30 @@
 	<link th:href="@{/css/style.css}" href="static/css/style.css"
 	rel="stylesheet" type="text/css" />
 	
-	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
+	<style>
+	.footer {
+    background-color: #f5f5f5;
+    bottom: 0;
+    height: 60px;
+    line-height: 60px;
+    position: absolute;
+    width: 100%;
+}
 	
+	
+	</style>
 </head>
 <body>
 
-
-	<div th:replace="fragments/navigationFragment :: navigation"></div>
-
-	<div class="container">
-		<h2>Error page</h2>
-		
-		<br>
-		
-		<div th:if="${errorMsg}">
-			<span th:text="${errorMsg}"></span>
-		</div>
+	<div th:fragment="footer">
 	
+		<footer class="footer">
+	      <div class="container">
+	        <span class="text-muted">Place sticky footer content here.</span>
+	      </div>
+	    </footer>
+		
 	</div>
-
-
 </body>
+
 </html>
