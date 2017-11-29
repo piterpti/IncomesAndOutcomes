@@ -57,7 +57,11 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Task findTaskById(long id) {
-		return taskRepository.findOne(id);
+		Task task = taskRepository.findOne(id);
+		if (task != null) {
+			task.setPriorityStr(TASK_PRIORITIES[task.getPriority()-1]);
+		}
+		return task;
 	}
 
 	@Override
@@ -75,7 +79,11 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<Task> getUserTaskById(String login, long id) {
-		return taskRepository.getUserTaskById(login, id);
+		List<Task> tasks = taskRepository.getUserTaskById(login, id);
+		for (Task task : tasks) {
+			task.setPriorityStr(TASK_PRIORITIES[task.getPriority()-1]);
+		}
+		return tasks;
 	}
 
 	@Override
@@ -85,6 +93,11 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public List<Task> findUserTasks(String login, Pageable pageable) {
-		return taskRepository.findUserTasks(login, pageable);
+		List<Task> tasks = taskRepository.findUserTasks(login, pageable);
+		
+		for (Task task : tasks) {
+			task.setPriorityStr(TASK_PRIORITIES[task.getPriority()-1]);
+		}
+		return tasks;
 	}
 }

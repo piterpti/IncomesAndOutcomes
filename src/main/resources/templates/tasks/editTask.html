@@ -15,6 +15,9 @@
 	
 	<link th:href="@{/css/style.css}" href="static/css/style.css"
 	rel="stylesheet" type="text/css" />
+	
+	<script th:href="@{/js/validators.js}" src="../js/validators.js"></script>
+	
 </head>
 <body>
 
@@ -22,7 +25,43 @@
 	<div th:replace="fragments/navigationFragment :: navigation"></div>
 	
 	<div class="container">
-		<h3>Edit task</h3>
+		<form action="#" th:action=@{/tasks/edit} th:object="${task}" onsubmit="return(validateTask());"
+			method="post" role="form">
+			<h3>Edit task</h3>
+		
+			<input type="hidden" th:field=*{task_id} />
+			<input type="hidden" th:field=*{completed} />
+			
+			<div class="form-group">
+			      <label for="Title">Title</label>
+			      <input type="text" th:field="*{title}" class="form-control" id="Title" placeholder="Title" name="Title">
+    		</div>
+    		
+    		<div class="form-group">
+			      <label for="Description">Description</label>
+			      <input type="text" th:field="*{description}" class="form-control" id="Description" placeholder="Description" name="Description">
+    		</div>
+    		
+			<div class="form-group">
+			      <label for="Date">Date</label>
+			      <input type="text" th:field="*{date}" class="form-control" id="Date" placeholder="Date" name="Date">
+    		</div>
+    		
+    		<div class="form-group">
+					<label for="pr">Priority</label>
+					<select class="form-control" th:field="*{priority}" id="Priority">
+						<option th:each="prior : ${priorities}" th:value="${prior.value}" th:text="${prior.name}"/>
+					</select>
+			</div>
+			
+			<button type="submit" class="btn btn-default">Save</button>
+		
+		</form>
+		
+		<div>
+			<span id="jsValidator" style="color:red;"></span>
+		</div>
+		
 		
 				
 	</div>

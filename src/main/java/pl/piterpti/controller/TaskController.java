@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -198,7 +199,7 @@ public class TaskController {
 	
 	@RequestMapping(value = "tasks/edit", method = RequestMethod.GET)
 	public ModelAndView getTaskEditPage(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = getDefaultMav();
 		mav.setViewName(VIEW_EDIT_TASK);
 		
 		Object idObj = request.getParameter("id");
@@ -215,9 +216,39 @@ public class TaskController {
 			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
 		}
 		
+		List<Task> task = taskService.getUserTaskById(Toolkit.getLoggerUserName(), taskId);
 		
+		if (task.isEmpty()) {
+			return ErrorController.getErrorMav("Task not found or permission denied");
+		}
 		
+		mav.addObject("task", task.get(0));
+		mav.addObject("priorities", getPriorities());
+		return mav;
+	}
+	
+	@RequestMapping(value = "tasks/edit", method = RequestMethod.POST)
+	public ModelAndView updateTask(Task task) {
+		ModelAndView mav = getDefaultMav();
+		mav.setViewName("redirect:/tasks");
 		
+		if (task == null) {
+			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
+		}
+		
+		long taskId = task.getTask_id();
+		
+		if (taskId < 1) {
+			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
+		}
+		
+		String userName = Toolkit.getLoggerUserName();
+		List<Task> tasks = taskService.getUserTaskById(userName, taskId);
+		if (tasks.isEmpty()) {
+			return ErrorController.getErrorMav("Task not found or permission denied");
+		}
+		
+		taskService.updateTask(task);
 		return mav;
 	}
 
@@ -319,6 +350,12 @@ public class TaskController {
 			}
 		});
 		
+	}
+	
+	private ModelAndView getDefaultMav() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(ACTIVE_TASKS, "active");
+		return mav;
 	}
 
 }
