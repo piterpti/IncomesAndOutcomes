@@ -31,6 +31,7 @@
 					<th>Priority</th>
 					<th>Date</th>
 					<th>Completed</th>
+					<th>Edit</th>
 				</tr>
 				<th:block th:each="task : ${tasks}">
 					<tr>
@@ -42,6 +43,7 @@
 							th:href="@{'/tasks/changeCompleted?id=' + ${task.task_id}}"><span
 								th:text="${task.completed ? 'Completed' : 'Not completed'}"
 								th:style="${task.completed ? 'color:green;' : 'color:red;'}"></span></a></td>
+						<td><a th:href="@{'/tasks/edit?id=' + ${task.task_id}}">Edit</a></td>
 					</tr>
 			</table>
 		</div>

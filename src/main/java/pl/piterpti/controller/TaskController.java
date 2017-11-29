@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +27,11 @@ import pl.piterpti.toolkit.Toolkit;
 @Controller
 public class TaskController {
 
+	private Logger logger = Logger.getLogger(TaskController.class);
+	
 	private static final String VIEW_TASKS = "/tasks/tasks";
 	private static final String VIEW_ADD_TASKS = "/tasks/addTask";
+	private static final String VIEW_EDIT_TASK = "/tasks/editTask";
 	private static final String VIEW_TASKS_HISTORY = "/tasks/tasksHistory";
 	
 	private static final String ACTIVE_TASKS = "activeTasks";
@@ -188,6 +192,31 @@ public class TaskController {
 			mav.addObject("tasks", userTasks);
 			getPages(page, mav, count);
 		}
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "tasks/edit", method = RequestMethod.GET)
+	public ModelAndView getTaskEditPage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(VIEW_EDIT_TASK);
+		
+		Object idObj = request.getParameter("id");
+		long taskId = -1;
+		if (idObj instanceof String) {
+			try {
+				taskId = Long.valueOf((String)idObj);
+			} catch (Exception e) {
+				logger.error("Wrong task id to edit :" + taskId);
+			}
+		}
+		
+		if (taskId < 0) {
+			return ErrorController.getErrorPage(ErrorController.ERROR_BAD_REQUEST);
+		}
+		
+		
+		
 		
 		return mav;
 	}
