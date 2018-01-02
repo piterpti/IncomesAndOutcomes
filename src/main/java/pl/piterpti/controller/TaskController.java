@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.piterpti.exception.TaskNotFoundException;
 import pl.piterpti.model.PairNameValue;
 import pl.piterpti.model.Task;
 import pl.piterpti.model.User;
@@ -202,6 +203,11 @@ public class TaskController {
 		ModelAndView mav = getDefaultMav();
 		mav.setViewName(VIEW_EDIT_TASK);
 		
+		if (request != null) {
+			throw new TaskNotFoundException("Task editting error content");
+		}
+		
+		
 		Object idObj = request.getParameter("id");
 		long taskId = -1;
 		if (idObj instanceof String) {
@@ -350,6 +356,13 @@ public class TaskController {
 			}
 		});
 		
+	}
+	
+	@ExceptionHandler(TaskNotFoundException.class)
+	public ModelAndView showErrorPage2() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("error2");
+		return mav;
 	}
 	
 	private ModelAndView getDefaultMav() {
